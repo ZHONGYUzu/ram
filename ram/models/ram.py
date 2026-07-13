@@ -910,6 +910,12 @@ class MultiScalePhysics(Physics):
     def update_parameters(self, **kwargs):
         self.base.update_parameters(**kwargs)
 
+    def prox_l2(self, z, y, gamma, scale=None, **kwargs):
+        self.set_scale(scale)
+        if self.scale == 0:
+            return self.base.prox_l2(z, y, gamma=gamma, **kwargs)
+        return super().prox_l2(z, y, gamma=gamma, **kwargs)
+
 
 class MultiScaleLinearPhysics(MultiScalePhysics, LinearPhysics):
     def __init__(self, physics, img_shape, filter="sinc", scales=[2, 4, 8], **kwargs):
@@ -943,3 +949,7 @@ class Pad(LinearPhysics):
 
     def update_parameters(self, **kwargs):
         self.base.update_parameters(**kwargs)
+
+    def prox_l2(self, z, y, gamma, **kwargs):
+        out = self.base.prox_l2(z[..., self.pad[0]:, self.pad[1]:], y, gamma=gamma, **kwargs)
+        return torch.nn.functional.pad(out, (self.pad[1], 0, self.pad[0], 0))
