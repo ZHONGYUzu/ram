@@ -171,6 +171,8 @@ def main() -> None:
     parser.add_argument("--mask-key", default="mask")
     parser.add_argument("--mask-txt", type=Path, default=None)
     parser.add_argument("--mask-txt-delimiter", default=",", help="Use 'whitespace' for whitespace-delimited masks.")
+    parser.add_argument("--slice-index", type=int, default=None, help="Reconstruct only this zero-based slice index.")
+    parser.add_argument("--time-index", type=int, default=None, help="Reconstruct only this zero-based time-frame index.")
     parser.add_argument("--batch-size", type=int, default=4)
     parser.add_argument("--cg-iter", type=int, default=8)
     parser.add_argument("--noise-sigma", type=float, default=1e-3)
@@ -182,6 +184,21 @@ def main() -> None:
 
     kspace_np, smap_np = load_cine_h5(args.input_h5, args.kspace_key, args.smap_key)
     mask_np = load_mask(args, kspace_np)
+
+    source_slices, _, source_times, _, _ = kspace_np.shape
+    if args.slice_index is not None and not 0 <= args.slice_index < source_slices:
+        parser.error(f"--slice-index must be in [0, {source_slices - 1}], got {args.slice_index}")
+    if args.time_index is not None and not 0 <= args.time_index < source_times:
+        parser.error(f"--time-index must be in [0, {source_times - 1}], got {args.time_index}")
+
+    slice_selection = slice(None) if args.slice_index is None else slice(args.slice_index, args.slice_index + 1)
+    time_selection = slice(None) if args.time_index is None else slice(args.time_index, args.time_index + 1)
+    selected_slice_indices = np.arange(source_slices, dtype=np.int32)[slice_selection]
+    selected_time_indices = np.arange(source_times, dtype=np.int32)[time_selection]
+
+    kspace_np = kspace_np[slice_selection, :, time_selection, :, :]
+    smap_np = smap_np[slice_selection, :, :, :, :]
+    mask_np = mask_np[time_selection, :, :]
     slices, coils, times, phase, frequency = kspace_np.shape
 
     kspace = torch.from_numpy(np.transpose(kspace_np, (0, 2, 1, 3, 4)).reshape(slices * times, coils, phase, frequency))
@@ -204,7 +221,7 @@ def main() -> None:
                 cg_iter=args.cg_iter,
                 device=args.device,
             )
-            y = kspace[start:stop].to(args.device)
+            y = kspace[start:stop].to(args.device) * mask[start:stop, None].to(args.device)
             x_hat = model(y, physics=physics)
             recon_batches.append(channels_to_complex(x_hat).cpu())
 
@@ -219,12 +236,16 @@ def main() -> None:
             "img4ranking": img4ranking,
             "recon_real": recon.real.astype(np.float32),
             "recon_imag": recon.imag.astype(np.float32),
+            "source_slice_indices": selected_slice_indices,
+            "source_time_indices": selected_time_indices,
         },
         appendmat=False,
         do_compression=True,
     )
     print(f"saved {args.output_mat}")
     print(f"img4ranking shape: {img4ranking.shape} = (frequency, phase, slice, time)")
+    print(f"source slice indices: {selected_slice_indices.tolist()}")
+    print(f"source time indices: {selected_time_indices.tolist()}")
 
 
 if __name__ == "__main__":

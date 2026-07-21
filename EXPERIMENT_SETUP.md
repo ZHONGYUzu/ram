@@ -158,8 +158,14 @@ bash scripts/run_cine_experiment.sh \
   --input-h5 /server/path/to/data/input.h5 \
   --mask-mat /server/path/to/data/mask.mat \
   --results-root /server/path/to/results \
-  --batch-size 4
+  --slice-index 6 \
+  --batch-size 1
 ```
+
+`--slice-index` and `--time-index` are zero-based and optional. Selecting one
+slice while omitting `--time-index` reconstructs every CINE frame for that slice.
+Selecting both is the smallest technical test. Replace every `/server/path/...`
+placeholder with an existing server path before running the command.
 
 Without a separate mask, omit `--mask-mat`; the inference code derives the mask
 from nonzero k-space samples:

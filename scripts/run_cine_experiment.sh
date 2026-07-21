@@ -11,6 +11,8 @@ Usage:
     --results-root PATH \
     [--mask-mat PATH] \
     [--mask-key KEY] \
+    [--slice-index N] \
+    [--time-index N] \
     [--batch-size N] \
     [--cg-iter N] \
     [--noise-sigma FLOAT] \
@@ -23,6 +25,8 @@ input_h5=""
 results_root=""
 mask_mat=""
 mask_key="mask"
+slice_index=""
+time_index=""
 batch_size="4"
 cg_iter="8"
 noise_sigma="1e-3"
@@ -35,6 +39,8 @@ while [[ $# -gt 0 ]]; do
         --results-root) results_root="$2"; shift 2 ;;
         --mask-mat) mask_mat="$2"; shift 2 ;;
         --mask-key) mask_key="$2"; shift 2 ;;
+        --slice-index) slice_index="$2"; shift 2 ;;
+        --time-index) time_index="$2"; shift 2 ;;
         --batch-size) batch_size="$2"; shift 2 ;;
         --cg-iter) cg_iter="$2"; shift 2 ;;
         --noise-sigma) noise_sigma="$2"; shift 2 ;;
@@ -95,6 +101,14 @@ command=(
 
 if [[ -n "$mask_mat" ]]; then
     command+=(--mask-mat "$mask_mat")
+fi
+
+if [[ -n "$slice_index" ]]; then
+    command+=(--slice-index "$slice_index")
+fi
+
+if [[ -n "$time_index" ]]; then
+    command+=(--time-index "$time_index")
 fi
 
 git rev-parse HEAD > "$run_dir/git-commit.txt"
