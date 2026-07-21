@@ -18,6 +18,7 @@ Usage:
     [--normalization MODE] \
     [--batch-size N] \
     [--cg-iter N] \
+    [--dc-gamma FLOAT] \
     [--noise-sigma FLOAT] \
     [--device DEVICE]
 EOF
@@ -35,6 +36,7 @@ time_index=""
 normalization="none"
 batch_size="4"
 cg_iter="8"
+dc_gamma="0"
 noise_sigma="1e-3"
 device="cuda"
 
@@ -52,6 +54,7 @@ while [[ $# -gt 0 ]]; do
         --normalization) normalization="$2"; shift 2 ;;
         --batch-size) batch_size="$2"; shift 2 ;;
         --cg-iter) cg_iter="$2"; shift 2 ;;
+        --dc-gamma) dc_gamma="$2"; shift 2 ;;
         --noise-sigma) noise_sigma="$2"; shift 2 ;;
         --device) device="$2"; shift 2 ;;
         -h|--help) usage; exit 0 ;;
@@ -114,6 +117,7 @@ command=(
     --mask-key "$mask_key"
     --batch-size "$batch_size"
     --cg-iter "$cg_iter"
+    --dc-gamma "$dc_gamma"
     --noise-sigma "$noise_sigma"
     --normalization "$normalization"
     --device "$device"

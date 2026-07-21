@@ -216,12 +216,20 @@ def main() -> None:
     )
     parser.add_argument("--batch-size", type=int, default=4)
     parser.add_argument("--cg-iter", type=int, default=8)
+    parser.add_argument(
+        "--dc-gamma",
+        type=float,
+        default=0.0,
+        help="Post-RAM measurement-consistency strength; 0 disables the optional step.",
+    )
     parser.add_argument("--noise-sigma", type=float, default=1e-3)
     parser.add_argument("--device", default="cuda" if torch.cuda.is_available() else "cpu")
     args = parser.parse_args()
 
     if args.mask_mat and args.mask_txt:
         parser.error("Use only one of --mask-mat or --mask-txt")
+    if not np.isfinite(args.dc_gamma) or args.dc_gamma < 0:
+        parser.error("--dc-gamma must be a finite non-negative number")
 
     kspace_np, smap_np = load_cine_h5(args.input_h5, args.kspace_key, args.smap_key)
     mask_np = load_mask(args, kspace_np)
@@ -267,6 +275,14 @@ def main() -> None:
             )
             y = kspace[start:stop].to(args.device) * mask[start:stop, None].to(args.device)
             x_hat = model(y, physics=physics)
+            if args.dc_gamma > 0:
+                dc_gamma = torch.full(
+                    (stop - start, 1, 1, 1),
+                    args.dc_gamma,
+                    dtype=x_hat.dtype,
+                    device=x_hat.device,
+                )
+                x_hat = physics.prox_l2(x_hat, y, gamma=dc_gamma)
             recon_batches.append(channels_to_complex(x_hat).cpu())
 
     recon = torch.cat(recon_batches, dim=0).numpy().reshape(slices, times, phase, frequency)
@@ -285,6 +301,7 @@ def main() -> None:
             "source_time_indices": selected_time_indices,
             "normalization_mode": args.normalization,
             "normalization_scale": np.asarray([scale], dtype=np.float32),
+            "dc_gamma": np.asarray([args.dc_gamma], dtype=np.float32),
         },
         appendmat=False,
         do_compression=True,
@@ -294,6 +311,7 @@ def main() -> None:
     print(f"source slice indices: {selected_slice_indices.tolist()}")
     print(f"source time indices: {selected_time_indices.tolist()}")
     print(f"normalization: {args.normalization}, scale: {scale:.8g}")
+    print(f"post-RAM data consistency gamma: {args.dc_gamma:.8g}")
 
 
 if __name__ == "__main__":

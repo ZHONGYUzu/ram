@@ -211,6 +211,22 @@ mkdir -p logs
 sbatch scripts/slurm_sub0008_acc8_slice06_time10_p995.sbatch
 ```
 
+After confirming p99.5 normalization, test optional post-RAM measurement data
+consistency on the same diagnostic frame. The tracked Slurm array creates three
+separate experiment directories for `--dc-gamma 0.1`, `1`, and `10`:
+
+```bash
+cd ~/ram
+mkdir -p logs
+sbatch scripts/slurm_sub0008_acc8_slice06_time10_p995_dc_sweep.sbatch
+```
+
+The post-processing step solves a multicoil least-squares proximal problem using
+the same acquired k-space and mask. It is disabled by default (`--dc-gamma 0`),
+so existing inference behavior is unchanged. Do not expand beyond the diagnostic
+frame until a setting exceeds the zero-filled reference of 19.9336 dB PSNR and
+improves on 0.341558 NMSE under the same global scale-fit evaluation.
+
 Without a separate mask, omit both mask options; the inference code derives the
 mask from nonzero k-space samples:
 
