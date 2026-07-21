@@ -19,6 +19,7 @@ Usage:
     [--batch-size N] \
     [--cg-iter N] \
     [--dc-gamma FLOAT] \
+    [--dc-cg-iter N] \
     [--noise-sigma FLOAT] \
     [--device DEVICE]
 EOF
@@ -37,6 +38,7 @@ normalization="none"
 batch_size="4"
 cg_iter="8"
 dc_gamma="0"
+dc_cg_iter=""
 noise_sigma="1e-3"
 device="cuda"
 
@@ -55,6 +57,7 @@ while [[ $# -gt 0 ]]; do
         --batch-size) batch_size="$2"; shift 2 ;;
         --cg-iter) cg_iter="$2"; shift 2 ;;
         --dc-gamma) dc_gamma="$2"; shift 2 ;;
+        --dc-cg-iter) dc_cg_iter="$2"; shift 2 ;;
         --noise-sigma) noise_sigma="$2"; shift 2 ;;
         --device) device="$2"; shift 2 ;;
         -h|--help) usage; exit 0 ;;
@@ -137,6 +140,10 @@ fi
 
 if [[ -n "$time_index" ]]; then
     command+=(--time-index "$time_index")
+fi
+
+if [[ -n "$dc_cg_iter" ]]; then
+    command+=(--dc-cg-iter "$dc_cg_iter")
 fi
 
 git rev-parse HEAD > "$run_dir/git-commit.txt"

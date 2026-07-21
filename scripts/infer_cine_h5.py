@@ -160,15 +160,23 @@ class CineMultiCoilMRI(dinv.physics.LinearPhysics):
         image = torch.sum(coil_images * torch.conj(self.sensitivity_maps), dim=1)
         return complex_to_channels(image)
 
-    def prox_l2(self, z: torch.Tensor, y: torch.Tensor, gamma: torch.Tensor, **kwargs) -> torch.Tensor:
+    def prox_l2(
+        self,
+        z: torch.Tensor,
+        y: torch.Tensor,
+        gamma: torch.Tensor,
+        max_iter=None,
+        **kwargs,
+    ) -> torch.Tensor:
         """Approximate prox for 0.5||A x - y||^2 with conjugate gradients."""
+        iterations = self.cg_iter if max_iter is None else max_iter
         rhs = z + gamma * self.A_adjoint(y)
         x = z.clone()
         r = rhs - self._normal_plus_identity(x, gamma)
         p = r.clone()
         rsold = self._dot(r, r)
 
-        for _ in range(self.cg_iter):
+        for _ in range(iterations):
             ap = self._normal_plus_identity(p, gamma)
             alpha = rsold / (self._dot(p, ap) + 1e-12)
             x = x + self._view_batch(alpha, x) * p
@@ -222,6 +230,12 @@ def main() -> None:
         default=0.0,
         help="Post-RAM measurement-consistency strength; 0 disables the optional step.",
     )
+    parser.add_argument(
+        "--dc-cg-iter",
+        type=int,
+        default=None,
+        help="CG iterations for optional post-RAM data consistency; defaults to --cg-iter.",
+    )
     parser.add_argument("--noise-sigma", type=float, default=1e-3)
     parser.add_argument("--device", default="cuda" if torch.cuda.is_available() else "cpu")
     args = parser.parse_args()
@@ -230,6 +244,10 @@ def main() -> None:
         parser.error("Use only one of --mask-mat or --mask-txt")
     if not np.isfinite(args.dc_gamma) or args.dc_gamma < 0:
         parser.error("--dc-gamma must be a finite non-negative number")
+    if args.dc_cg_iter is not None and args.dc_cg_iter < 1:
+        parser.error("--dc-cg-iter must be a positive integer")
+
+    dc_cg_iter = args.cg_iter if args.dc_cg_iter is None else args.dc_cg_iter
 
     kspace_np, smap_np = load_cine_h5(args.input_h5, args.kspace_key, args.smap_key)
     mask_np = load_mask(args, kspace_np)
@@ -282,7 +300,7 @@ def main() -> None:
                     dtype=x_hat.dtype,
                     device=x_hat.device,
                 )
-                x_hat = physics.prox_l2(x_hat, y, gamma=dc_gamma)
+                x_hat = physics.prox_l2(x_hat, y, gamma=dc_gamma, max_iter=dc_cg_iter)
             recon_batches.append(channels_to_complex(x_hat).cpu())
 
     recon = torch.cat(recon_batches, dim=0).numpy().reshape(slices, times, phase, frequency)
@@ -302,6 +320,7 @@ def main() -> None:
             "normalization_mode": args.normalization,
             "normalization_scale": np.asarray([scale], dtype=np.float32),
             "dc_gamma": np.asarray([args.dc_gamma], dtype=np.float32),
+            "dc_cg_iter": np.asarray([dc_cg_iter], dtype=np.int32),
         },
         appendmat=False,
         do_compression=True,
@@ -312,6 +331,7 @@ def main() -> None:
     print(f"source time indices: {selected_time_indices.tolist()}")
     print(f"normalization: {args.normalization}, scale: {scale:.8g}")
     print(f"post-RAM data consistency gamma: {args.dc_gamma:.8g}")
+    print(f"post-RAM data consistency CG iterations: {dc_cg_iter}")
 
 
 if __name__ == "__main__":

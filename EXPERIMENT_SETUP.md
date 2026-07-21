@@ -227,6 +227,29 @@ so existing inference behavior is unchanged. Do not expand beyond the diagnostic
 frame until a setting exceeds the zero-filled reference of 19.9336 dB PSNR and
 improves on 0.341558 NMSE under the same global scale-fit evaluation.
 
+Once a single-frame setting beats zero-filled, submit the tracked overnight
+Sub0008 campaign. It contains 168 independent single-frame experiments: 12
+gamma/CG refinement runs, 36 temporal runs on slice 6, and 120 runs spanning six
+other slices and five times. Dependencies keep the three arrays staged, while
+the cluster's account job limit controls task-level concurrency:
+
+```bash
+cd ~/ram
+bash scripts/submit_sub0008_overnight.sh
+```
+
+After the arrays finish, create a CSV containing scale-fitted reconstruction and
+zero-filled metrics for every experiment:
+
+```bash
+~/envs/ram/bin/python scripts/evaluate_cine_experiments.py \
+  --input-h5 /mnt/qdata/rawdata/CINE/2D_h5_compressed/Sub0008.h5 \
+  --mask-txt /home/students/studxusiy1/mr_recon/masks/mask_VISTA_132x25_acc8_8.txt \
+  --results-root ~/ram-results \
+  --experiment-glob 'sub0008-*-s??-t??-*' \
+  --output-csv ~/ram-results/sub0008-overnight-metrics.csv
+```
+
 Without a separate mask, omit both mask options; the inference code derives the
 mask from nonzero k-space samples:
 
