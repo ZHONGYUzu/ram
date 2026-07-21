@@ -167,8 +167,27 @@ slice while omitting `--time-index` reconstructs every CINE frame for that slice
 Selecting both is the smallest technical test. Replace every `/server/path/...`
 placeholder with an existing server path before running the command.
 
-Without a separate mask, omit `--mask-mat`; the inference code derives the mask
-from nonzero k-space samples:
+For the established Sub0008 acceleration-8 test, use the assigned comma-delimited
+VISTA mask directly. It has shape `(phase, time) = (132, 25)` and is expanded
+across the frequency dimension by the inference adapter:
+
+```bash
+bash scripts/run_cine_experiment.sh \
+  --experiment-id sub0008-acc8-slice06-time10 \
+  --input-h5 /mnt/qdata/rawdata/CINE/2D_h5_compressed/Sub0008.h5 \
+  --mask-txt /home/students/studxusiy1/mr_recon/masks/mask_VISTA_132x25_acc8_8.txt \
+  --results-root ~/ram-results \
+  --slice-index 6 \
+  --time-index 10 \
+  --batch-size 1 \
+  --device cuda
+```
+
+Use only one of `--mask-mat` and `--mask-txt`. The TXT delimiter defaults to a
+comma; pass `--mask-txt-delimiter whitespace` for a whitespace-delimited mask.
+
+Without a separate mask, omit both mask options; the inference code derives the
+mask from nonzero k-space samples:
 
 ```bash
 bash scripts/run_cine_experiment.sh \

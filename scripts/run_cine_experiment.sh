@@ -11,6 +11,8 @@ Usage:
     --results-root PATH \
     [--mask-mat PATH] \
     [--mask-key KEY] \
+    [--mask-txt PATH] \
+    [--mask-txt-delimiter VALUE] \
     [--slice-index N] \
     [--time-index N] \
     [--batch-size N] \
@@ -25,6 +27,8 @@ input_h5=""
 results_root=""
 mask_mat=""
 mask_key="mask"
+mask_txt=""
+mask_txt_delimiter=","
 slice_index=""
 time_index=""
 batch_size="4"
@@ -39,6 +43,8 @@ while [[ $# -gt 0 ]]; do
         --results-root) results_root="$2"; shift 2 ;;
         --mask-mat) mask_mat="$2"; shift 2 ;;
         --mask-key) mask_key="$2"; shift 2 ;;
+        --mask-txt) mask_txt="$2"; shift 2 ;;
+        --mask-txt-delimiter) mask_txt_delimiter="$2"; shift 2 ;;
         --slice-index) slice_index="$2"; shift 2 ;;
         --time-index) time_index="$2"; shift 2 ;;
         --batch-size) batch_size="$2"; shift 2 ;;
@@ -67,6 +73,16 @@ fi
 
 if [[ -n "$mask_mat" && ! -f "$mask_mat" ]]; then
     echo "Mask MAT does not exist: $mask_mat" >&2
+    exit 2
+fi
+
+if [[ -n "$mask_txt" && ! -f "$mask_txt" ]]; then
+    echo "Mask TXT does not exist: $mask_txt" >&2
+    exit 2
+fi
+
+if [[ -n "$mask_mat" && -n "$mask_txt" ]]; then
+    echo "Use only one of --mask-mat or --mask-txt." >&2
     exit 2
 fi
 
@@ -101,6 +117,10 @@ command=(
 
 if [[ -n "$mask_mat" ]]; then
     command+=(--mask-mat "$mask_mat")
+fi
+
+if [[ -n "$mask_txt" ]]; then
+    command+=(--mask-txt "$mask_txt" --mask-txt-delimiter "$mask_txt_delimiter")
 fi
 
 if [[ -n "$slice_index" ]]; then
