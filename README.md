@@ -61,6 +61,9 @@ RAM supports many tasks **out-of-the-box** or with **few-shot self-supervised fi
 pip install git+https://github.com/matthieutrs/ram
 ```
 
+For this fork's local-to-server development workflow and reproducible GPU runs,
+see [EXPERIMENT_SETUP.md](EXPERIMENT_SETUP.md).
+
 ---
 
 ## Usage
