@@ -46,6 +46,41 @@ def channels_to_complex(x: torch.Tensor) -> torch.Tensor:
     return torch.complex(x[:, 0], x[:, 1])
 
 
+def normalization_scale(
+    kspace: np.ndarray,
+    smap: np.ndarray,
+    mask: np.ndarray,
+    mode: str,
+) -> float:
+    """Estimate one case-wide scale from the masked zero-filled reconstruction."""
+    if mode == "none":
+        return 1.0
+
+    masked_kspace = kspace * mask[None, None]
+    coil_images = np.fft.fftshift(
+        np.fft.ifft2(
+            np.fft.ifftshift(masked_kspace, axes=(-2, -1)),
+            axes=(-2, -1),
+            norm="ortho",
+        ),
+        axes=(-2, -1),
+    )
+    sensitivity_maps = smap[:, :, 0, None]
+    zero_filled = np.sum(coil_images * np.conj(sensitivity_maps), axis=1)
+    magnitude = np.abs(zero_filled)
+
+    if mode == "max":
+        scale = float(np.max(magnitude))
+    elif mode == "p99.5":
+        scale = float(np.percentile(magnitude, 99.5))
+    else:
+        raise ValueError(f"Unknown normalization mode: {mode}")
+
+    if not np.isfinite(scale) or scale <= 0:
+        raise ValueError(f"Invalid {mode} normalization scale: {scale}")
+    return scale
+
+
 def load_cine_h5(path: Path, kspace_key: str, smap_key: str) -> tuple[np.ndarray, np.ndarray]:
     with h5py.File(path, "r") as h5_file:
         for key in (kspace_key, smap_key):
@@ -173,6 +208,12 @@ def main() -> None:
     parser.add_argument("--mask-txt-delimiter", default=",", help="Use 'whitespace' for whitespace-delimited masks.")
     parser.add_argument("--slice-index", type=int, default=None, help="Reconstruct only this zero-based slice index.")
     parser.add_argument("--time-index", type=int, default=None, help="Reconstruct only this zero-based time-frame index.")
+    parser.add_argument(
+        "--normalization",
+        choices=("none", "max", "p99.5"),
+        default="none",
+        help="Normalize masked zero-filled magnitude before RAM and restore the scale afterward.",
+    )
     parser.add_argument("--batch-size", type=int, default=4)
     parser.add_argument("--cg-iter", type=int, default=8)
     parser.add_argument("--noise-sigma", type=float, default=1e-3)
@@ -201,6 +242,9 @@ def main() -> None:
     mask_np = mask_np[time_selection, :, :]
     slices, coils, times, phase, frequency = kspace_np.shape
 
+    scale = normalization_scale(kspace_np, smap_np, mask_np, args.normalization)
+    kspace_np = (kspace_np / scale).astype(np.complex64)
+
     kspace = torch.from_numpy(np.transpose(kspace_np, (0, 2, 1, 3, 4)).reshape(slices * times, coils, phase, frequency))
     smap = torch.from_numpy(
         np.broadcast_to(np.transpose(smap_np, (0, 2, 1, 3, 4)), (slices, times, coils, phase, frequency))
@@ -226,6 +270,7 @@ def main() -> None:
             recon_batches.append(channels_to_complex(x_hat).cpu())
 
     recon = torch.cat(recon_batches, dim=0).numpy().reshape(slices, times, phase, frequency)
+    recon = recon * scale
     magnitude = np.abs(recon).astype(np.float32)
     img4ranking = np.transpose(magnitude, (3, 2, 0, 1))
 
@@ -238,6 +283,8 @@ def main() -> None:
             "recon_imag": recon.imag.astype(np.float32),
             "source_slice_indices": selected_slice_indices,
             "source_time_indices": selected_time_indices,
+            "normalization_mode": args.normalization,
+            "normalization_scale": np.asarray([scale], dtype=np.float32),
         },
         appendmat=False,
         do_compression=True,
@@ -246,6 +293,7 @@ def main() -> None:
     print(f"img4ranking shape: {img4ranking.shape} = (frequency, phase, slice, time)")
     print(f"source slice indices: {selected_slice_indices.tolist()}")
     print(f"source time indices: {selected_time_indices.tolist()}")
+    print(f"normalization: {args.normalization}, scale: {scale:.8g}")
 
 
 if __name__ == "__main__":

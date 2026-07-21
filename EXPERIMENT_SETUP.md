@@ -200,6 +200,17 @@ Monitor it with `squeue -u "$USER"`. The scheduler log files are written under
 `~/ram-results/sub0008-acc8-slice06-alltimes/`. The job requests one GPU, eight
 CPU cores, 64 GB host memory, and three hours.
 
+After the unnormalized acc8 baseline, isolate measurement scaling with a
+single-frame p99.5-normalized diagnostic. This computes one scale from the masked
+zero-filled reconstruction, divides k-space by it before RAM, restores the scale
+on output, and records the mode and scale in the MAT file:
+
+```bash
+cd ~/ram
+mkdir -p logs
+sbatch scripts/slurm_sub0008_acc8_slice06_time10_p995.sbatch
+```
+
 Without a separate mask, omit both mask options; the inference code derives the
 mask from nonzero k-space samples:
 

@@ -15,6 +15,7 @@ Usage:
     [--mask-txt-delimiter VALUE] \
     [--slice-index N] \
     [--time-index N] \
+    [--normalization MODE] \
     [--batch-size N] \
     [--cg-iter N] \
     [--noise-sigma FLOAT] \
@@ -31,6 +32,7 @@ mask_txt=""
 mask_txt_delimiter=","
 slice_index=""
 time_index=""
+normalization="none"
 batch_size="4"
 cg_iter="8"
 noise_sigma="1e-3"
@@ -47,6 +49,7 @@ while [[ $# -gt 0 ]]; do
         --mask-txt-delimiter) mask_txt_delimiter="$2"; shift 2 ;;
         --slice-index) slice_index="$2"; shift 2 ;;
         --time-index) time_index="$2"; shift 2 ;;
+        --normalization) normalization="$2"; shift 2 ;;
         --batch-size) batch_size="$2"; shift 2 ;;
         --cg-iter) cg_iter="$2"; shift 2 ;;
         --noise-sigma) noise_sigma="$2"; shift 2 ;;
@@ -112,6 +115,7 @@ command=(
     --batch-size "$batch_size"
     --cg-iter "$cg_iter"
     --noise-sigma "$noise_sigma"
+    --normalization "$normalization"
     --device "$device"
 )
 
