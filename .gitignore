@@ -4,6 +4,7 @@
 .ipynb_checkpoints
 *.aux
 *.log
+logs/
 *.gz
 *.pdf
 

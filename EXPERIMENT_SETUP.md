@@ -186,6 +186,20 @@ bash scripts/run_cine_experiment.sh \
 Use only one of `--mask-mat` and `--mask-txt`. The TXT delimiter defaults to a
 comma; pass `--mask-txt-delimiter whitespace` for a whitespace-delimited mask.
 
+To run the same Sub0008 single-slice experiment as a Slurm GPU job, submit the
+tracked job file from the repository root:
+
+```bash
+cd ~/ram
+mkdir -p logs
+sbatch scripts/slurm_sub0008_acc8_slice06.sbatch
+```
+
+Monitor it with `squeue -u "$USER"`. The scheduler log files are written under
+`logs/`, while the inference artifacts remain under
+`~/ram-results/sub0008-acc8-slice06-alltimes/`. The job requests one GPU, eight
+CPU cores, 64 GB host memory, and three hours.
+
 Without a separate mask, omit both mask options; the inference code derives the
 mask from nonzero k-space samples:
 
