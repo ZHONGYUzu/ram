@@ -12,12 +12,14 @@ fi
 
 mkdir -p logs
 
-refine_job="$(sbatch --parsable --job-name=ram_dc_refine --array=0-11 --export=ALL,CAMPAIGN=refine scripts/slurm_sub0008_overnight_dc.sbatch)"
-temporal_job="$(sbatch --parsable --job-name=ram_dc_time --array=0-35 --dependency="afterany:$refine_job" --export=ALL,CAMPAIGN=temporal scripts/slurm_sub0008_overnight_dc.sbatch)"
-grid_job="$(sbatch --parsable --job-name=ram_dc_grid --array=0-119 --dependency="afterany:$temporal_job" --export=ALL,CAMPAIGN=grid scripts/slurm_sub0008_overnight_dc.sbatch)"
+core_job="$(sbatch --parsable --job-name=ram_dc_core --export=ALL,BUNDLE=core scripts/slurm_sub0008_overnight_dc.sbatch)"
+grid_a_job="$(sbatch --parsable --job-name=ram_dc_grid_a --export=ALL,BUNDLE=grid-a scripts/slurm_sub0008_overnight_dc.sbatch)"
+grid_b_job="$(sbatch --parsable --job-name=ram_dc_grid_b --export=ALL,BUNDLE=grid-b scripts/slurm_sub0008_overnight_dc.sbatch)"
+grid_c_job="$(sbatch --parsable --job-name=ram_dc_grid_c --export=ALL,BUNDLE=grid-c scripts/slurm_sub0008_overnight_dc.sbatch)"
 
-echo "Submitted Sub0008 overnight campaign (168 experiments)."
-echo "Refinement array: $refine_job (12 experiments)"
-echo "Temporal array:   $temporal_job (36 experiments; after refinement)"
-echo "Slice/time grid:  $grid_job (120 experiments; after temporal)"
+echo "Submitted Sub0008 overnight campaign (168 experiments in four jobs)."
+echo "Core job:   $core_job (48 experiments)"
+echo "Grid A job: $grid_a_job (40 experiments; slices 1 and 3)"
+echo "Grid B job: $grid_b_job (40 experiments; slices 5 and 7)"
+echo "Grid C job: $grid_c_job (40 experiments; slices 9 and 11)"
 echo "Monitor with: squeue -u \"$USER\""

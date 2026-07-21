@@ -230,8 +230,10 @@ improves on 0.341558 NMSE under the same global scale-fit evaluation.
 Once a single-frame setting beats zero-filled, submit the tracked overnight
 Sub0008 campaign. It contains 168 independent single-frame experiments: 12
 gamma/CG refinement runs, 36 temporal runs on slice 6, and 120 runs spanning six
-other slices and five times. Dependencies keep the three arrays staged, while
-the cluster's account job limit controls task-level concurrency:
+other slices and five times. The submitter packages these into four ordinary
+Slurm jobs—one 48-experiment core bundle and three 40-experiment grid bundles—so
+the campaign stays below the account's submitted-job limit. Each bundle skips
+already-existing experiment directories and is safe to resume:
 
 ```bash
 cd ~/ram
