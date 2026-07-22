@@ -395,6 +395,51 @@ fixed `0.005` dataset rescaling, noise sigma `0.001` instead of `0.0005`, no
 synthetic noise, and an equispaced rather than fastMRI random mask. The `r1`
 retry corrects all four before any conclusion about the pretrained checkpoint.
 
+### Experiment 3: overnight brain parameter sweep
+
+Script: `scripts/slurm_fastmri_brain_overnight.sbatch`
+
+Status: planned; not yet submitted.
+
+The sweep runs 25 configurations sequentially in one resumable 12-hour Slurm
+job. This respects the account's one-submitted-job limit and avoids an opaque
+full Cartesian product. Every run uses brain slices 7, 8, and 9, plain
+`model(y, physics)`, and no post-RAM data consistency.
+
+| Family | Trials | Parameters |
+|---|---:|---|
+| Paper core | 6 | R=8/center 0.04 and R=4/center 0.08; random masks; seeds 0, 1, 2; scale 0.005; sigma 0.0005 with noise |
+| Global scaling | 6 | Scale 0.0002, 0.0005, 0.001, 0.0025, 0.01, 0.02; otherwise paper R=8 setup |
+| Noise | 8 | Four noisy sigma values and four noiseless conditioning sigma values |
+| Mask/reference | 5 | Two equispaced seeds, center fractions 0.02/0.08, and ACL30 reference |
+
+The job skips directories that already contain `metrics.json`, preserves failed
+or incomplete directories, and writes the combined comparison to:
+
+```text
+~/ram-results/fastmri-brain-overnight-sweep.csv
+```
+
+Submit all families:
+
+```bash
+cd ~/ram
+mkdir -p logs
+sbatch --export=ALL,BUNDLE=all scripts/slurm_fastmri_brain_overnight.sbatch
+```
+
+Submit only one diagnostic family if needed:
+
+```bash
+sbatch --export=ALL,BUNDLE=core scripts/slurm_fastmri_brain_overnight.sbatch
+sbatch --export=ALL,BUNDLE=scale scripts/slurm_fastmri_brain_overnight.sbatch
+sbatch --export=ALL,BUNDLE=noise scripts/slurm_fastmri_brain_overnight.sbatch
+sbatch --export=ALL,BUNDLE=mask scripts/slurm_fastmri_brain_overnight.sbatch
+```
+
+Do not submit these simultaneously under the one-job account limit. The `all`
+bundle is the default and is the recommended overnight command.
+
 ## Inventory command
 
 The dataset details above were collected on the server with:
