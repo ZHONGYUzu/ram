@@ -293,6 +293,33 @@ the pretrained checkpoint before introducing `MultiCoilMRI`.
 Visual observations: pending inspection of `slice_0016.png`, `slice_0017.png`,
 and `slice_0018.png`.
 
+#### Dataset-shift finding
+
+Experiment 1 exposed an important dataset mismatch that must be kept separate
+from inference-code correctness:
+
+| Property | RAM MRI training distribution | Experiment 1 | Cardiac CINE |
+|---|---|---|---|
+| Anatomy | Brain | Knee | Heart |
+| Source | fastMRI brain multicoil, converted to complex virtual-coil images | fastMRI native knee single-coil | Custom dynamic CINE H5 |
+| Temporal dimension | Static 2D slices | Static 2D slices | Dynamic 2D+t frames |
+| Training status | In distribution | Out of distribution | Out of distribution |
+| Sampling used here | Cartesian acceleration 4/8 in RAM training | Equispaced Cartesian acceleration 8 | VISTA k-t acceleration 8 |
+| Measurement representation | Single complex image as `(B,2,H,W)` after virtual coil-combination | `(B,2,H,W)` | Previously passed as native complex multicoil data; RAM requires `(B,2,coils,H,W)` for multicoil physics |
+
+The knee experiment therefore validates the single-coil DeepInverse/RAM
+inference mechanics but cannot reproduce the paper's in-distribution MRI result.
+Its near-tie between RAM and zero-filled may be caused by knee-to-brain dataset
+shift and/or by preprocessing differences. It is not evidence by itself that the
+RAM checkpoint is ineffective on its intended MRI distribution.
+
+Experiment 2 uses virtual-coil-combined fastMRI brain validation references and
+is the required in-distribution checkpoint test. Only after experiment 2 should
+we interpret the CINE deficit: strong brain performance would point toward
+cardiac/CINE domain shift or CINE-specific multicoil handling, whereas weak brain
+performance would indicate a remaining checkpoint, mask, noise-conditioning, or
+preprocessing mismatch in our inference pipeline.
+
 ### Experiment 2: brain virtual-coil acceleration-8 smoke test
 
 This is the first test designed to match RAM's MRI training distribution.
