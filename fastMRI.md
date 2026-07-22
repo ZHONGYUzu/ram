@@ -185,7 +185,7 @@ larger run:
 | Field | Recorded value |
 |---|---|
 | Experiment ID | `fastmri-knee-sc-acc8-smoke-001` |
-| Status | Planned; not yet run |
+| Status | First technical attempt failed during normalization; corrected retry pending |
 | Dataset | fastMRI knee single-coil validation |
 | Input volume | `/mnt/qdata/rawdata/fastMRI/knee/data/singlecoil_val/file1000000.h5` |
 | Slices | 16, 17, 18 (zero-based) |
@@ -198,9 +198,10 @@ larger run:
 | RAM call | Plain `model(y, physics)` |
 | Post-RAM data consistency | None |
 | Metrics | PSNR, NMSE, SSIM for zero-filled and RAM |
-| Output | `~/ram-results/fastmri-knee-sc-acc8-smoke-001/` |
+| First-attempt output | `~/ram-results/fastmri-knee-sc-acc8-smoke-001/` |
+| Retry output | `~/ram-results/fastmri-knee-sc-acc8-smoke-001-r1/` |
 | Git commit | Captured automatically in `git-commit.txt` when run |
-| Result | Pending |
+| Result | Attempt 1: DeepInverse 0.4.1 rejected unbatched `(2,H,W)` input to `normalize_kspace`; retry uses `(1,2,H,W)` |
 
 Run from an interactive GPU node:
 
@@ -211,16 +212,16 @@ set -o pipefail
 
 python scripts/validate_fastmri_ram.py \
   --input-h5 /mnt/qdata/rawdata/fastMRI/knee/data/singlecoil_val/file1000000.h5 \
-  --output-dir ~/ram-results/fastmri-knee-sc-acc8-smoke-001 \
+  --output-dir ~/ram-results/fastmri-knee-sc-acc8-smoke-001-r1 \
   --slices 16 17 18 \
   --acceleration 8 \
   --center-fraction 0.04 \
   --acs 15 \
   --noise-sigma 0.001 \
   --seed 0 \
-  --device cuda 2>&1 | tee ~/ram-results/fastmri-knee-sc-acc8-smoke-001-console.log && \
-  mv ~/ram-results/fastmri-knee-sc-acc8-smoke-001-console.log \
-    ~/ram-results/fastmri-knee-sc-acc8-smoke-001/run.log
+  --device cuda 2>&1 | tee ~/ram-results/fastmri-knee-sc-acc8-smoke-001-r1-console.log && \
+  mv ~/ram-results/fastmri-knee-sc-acc8-smoke-001-r1-console.log \
+    ~/ram-results/fastmri-knee-sc-acc8-smoke-001-r1/run.log
 ```
 
 The output directory is intentionally required to be empty. Use a new experiment

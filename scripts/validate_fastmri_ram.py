@@ -326,8 +326,10 @@ def main() -> None:
     transform = dinv.datasets.MRISliceTransform(normalize=True, acs=args.acs)
     for position, slice_index in enumerate(args.slices):
         raw_channels = complex_to_channels(torch.from_numpy(selected_kspace[position])).to(device)
-        normalized_channels = transform.normalize_kspace(raw_channels).unsqueeze(0)
         raw_batch = raw_channels.unsqueeze(0)
+        # DeepInverse 0.4.1 requires the batch dimension here even though the
+        # FastMRISliceDataset transform handles one slice at a time.
+        normalized_channels = transform.normalize_kspace(raw_batch)
         scale = float(
             (
                 torch.linalg.vector_norm(raw_batch)
