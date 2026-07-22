@@ -178,6 +178,57 @@ larger run:
 - saved reference, zero-filled, RAM, error, and mask images for a few slices;
 - exact command, Git commit, package versions, GPU details, and result paths.
 
+## Experiment record
+
+### Experiment 1: knee single-coil acceleration-8 smoke test
+
+| Field | Recorded value |
+|---|---|
+| Experiment ID | `fastmri-knee-sc-acc8-smoke-001` |
+| Status | Planned; not yet run |
+| Dataset | fastMRI knee single-coil validation |
+| Input volume | `/mnt/qdata/rawdata/fastMRI/knee/data/singlecoil_val/file1000000.h5` |
+| Slices | 16, 17, 18 (zero-based) |
+| Physics | Official `deepinv.physics.MRI` |
+| Measurement representation | `(B, 2, H, W)` real/imaginary channels |
+| Mask | Official DeepInverse equispaced Cartesian mask |
+| Acceleration / center fraction | 8 / 0.04 |
+| Normalization | DeepInverse ACS RSS 99th percentile, 15 ACS lines |
+| Noise sigma | `0.001` for RAM conditioning; no synthetic noise added |
+| RAM call | Plain `model(y, physics)` |
+| Post-RAM data consistency | None |
+| Metrics | PSNR, NMSE, SSIM for zero-filled and RAM |
+| Output | `~/ram-results/fastmri-knee-sc-acc8-smoke-001/` |
+| Git commit | Captured automatically in `git-commit.txt` when run |
+| Result | Pending |
+
+Run from an interactive GPU node:
+
+```bash
+cd ~/ram
+conda activate ~/envs/ram
+set -o pipefail
+
+python scripts/validate_fastmri_ram.py \
+  --input-h5 /mnt/qdata/rawdata/fastMRI/knee/data/singlecoil_val/file1000000.h5 \
+  --output-dir ~/ram-results/fastmri-knee-sc-acc8-smoke-001 \
+  --slices 16 17 18 \
+  --acceleration 8 \
+  --center-fraction 0.04 \
+  --acs 15 \
+  --noise-sigma 0.001 \
+  --seed 0 \
+  --device cuda 2>&1 | tee ~/ram-results/fastmri-knee-sc-acc8-smoke-001-console.log && \
+  mv ~/ram-results/fastmri-knee-sc-acc8-smoke-001-console.log \
+    ~/ram-results/fastmri-knee-sc-acc8-smoke-001/run.log
+```
+
+The output directory is intentionally required to be empty. Use a new experiment
+ID rather than overwriting a previous run. The script writes environment details,
+the exact command, Git status and commit, package versions, GPU information,
+operator diagnostics, per-slice and aggregate metrics, PNG comparison panels,
+and compressed reconstruction arrays.
+
 ## Inventory command
 
 The dataset details above were collected on the server with:
