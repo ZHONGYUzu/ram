@@ -252,6 +252,28 @@ zero-filled metrics for every experiment:
   --output-csv ~/ram-results/sub0008-overnight-metrics.csv
 ```
 
+If validation shows that post-DC improves RAM consistently but remains behind
+zero-filled, run the bounded strong-DC diagnostic before expanding the spatial
+grid. It evaluates gamma 100, 300, and 1000 with 8 and 32 post-DC CG iterations
+on six representative frames (36 sequential experiments in one Slurm job):
+
+```bash
+cd ~/ram
+mkdir -p logs
+sbatch scripts/slurm_sub0008_strong_dc.sbatch
+```
+
+After completion, evaluate only this diagnostic family:
+
+```bash
+~/envs/ram/bin/python scripts/evaluate_cine_experiments.py \
+  --input-h5 /mnt/qdata/rawdata/CINE/2D_h5_compressed/Sub0008.h5 \
+  --mask-txt /home/students/studxusiy1/mr_recon/masks/mask_VISTA_132x25_acc8_8.txt \
+  --results-root ~/ram-results \
+  --experiment-glob 'sub0008-strongdc-*' \
+  --output-csv ~/ram-results/sub0008-strongdc-metrics.csv
+```
+
 Without a separate mask, omit both mask options; the inference code derives the
 mask from nonzero k-space samples:
 
