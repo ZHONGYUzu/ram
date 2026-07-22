@@ -327,7 +327,8 @@ This is the first test designed to match RAM's MRI training distribution.
 | Field | Recorded value |
 |---|---|
 | Experiment ID | `fastmri-brain-vcc-acc8-smoke-002` |
-| Status | Planned; not yet run |
+| Status | First brain run completed with mismatched preprocessing; paper-matched retry pending |
+| First-run date | 2026-07-23 |
 | ESPIRiT input | `/mnt/qdata/rawdata/fastMRI/brain/multicoil_val_espirit/file_brain_AXFLAIR_200_6002462.h5` |
 | Matching raw input | `/mnt/qdata/rawdata/fastMRI/brain/multicoil_val/file_brain_AXFLAIR_200_6002462.h5` |
 | Complex reference | `reference_acl15`, with map selected automatically against `reconstruction_rss` |
@@ -335,13 +336,18 @@ This is the first test designed to match RAM's MRI training distribution.
 | Physics | Official `deepinv.physics.MRI` |
 | Measurement representation | `(B, 2, H, W)` real/imaginary channels |
 | Acceleration / center fraction | 8 / 0.04 |
-| Normalization | Per-slice p99 of cropped virtual-coil reference magnitude |
-| Noise sigma | `0.001` for RAM conditioning; no synthetic noise added |
+| First-run mask | Equispaced Cartesian |
+| Retry mask | Random Cartesian fastMRI procedure |
+| First-run normalization | Per-slice p99 of cropped virtual-coil reference magnitude |
+| Retry normalization | Fixed full-dataset scale `0.005`, from RAM paper |
+| First-run noise | Sigma `0.001` for conditioning; no noise added |
+| Retry noise | Gaussian sigma `0.0005`, added through DeepInverse physics |
 | RAM call | Plain `model(y, physics)` |
 | Post-RAM data consistency | None |
 | Metrics | PSNR, NMSE, SSIM for zero-filled and RAM |
-| Output | `~/ram-results/fastmri-brain-vcc-acc8-smoke-002/` |
-| Result | Pending |
+| First-run output | `~/ram-results/fastmri-brain-vcc-acc8-smoke-002/` |
+| Retry output | `~/ram-results/fastmri-brain-vcc-acc8-smoke-002-r1/` |
+| Result | First run: RAM essentially tied with zero-filled; exact paper-matched retry pending |
 
 Run from an interactive GPU node:
 
@@ -353,18 +359,41 @@ set -o pipefail
 python scripts/validate_fastmri_brain_ram.py \
   --input-h5 /mnt/qdata/rawdata/fastMRI/brain/multicoil_val_espirit/file_brain_AXFLAIR_200_6002462.h5 \
   --raw-h5 /mnt/qdata/rawdata/fastMRI/brain/multicoil_val/file_brain_AXFLAIR_200_6002462.h5 \
-  --output-dir ~/ram-results/fastmri-brain-vcc-acc8-smoke-002 \
+  --output-dir ~/ram-results/fastmri-brain-vcc-acc8-smoke-002-r1 \
   --reference-key reference_acl15 \
   --map-index auto \
   --slices 7 8 9 \
   --acceleration 8 \
   --center-fraction 0.04 \
-  --noise-sigma 0.001 \
+  --mask-type random \
+  --normalization-scale 0.005 \
+  --noise-sigma 0.0005 \
+  --add-noise \
   --seed 0 \
-  --device cuda 2>&1 | tee ~/ram-results/fastmri-brain-vcc-acc8-smoke-002-console.log && \
-  mv ~/ram-results/fastmri-brain-vcc-acc8-smoke-002-console.log \
-    ~/ram-results/fastmri-brain-vcc-acc8-smoke-002/run.log
+  --device cuda 2>&1 | tee ~/ram-results/fastmri-brain-vcc-acc8-smoke-002-r1-console.log && \
+  mv ~/ram-results/fastmri-brain-vcc-acc8-smoke-002-r1-console.log \
+    ~/ram-results/fastmri-brain-vcc-acc8-smoke-002-r1/run.log
 ```
+
+#### Experiment 2 first-run results
+
+The first brain execution selected reference map 0; map 1 had zero usable
+energy. All numerical operator checks passed: exact centered orthonormal FFT
+agreement, adjoint relative error 0, operator norm approximately 1, and exact
+acceleration 8 along the correct phase-encoding axis.
+
+| Reconstruction | PSNR (dB) | NMSE | SSIM |
+|---|---:|---:|---:|
+| Zero-filled | 22.13886 | 0.053529 | 0.475689 |
+| RAM | 22.18389 | 0.052969 | 0.473348 |
+| RAM minus zero-filled | +0.04503 | -0.000560 | -0.002341 |
+
+This is only a marginal PSNR/NMSE improvement and a small SSIM regression. It
+does not reproduce the published in-distribution RAM result. The run used four
+settings that differ from the paper: per-slice p99 normalization instead of the
+fixed `0.005` dataset rescaling, noise sigma `0.001` instead of `0.0005`, no
+synthetic noise, and an equispaced rather than fastMRI random mask. The `r1`
+retry corrects all four before any conclusion about the pretrained checkpoint.
 
 ## Inventory command
 

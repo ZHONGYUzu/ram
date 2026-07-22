@@ -89,7 +89,15 @@ def main() -> None:
     )
     parser.add_argument("--acceleration", type=int, default=8)
     parser.add_argument("--center-fraction", type=float, default=0.04)
-    parser.add_argument("--noise-sigma", type=float, default=1e-3)
+    parser.add_argument("--mask-type", choices=("random", "equispaced"), default="random")
+    parser.add_argument("--normalization-scale", type=float, default=5e-3)
+    parser.add_argument("--noise-sigma", type=float, default=5e-4)
+    parser.add_argument(
+        "--add-noise",
+        action=argparse.BooleanOptionalAction,
+        default=True,
+        help="Add Gaussian measurement noise through the physics (default: true).",
+    )
     parser.add_argument("--seed", type=int, default=0)
     parser.add_argument("--device", default="cuda" if torch.cuda.is_available() else "cpu")
     args = parser.parse_args()
@@ -141,11 +149,20 @@ def main() -> None:
 
     device = torch.device(args.device)
     torch.manual_seed(args.seed)
+    if args.normalization_scale <= 0 or not np.isfinite(args.normalization_scale):
+        parser.error("--normalization-scale must be finite and positive")
+    if args.noise_sigma < 0 or not np.isfinite(args.noise_sigma):
+        parser.error("--noise-sigma must be finite and non-negative")
     height, width = source_shape[-2:]
     target_shape = raw_targets.shape[-2:]
     rng_device = device.type if device.type == "cuda" else "cpu"
     rng = torch.Generator(device=rng_device).manual_seed(args.seed)
-    mask_generator = dinv.physics.generator.EquispacedMaskGenerator(
+    mask_generator_class = (
+        dinv.physics.generator.RandomMaskGenerator
+        if args.mask_type == "random"
+        else dinv.physics.generator.EquispacedMaskGenerator
+    )
+    mask_generator = mask_generator_class(
         img_size=(2, height, width),
         acceleration=args.acceleration,
         center_fraction=args.center_fraction,
@@ -174,9 +191,10 @@ def main() -> None:
         "image_shape": [1, 2, height, width],
         "measurement_shape": [1, 2, height, width],
         "fft_convention": "centered orthonormal 2D FFT",
-        "normalization": "per-slice p99 of cropped virtual-coil reference magnitude",
+        "normalization": "fixed full-dataset scale from RAM paper",
+        "normalization_scale": args.normalization_scale,
         "noise_sigma": args.noise_sigma,
-        "synthetic_noise_added": False,
+        "synthetic_noise_added": args.add_noise,
         "plain_model_call": "model(y, physics)",
         "post_ram_data_consistency": False,
         "mask": mask_diagnostics(mask),
@@ -194,15 +212,11 @@ def main() -> None:
     for position, slice_index in enumerate(args.slices):
         complex_reference = torch.from_numpy(references[position, selected_map]).to(device)
         x_reference = complex_to_channels(complex_reference).unsqueeze(0)
-        cropped_magnitude = center_crop(magnitude(x_reference), target_shape)
-        normalization_scale = torch.quantile(cropped_magnitude.flatten(), 0.99)
-        if not torch.isfinite(normalization_scale) or normalization_scale <= 0:
-            raise ValueError(f"Invalid normalization scale for slice {slice_index}")
-        x_reference = x_reference / normalization_scale
+        x_reference = x_reference / args.normalization_scale
         reference = center_crop(magnitude(x_reference), target_shape)
 
         with torch.no_grad():
-            y = physics.A(x_reference)
+            y = physics(x_reference) if args.add_noise else physics.A(x_reference)
             zero_filled_complex = physics.A_adjoint(y)
             ram_complex = model(y, physics)
             y_full = full_physics.A(x_reference)
@@ -219,7 +233,7 @@ def main() -> None:
         values = {
             "slice": slice_index,
             "reference_map": selected_map,
-            "normalization_scale": float(normalization_scale.item()),
+            "normalization_scale": args.normalization_scale,
             "fft_relative_error": fft_relative_error,
             "zf_psnr": psnr(reference, zero_filled),
             "zf_nmse": nmse(reference, zero_filled),
