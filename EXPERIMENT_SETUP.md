@@ -274,6 +274,29 @@ After completion, evaluate only this diagnostic family:
   --output-csv ~/ram-results/sub0008-strongdc-metrics.csv
 ```
 
+If stronger proximal DC plateaus, test explicit normalized measured-k-space
+projection. The projection applies one or more preconditioned multicoil residual
+corrections after RAM and records relative k-space residuals before and after.
+The tracked job tests 1, 2, 4, and 8 iterations on the same six representative
+frames (24 sequential experiments):
+
+```bash
+cd ~/ram
+mkdir -p logs
+sbatch scripts/slurm_sub0008_projection_dc.sbatch
+```
+
+Evaluate the projection family with:
+
+```bash
+~/envs/ram/bin/python scripts/evaluate_cine_experiments.py \
+  --input-h5 /mnt/qdata/rawdata/CINE/2D_h5_compressed/Sub0008.h5 \
+  --mask-txt /home/students/studxusiy1/mr_recon/masks/mask_VISTA_132x25_acc8_8.txt \
+  --results-root ~/ram-results \
+  --experiment-glob 'sub0008-projectdc-*' \
+  --output-csv ~/ram-results/sub0008-projectdc-metrics.csv
+```
+
 Without a separate mask, omit both mask options; the inference code derives the
 mask from nonzero k-space samples:
 

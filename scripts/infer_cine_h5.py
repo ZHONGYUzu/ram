@@ -187,6 +187,31 @@ class CineMultiCoilMRI(dinv.physics.LinearPhysics):
             rsold = rsnew
         return x
 
+    def project_measurements(
+        self,
+        x: torch.Tensor,
+        y: torch.Tensor,
+        max_iter: int = 1,
+    ) -> torch.Tensor:
+        """Apply normalized multicoil corrections using acquired k-space."""
+        sensitivity_power = torch.sum(torch.abs(self.sensitivity_maps) ** 2, dim=1)
+        sensitivity_power = torch.clamp(sensitivity_power, min=1e-6)
+
+        for _ in range(max_iter):
+            residual = y - self.A(x)
+            correction = channels_to_complex(self.A_adjoint(residual))
+            image = channels_to_complex(x) + correction / sensitivity_power
+            x = complex_to_channels(image)
+        return x
+
+    def relative_residual(self, x: torch.Tensor, y: torch.Tensor) -> torch.Tensor:
+        """Return ||A x - y||_2 / ||y||_2 for each batch item."""
+        residual = (self.A(x) - y).reshape(x.shape[0], -1)
+        measurement = y.reshape(x.shape[0], -1)
+        numerator = torch.linalg.vector_norm(residual, dim=1)
+        denominator = torch.linalg.vector_norm(measurement, dim=1).clamp_min(1e-12)
+        return numerator / denominator
+
     def _normal_plus_identity(self, x: torch.Tensor, gamma: torch.Tensor) -> torch.Tensor:
         return x + gamma * self.A_adjoint(self.A(x))
 
@@ -231,10 +256,22 @@ def main() -> None:
         help="Post-RAM measurement-consistency strength; 0 disables the optional step.",
     )
     parser.add_argument(
+        "--dc-method",
+        choices=("prox", "projection"),
+        default="prox",
+        help="Optional post-RAM correction method; projection directly corrects measured k-space.",
+    )
+    parser.add_argument(
         "--dc-cg-iter",
         type=int,
         default=None,
         help="CG iterations for optional post-RAM data consistency; defaults to --cg-iter.",
+    )
+    parser.add_argument(
+        "--dc-projection-iter",
+        type=int,
+        default=1,
+        help="Number of normalized measured-k-space projection iterations.",
     )
     parser.add_argument("--noise-sigma", type=float, default=1e-3)
     parser.add_argument("--device", default="cuda" if torch.cuda.is_available() else "cpu")
@@ -246,6 +283,8 @@ def main() -> None:
         parser.error("--dc-gamma must be a finite non-negative number")
     if args.dc_cg_iter is not None and args.dc_cg_iter < 1:
         parser.error("--dc-cg-iter must be a positive integer")
+    if args.dc_projection_iter < 1:
+        parser.error("--dc-projection-iter must be a positive integer")
 
     dc_cg_iter = args.cg_iter if args.dc_cg_iter is None else args.dc_cg_iter
 
@@ -281,6 +320,8 @@ def main() -> None:
 
     model = RAM(device=args.device).eval()
     recon_batches = []
+    residual_before_batches = []
+    residual_after_batches = []
 
     with torch.no_grad():
         for start, stop in batched_indices(kspace.shape[0], args.batch_size):
@@ -293,7 +334,14 @@ def main() -> None:
             )
             y = kspace[start:stop].to(args.device) * mask[start:stop, None].to(args.device)
             x_hat = model(y, physics=physics)
-            if args.dc_gamma > 0:
+            residual_before = physics.relative_residual(x_hat, y)
+            if args.dc_method == "projection":
+                x_hat = physics.project_measurements(
+                    x_hat,
+                    y,
+                    max_iter=args.dc_projection_iter,
+                )
+            elif args.dc_gamma > 0:
                 dc_gamma = torch.full(
                     (stop - start, 1, 1, 1),
                     args.dc_gamma,
@@ -301,9 +349,14 @@ def main() -> None:
                     device=x_hat.device,
                 )
                 x_hat = physics.prox_l2(x_hat, y, gamma=dc_gamma, max_iter=dc_cg_iter)
+            residual_after = physics.relative_residual(x_hat, y)
             recon_batches.append(channels_to_complex(x_hat).cpu())
+            residual_before_batches.append(residual_before.cpu())
+            residual_after_batches.append(residual_after.cpu())
 
     recon = torch.cat(recon_batches, dim=0).numpy().reshape(slices, times, phase, frequency)
+    residual_before = torch.cat(residual_before_batches).numpy().reshape(slices, times)
+    residual_after = torch.cat(residual_after_batches).numpy().reshape(slices, times)
     recon = recon * scale
     magnitude = np.abs(recon).astype(np.float32)
     img4ranking = np.transpose(magnitude, (3, 2, 0, 1))
@@ -321,6 +374,10 @@ def main() -> None:
             "normalization_scale": np.asarray([scale], dtype=np.float32),
             "dc_gamma": np.asarray([args.dc_gamma], dtype=np.float32),
             "dc_cg_iter": np.asarray([dc_cg_iter], dtype=np.int32),
+            "dc_method": args.dc_method,
+            "dc_projection_iter": np.asarray([args.dc_projection_iter], dtype=np.int32),
+            "kspace_relative_residual_before": residual_before.astype(np.float32),
+            "kspace_relative_residual_after": residual_after.astype(np.float32),
         },
         appendmat=False,
         do_compression=True,
@@ -332,6 +389,9 @@ def main() -> None:
     print(f"normalization: {args.normalization}, scale: {scale:.8g}")
     print(f"post-RAM data consistency gamma: {args.dc_gamma:.8g}")
     print(f"post-RAM data consistency CG iterations: {dc_cg_iter}")
+    print(f"post-RAM data consistency method: {args.dc_method}")
+    print(f"projection iterations: {args.dc_projection_iter}")
+    print(f"relative k-space residual before/after: {residual_before.mean():.8g}/{residual_after.mean():.8g}")
 
 
 if __name__ == "__main__":

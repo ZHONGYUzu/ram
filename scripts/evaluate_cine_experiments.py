@@ -35,6 +35,15 @@ def scalar(mat: dict, key: str, default):
     return np.asarray(mat[key]).reshape(-1)[0].item()
 
 
+def text_value(mat: dict, key: str, default: str) -> str:
+    if key not in mat:
+        return default
+    value = np.asarray(mat[key]).squeeze()
+    if value.ndim == 0:
+        return str(value.item())
+    return "".join(str(item) for item in value.reshape(-1))
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--input-h5", type=Path, required=True)
@@ -89,6 +98,14 @@ def main() -> None:
                     "time": time_index,
                     "dc_gamma": float(scalar(mat, "dc_gamma", 0.0)),
                     "dc_cg_iter": int(scalar(mat, "dc_cg_iter", 0)),
+                    "dc_method": text_value(mat, "dc_method", "prox"),
+                    "dc_projection_iter": int(scalar(mat, "dc_projection_iter", 0)),
+                    "kspace_residual_before": float(
+                        scalar(mat, "kspace_relative_residual_before", np.nan)
+                    ),
+                    "kspace_residual_after": float(
+                        scalar(mat, "kspace_relative_residual_after", np.nan)
+                    ),
                     "fit_scale": fit_scale,
                     "psnr": psnr,
                     "nmse": nmse,

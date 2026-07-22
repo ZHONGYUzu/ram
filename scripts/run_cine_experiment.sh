@@ -19,7 +19,9 @@ Usage:
     [--batch-size N] \
     [--cg-iter N] \
     [--dc-gamma FLOAT] \
+    [--dc-method METHOD] \
     [--dc-cg-iter N] \
+    [--dc-projection-iter N] \
     [--noise-sigma FLOAT] \
     [--device DEVICE]
 EOF
@@ -38,7 +40,9 @@ normalization="none"
 batch_size="4"
 cg_iter="8"
 dc_gamma="0"
+dc_method="prox"
 dc_cg_iter=""
+dc_projection_iter="1"
 noise_sigma="1e-3"
 device="cuda"
 
@@ -57,7 +61,9 @@ while [[ $# -gt 0 ]]; do
         --batch-size) batch_size="$2"; shift 2 ;;
         --cg-iter) cg_iter="$2"; shift 2 ;;
         --dc-gamma) dc_gamma="$2"; shift 2 ;;
+        --dc-method) dc_method="$2"; shift 2 ;;
         --dc-cg-iter) dc_cg_iter="$2"; shift 2 ;;
+        --dc-projection-iter) dc_projection_iter="$2"; shift 2 ;;
         --noise-sigma) noise_sigma="$2"; shift 2 ;;
         --device) device="$2"; shift 2 ;;
         -h|--help) usage; exit 0 ;;
@@ -121,6 +127,8 @@ command=(
     --batch-size "$batch_size"
     --cg-iter "$cg_iter"
     --dc-gamma "$dc_gamma"
+    --dc-method "$dc_method"
+    --dc-projection-iter "$dc_projection_iter"
     --noise-sigma "$noise_sigma"
     --normalization "$normalization"
     --device "$device"
