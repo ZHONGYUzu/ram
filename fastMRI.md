@@ -185,7 +185,7 @@ larger run:
 | Field | Recorded value |
 |---|---|
 | Experiment ID | `fastmri-knee-sc-acc8-smoke-001` |
-| Status | First technical attempt failed during normalization; corrected retry pending |
+| Status | Three executions failed across two DeepInverse normalization-helper shape errors; explicit-formula retry pending |
 | Dataset | fastMRI knee single-coil validation |
 | Input volume | `/mnt/qdata/rawdata/fastMRI/knee/data/singlecoil_val/file1000000.h5` |
 | Slices | 16, 17, 18 (zero-based) |
@@ -199,9 +199,11 @@ larger run:
 | Post-RAM data consistency | None |
 | Metrics | PSNR, NMSE, SSIM for zero-filled and RAM |
 | First-attempt output | `~/ram-results/fastmri-knee-sc-acc8-smoke-001/` |
-| Retry output | `~/ram-results/fastmri-knee-sc-acc8-smoke-001-r1/` |
+| Stale-code retry output | `~/ram-results/fastmri-knee-sc-acc8-smoke-001-r1/` |
+| Second-attempt output | `~/ram-results/fastmri-knee-sc-acc8-smoke-001-r2/` |
+| Current retry output | `~/ram-results/fastmri-knee-sc-acc8-smoke-001-r3/` |
 | Git commit | Captured automatically in `git-commit.txt` when run |
-| Result | Attempt 1: DeepInverse 0.4.1 rejected unbatched `(2,H,W)` input to `normalize_kspace`; retry uses `(1,2,H,W)` |
+| Result | Initial run and stale-code `r1`: helper rejected `(2,H,W)` at RSS; `r2`: helper unsqueezed `(1,2,H,W)` to the wrong complex-channel layout; `r3` implements the documented ACS-image p99 formula with official MRI adjoint physics |
 
 Run from an interactive GPU node:
 
@@ -212,16 +214,16 @@ set -o pipefail
 
 python scripts/validate_fastmri_ram.py \
   --input-h5 /mnt/qdata/rawdata/fastMRI/knee/data/singlecoil_val/file1000000.h5 \
-  --output-dir ~/ram-results/fastmri-knee-sc-acc8-smoke-001-r1 \
+  --output-dir ~/ram-results/fastmri-knee-sc-acc8-smoke-001-r3 \
   --slices 16 17 18 \
   --acceleration 8 \
   --center-fraction 0.04 \
   --acs 15 \
   --noise-sigma 0.001 \
   --seed 0 \
-  --device cuda 2>&1 | tee ~/ram-results/fastmri-knee-sc-acc8-smoke-001-r1-console.log && \
-  mv ~/ram-results/fastmri-knee-sc-acc8-smoke-001-r1-console.log \
-    ~/ram-results/fastmri-knee-sc-acc8-smoke-001-r1/run.log
+  --device cuda 2>&1 | tee ~/ram-results/fastmri-knee-sc-acc8-smoke-001-r3-console.log && \
+  mv ~/ram-results/fastmri-knee-sc-acc8-smoke-001-r3-console.log \
+    ~/ram-results/fastmri-knee-sc-acc8-smoke-001-r3/run.log
 ```
 
 The output directory is intentionally required to be empty. Use a new experiment

@@ -77,6 +77,38 @@ def centered_ifft2_channels(y: torch.Tensor) -> torch.Tensor:
     return torch.stack((image.real, image.imag), dim=1)
 
 
+def normalize_kspace_acs_p99(
+    kspace: torch.Tensor,
+    full_physics,
+    acs: int,
+) -> tuple[torch.Tensor, torch.Tensor]:
+    """Apply the ACS-image p99 normalization intended by MRISliceTransform.
+
+    DeepInverse 0.4.1's public ``normalize_kspace`` helper mixes batched and
+    unbatched shape assumptions for single-coil data. This implements the same
+    documented calculation with official MRI adjoint physics while keeping the
+    required shape (B,2,H,W) explicit.
+    """
+    if kspace.ndim != 4 or kspace.shape[1] != 2:
+        raise ValueError(f"Expected kspace (B,2,H,W), got {tuple(kspace.shape)}")
+    height, width = kspace.shape[-2:]
+    if not 1 <= acs <= min(height, width):
+        raise ValueError(f"ACS size {acs} is invalid for spatial shape {(height, width)}")
+    lower = acs // 2
+    upper = (acs + 1) // 2
+    acs_mask = torch.zeros_like(kspace)
+    acs_mask[
+        ...,
+        height // 2 - lower : height // 2 + upper,
+        width // 2 - lower : width // 2 + upper,
+    ] = 1
+    acs_image = magnitude(full_physics.A_adjoint(kspace * acs_mask))
+    scales = torch.quantile(acs_image.flatten(1), 0.99, dim=1)
+    if not torch.all(torch.isfinite(scales) & (scales > 0)):
+        raise ValueError(f"Invalid ACS p99 normalization scales: {scales}")
+    return kspace / scales[:, None, None, None], scales
+
+
 def nmse(reference: torch.Tensor, estimate: torch.Tensor) -> float:
     numerator = torch.sum((reference - estimate) ** 2)
     denominator = torch.sum(reference**2).clamp_min(1e-20)
@@ -306,8 +338,12 @@ def main() -> None:
         "complex_representation": "two real/imaginary channels",
         "measurement_shape_expected": [1, 2, height, width],
         "fft_convention": "centered orthonormal 2D FFT",
-        "normalization": "DeepInverse MRISliceTransform ACS RSS p99",
+        "normalization": "DeepInverse ACS-image RSS p99 formula using official MRI adjoint",
         "normalization_acs_lines": args.acs,
+        "normalization_note": (
+            "Implemented explicitly because DeepInverse 0.4.1 normalize_kspace has "
+            "inconsistent batched/unbatched single-coil shape handling."
+        ),
         "noise_sigma": args.noise_sigma,
         "mask": mask_diagnostics(mask),
         "post_ram_data_consistency": False,
@@ -323,19 +359,15 @@ def main() -> None:
     records: list[dict[str, object]] = []
     saved_arrays: dict[str, np.ndarray] = {"mask": mask[0, 0].detach().cpu().numpy()}
 
-    transform = dinv.datasets.MRISliceTransform(normalize=True, acs=args.acs)
     for position, slice_index in enumerate(args.slices):
         raw_channels = complex_to_channels(torch.from_numpy(selected_kspace[position])).to(device)
         raw_batch = raw_channels.unsqueeze(0)
-        # DeepInverse 0.4.1 requires the batch dimension here even though the
-        # FastMRISliceDataset transform handles one slice at a time.
-        normalized_channels = transform.normalize_kspace(raw_batch)
-        scale = float(
-            (
-                torch.linalg.vector_norm(raw_batch)
-                / torch.linalg.vector_norm(normalized_channels).clamp_min(1e-20)
-            ).item()
+        normalized_channels, scale_tensor = normalize_kspace_acs_p99(
+            raw_batch,
+            full_physics,
+            args.acs,
         )
+        scale = float(scale_tensor[0].item())
         y = normalized_channels * mask
 
         with torch.no_grad():
