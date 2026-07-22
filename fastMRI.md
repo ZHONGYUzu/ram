@@ -185,7 +185,7 @@ larger run:
 | Field | Recorded value |
 |---|---|
 | Experiment ID | `fastmri-knee-sc-acc8-smoke-001` |
-| Status | Three executions failed across two DeepInverse normalization-helper shape errors; explicit-formula retry pending |
+| Status | Completed successfully in `r3`; image inspection pending |
 | Dataset | fastMRI knee single-coil validation |
 | Input volume | `/mnt/qdata/rawdata/fastMRI/knee/data/singlecoil_val/file1000000.h5` |
 | Slices | 16, 17, 18 (zero-based) |
@@ -202,8 +202,8 @@ larger run:
 | Stale-code retry output | `~/ram-results/fastmri-knee-sc-acc8-smoke-001-r1/` |
 | Second-attempt output | `~/ram-results/fastmri-knee-sc-acc8-smoke-001-r2/` |
 | Current retry output | `~/ram-results/fastmri-knee-sc-acc8-smoke-001-r3/` |
-| Git commit | Captured automatically in `git-commit.txt` when run |
-| Result | Initial run and stale-code `r1`: helper rejected `(2,H,W)` at RSS; `r2`: helper unsqueezed `(1,2,H,W)` to the wrong complex-channel layout; `r3` implements the documented ACS-image p99 formula with official MRI adjoint physics |
+| Git commit | `03152f8` expected; verify from the saved `git-commit.txt` |
+| Result | `r3` completed; RAM was essentially tied with zero-filled on the three knee slices |
 
 Run from an interactive GPU node:
 
@@ -231,6 +231,67 @@ ID rather than overwriting a previous run. The script writes environment details
 the exact command, Git status and commit, package versions, GPU information,
 operator diagnostics, per-slice and aggregate metrics, PNG comparison panels,
 and compressed reconstruction arrays.
+
+#### Experiment 1 results
+
+Successful runtime environment:
+
+| Component | Value |
+|---|---|
+| Node/GPU | `node-gpu-01`; Tesla V100-SXM2 32 GB |
+| PyTorch/CUDA | 2.5.1+cu121 / CUDA 12.1 |
+| DeepInverse | 0.4.1 |
+| h5py | 3.16.0 |
+| Matplotlib | 3.10.9 |
+
+Numerical validation:
+
+| Check | Result |
+|---|---:|
+| Mask shape | `(1, 2, 640, 368)` |
+| Sampled fraction / acceleration | 0.125 / 8.0 |
+| Sampled columns / rows | 46 / 640 |
+| Mask constant across rows | true |
+| Adjoint relative error | `1.60e-7` |
+| Estimated operator norm | `0.99999994` |
+| DeepInverse versus explicit centered orthonormal IFFT error | `0.0` |
+| Full-k-space physics reference versus H5 target error | approximately `1.8e-7` |
+
+Aggregate reconstruction metrics across slices 16, 17, and 18:
+
+| Reconstruction | PSNR (dB) | NMSE | SSIM |
+|---|---:|---:|---:|
+| Zero-filled | 24.27225 | 0.123079 | 0.464423 |
+| RAM | 24.25602 | 0.123539 | 0.468138 |
+| RAM minus zero-filled | -0.01623 | +0.000459 | +0.003715 |
+
+The behavior was consistent across all three slices: RAM lost approximately
+0.014--0.017 dB PSNR, slightly increased NMSE, and slightly improved SSIM. This
+is a numerical tie rather than a meaningful reconstruction improvement.
+
+The operator and representation checks are sufficiently accurate to validate
+the basic single-coil inference implementation. In particular, this result is
+not explained by FFT centering, FFT normalization, mask orientation,
+acceleration, adjointness, operator scaling, target cropping, or a missing
+real/imaginary channel.
+
+However, knee single-coil is not the MRI distribution used to train RAM. The RAM
+paper states that its MRI images were produced by virtual coil-combination of
+the fastMRI **brain multicoil** dataset. Its in-distribution MRI task used
+acceleration factors 4 and 8. Therefore this experiment is best interpreted as
+an out-of-distribution knee smoke test, not a reproduction of the paper's
+in-distribution result. See the RAM paper's
+[MRI preprocessing and training configuration](https://arxiv.org/html/2503.08915#A1.SS2).
+
+Before testing native multicoil inference, the next controlled experiment should
+use the complex virtual-coil-combined brain validation references in
+`brain/multicoil_val_espirit`, select the intended ESPIRiT reference map, simulate
+single-coil acceleration 8 with official DeepInverse `MRI`, and run the same
+checks. This more closely matches RAM's training distribution and cleanly tests
+the pretrained checkpoint before introducing `MultiCoilMRI`.
+
+Visual observations: pending inspection of `slice_0016.png`, `slice_0017.png`,
+and `slice_0018.png`.
 
 ## Inventory command
 
