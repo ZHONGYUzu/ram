@@ -293,6 +293,52 @@ the pretrained checkpoint before introducing `MultiCoilMRI`.
 Visual observations: pending inspection of `slice_0016.png`, `slice_0017.png`,
 and `slice_0018.png`.
 
+### Experiment 2: brain virtual-coil acceleration-8 smoke test
+
+This is the first test designed to match RAM's MRI training distribution.
+
+| Field | Recorded value |
+|---|---|
+| Experiment ID | `fastmri-brain-vcc-acc8-smoke-002` |
+| Status | Planned; not yet run |
+| ESPIRiT input | `/mnt/qdata/rawdata/fastMRI/brain/multicoil_val_espirit/file_brain_AXFLAIR_200_6002462.h5` |
+| Matching raw input | `/mnt/qdata/rawdata/fastMRI/brain/multicoil_val/file_brain_AXFLAIR_200_6002462.h5` |
+| Complex reference | `reference_acl15`, with map selected automatically against `reconstruction_rss` |
+| Slices | 7, 8, 9 (zero-based central slices) |
+| Physics | Official `deepinv.physics.MRI` |
+| Measurement representation | `(B, 2, H, W)` real/imaginary channels |
+| Acceleration / center fraction | 8 / 0.04 |
+| Normalization | Per-slice p99 of cropped virtual-coil reference magnitude |
+| Noise sigma | `0.001` for RAM conditioning; no synthetic noise added |
+| RAM call | Plain `model(y, physics)` |
+| Post-RAM data consistency | None |
+| Metrics | PSNR, NMSE, SSIM for zero-filled and RAM |
+| Output | `~/ram-results/fastmri-brain-vcc-acc8-smoke-002/` |
+| Result | Pending |
+
+Run from an interactive GPU node:
+
+```bash
+cd ~/ram
+conda activate ~/envs/ram
+set -o pipefail
+
+python scripts/validate_fastmri_brain_ram.py \
+  --input-h5 /mnt/qdata/rawdata/fastMRI/brain/multicoil_val_espirit/file_brain_AXFLAIR_200_6002462.h5 \
+  --raw-h5 /mnt/qdata/rawdata/fastMRI/brain/multicoil_val/file_brain_AXFLAIR_200_6002462.h5 \
+  --output-dir ~/ram-results/fastmri-brain-vcc-acc8-smoke-002 \
+  --reference-key reference_acl15 \
+  --map-index auto \
+  --slices 7 8 9 \
+  --acceleration 8 \
+  --center-fraction 0.04 \
+  --noise-sigma 0.001 \
+  --seed 0 \
+  --device cuda 2>&1 | tee ~/ram-results/fastmri-brain-vcc-acc8-smoke-002-console.log && \
+  mv ~/ram-results/fastmri-brain-vcc-acc8-smoke-002-console.log \
+    ~/ram-results/fastmri-brain-vcc-acc8-smoke-002/run.log
+```
+
 ## Inventory command
 
 The dataset details above were collected on the server with:
