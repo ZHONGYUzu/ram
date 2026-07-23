@@ -198,6 +198,113 @@ larger run:
 - saved reference, zero-filled, RAM, error, and mask images for a few slices;
 - exact command, Git commit, package versions, GPU details, and result paths.
 
+## How to interpret PSNR, NMSE, and SSIM
+
+These metrics do not make a reconstruction blurry, sharp, noisy, or clear.
+They measure different aspects of an image produced by the reconstruction
+method. For all experiments in this file, metrics are computed on magnitude
+images against the matching magnitude reference.
+
+### PSNR: average pixel-value fidelity
+
+The scripts calculate
+
+```text
+MSE  = mean((reference - reconstruction)^2)
+PSNR = 20 log10(max(reference)) - 10 log10(MSE)
+```
+
+Higher PSNR is better. A higher value means the reconstruction's pixel
+intensities are closer to the reference on average.
+
+PSNR is strongly affected by noise and global pixel errors. Smoothing can
+occasionally increase PSNR by removing noisy variation, even if fine anatomical
+details become softer. Consequently, a small PSNR gain alone does not prove that
+an image is visibly sharper or clinically better.
+
+Practical interpretation for comparisons made on the same cases with the same
+implementation:
+
+| PSNR difference | Typical interpretation |
+|---:|---|
+| Less than about `0.1 dB` | Numerical tie; usually not visibly meaningful |
+| About `0.5–1 dB` | Potentially noticeable; inspect images |
+| More than about `1 dB` | Usually a substantial pixel-error improvement |
+
+These are working guidelines, not universal clinical thresholds.
+
+### NMSE: error energy relative to signal energy
+
+The scripts calculate
+
+```text
+NMSE = sum((reference - reconstruction)^2) / sum(reference^2)
+```
+
+Lower NMSE is better. It describes how much squared reconstruction error exists
+relative to the total squared energy of the reference. Like PSNR, NMSE rewards
+global pixel accuracy and noise reduction but does not know whether an error
+falls on an important anatomical edge.
+
+PSNR and NMSE often move together:
+
+- higher PSNR and lower NMSE usually mean less total pixel error;
+- lower PSNR and higher NMSE usually mean more total pixel error.
+
+They are not redundant because PSNR uses mean error and an explicit intensity
+range, whereas NMSE normalizes total error by reference energy.
+
+### SSIM: local luminance, contrast, and structure
+
+Higher SSIM is better. SSIM compares local image windows rather than only adding
+pixel errors. Our implementation uses an `11×11` Gaussian window with standard
+deviation `1.5` and `max(reference)` as the data range.
+
+SSIM is more sensitive than PSNR/NMSE to changes in:
+
+- local contrast;
+- edge shape;
+- texture and fine structure;
+- luminance consistency.
+
+An image can have slightly better PSNR and NMSE but slightly worse SSIM. This
+often occurs when a method removes small pixel errors while also smoothing or
+altering local detail. SSIM is not a direct clinical-quality measure, however,
+and it can also be influenced by normalization, background, cropping, and the
+exact window implementation.
+
+### Common visual effects
+
+| Visual effect | Likely metric response |
+|---|---|
+| Random noise is removed without losing detail | PSNR increases, NMSE decreases, SSIM often increases |
+| Fine anatomy is oversmoothed | PSNR may increase, NMSE may decrease, SSIM may decrease |
+| Edges become sharper and more faithful | SSIM often increases; PSNR/NMSE improve if pixel values are also accurate |
+| Gibbs ringing or structured aliasing remains | Usually harms all three, especially local SSIM |
+| Global intensity scaling is wrong | Strongly harms PSNR and NMSE and can also harm SSIM |
+| A reconstruction is visually different but has similar total error | PSNR/NMSE may tie while SSIM separates them |
+
+### Interpretation of experiment 4
+
+Experiment 4 produced:
+
+| Metric | Zero-filled | RAM | RAM change | Direction |
+|---|---:|---:|---:|---|
+| PSNR | 22.680779 dB | 22.745303 dB | `+0.064524 dB` | Better, but negligible |
+| NMSE | 0.047313 | 0.046613 | `-0.000700` | Better by about 1.5% relative |
+| SSIM | 0.468192 | 0.465798 | `-0.002393` | Slightly worse; effectively a tie |
+
+Together these values say that RAM reduced squared pixel error very slightly but
+did not improve local structural similarity. A possible visual correlate is
+very mild smoothing or alteration of fine structure, but metrics alone cannot
+establish that. The saved reference/ZF/RAM/error panels must be inspected before
+making a visual claim.
+
+For this project, a reconstruction is considered convincingly better only when
+the metrics improve consistently across several slices and volumes and the
+images show reduced aliasing without loss of anatomical detail. No single metric
+is sufficient.
+
 ## Experiment record
 
 ### Experiment 1: knee single-coil acceleration-8 smoke test
