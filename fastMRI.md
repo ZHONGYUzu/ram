@@ -16,7 +16,7 @@ server-side result directory.
 | 1 | Knee single-coil acceleration 8 | `knee/data/singlecoil_val/file1000000.h5` | 1 / 3 | `640×368` | `320×320` | Completed | RAM and ZF tied; numerical checks passed; anatomy is out of distribution |
 | 2 | Brain virtual-coil first smoke | Brain AXFLAIR volume below | 1 / 3 | `640×320` | `320×320` | Completed | RAM `+0.045 dB`; preprocessing still mismatched |
 | 3 | Brain parameter sweep | Same brain AXFLAIR volume | 25 / 75 | `640×320` | `320×320` | Completed, job 41963 | Scale dominated; best divisor `0.0002`, RAM `+0.0645 dB` |
-| 4 | Brain complex-crop smoke | Same brain AXFLAIR volume | 1 / 3 | `320×320` | `320×320` | Next | Crop complex image before FFT/measurement; use best scale from experiment 3 |
+| 4 | Brain complex-crop smoke | Same brain AXFLAIR volume | 1 / 3 | `320×320` | `320×320` | Completed | RAM `+0.0645 dB`; crop order had no material effect |
 
 “Slice cases” counts reconstructed slices, so experiment 3 contains 25
 configurations × 3 slices = 75 slice cases. None of experiments 1–4 is a large
@@ -496,7 +496,7 @@ at `640×320`, although its quantitative brain target is `320×320`.
 
 Experiment ID: `fastmri-brain-crop320-acc8-smoke-004`
 
-Status: prepared; run next on only slices 7, 8, and 9.
+Status: completed on 2026-07-23 on slices 7, 8, and 9.
 
 | Field | Recorded value |
 |---|---|
@@ -552,8 +552,75 @@ python -m json.tool \
 ls -lh ~/ram-results/fastmri-brain-crop320-acc8-smoke-004/*.png
 ```
 
-Do not start a complete-volume or multivolume run until experiment 4 metrics and
-images have been reviewed.
+#### Experiment 4 results
+
+All representation and operator checks passed:
+
+| Check | Result |
+|---|---:|
+| Image / measurement shape | `(1,2,320,320)` |
+| Achieved acceleration | `8.0` |
+| Mask orientation | 40 sampled columns; constant over all 320 rows |
+| FFT relative error | `0.0` on every slice |
+| Adjoint relative error | `4.70e-7` |
+| Estimated operator norm | `0.99999988` |
+
+Aggregate metrics over three slices:
+
+| Reconstruction | PSNR (dB) | NMSE | SSIM |
+|---|---:|---:|---:|
+| Zero-filled | 22.680779 | 0.047313 | 0.468192 |
+| RAM | 22.745303 | 0.046613 | 0.465798 |
+| RAM minus zero-filled | +0.064524 | -0.000700 | -0.002393 |
+
+This is effectively identical to experiment 3's best `0.0002` run, which used
+physics at `640×320`: the aggregate PSNR difference between the two RAM runs is
+only about `0.00006 dB`. Because the mask varies only along width and the
+readout direction is fully sampled, cropping the readout dimension before
+versus after the linear MRI reconstruction largely commutes. Experiment 4
+therefore rules out crop order as the explanation for the weak RAM gain.
+
+The checkpoint remains unvalidated. The RAM paper reports approximately
+31.50 dB PSNR and 0.813 SSIM for its acceleration-8 in-distribution brain MRI
+evaluation, far above this experiment's 22.75 dB and 0.466. These values should
+not be treated as directly reproduced until the source-image construction,
+normalization/noise convention, mask generator, and metric implementation match
+the authors' evaluation exactly.
+
+### Next step after experiment 4
+
+Do not run another parameter sweep or a larger dataset yet. Proceed in this
+order:
+
+1. Inspect `slice_0007.png`, `slice_0008.png`, and `slice_0009.png` from the
+   experiment 4 output. Record aliasing orientation, RAM artifacts, intensity
+   range, and whether RAM visibly differs from zero-filled.
+2. Audit the exact virtual coil-combination used to create RAM's 70,748 training
+   and 21,842 validation complex images. The current `reference_acl15` ESPIRiT
+   product is not yet proven to be the same image construction.
+3. Audit the full-dataset scaling and its coupled effective noise convention.
+   Experiment 3 established that divisor `0.0002` is empirically safest for this
+   file, but this does not prove it reproduces the authors' training transform.
+4. Reproduce the authors' fastMRI random mask and metric implementation on the
+   same three slices.
+5. Only after steps 1–4, run one new three-slice smoke test. A multivolume or
+   multicoil experiment remains blocked until that test materially improves
+   over zero-filled.
+
+Relevant primary references are the RAM paper, especially Appendix A/B and its
+fastMRI evaluation section, and the official fastMRI transform/mask
+implementation:
+
+- <https://arxiv.org/html/2503.08915>
+- <https://github.com/facebookresearch/fastMRI/blob/main/fastmri/data/README.md>
+
+For the required visual inspection on the server:
+
+```bash
+ls -lh ~/ram-results/fastmri-brain-crop320-acc8-smoke-004/*.png
+```
+
+Copy or attach those three PNG files before starting experiment 5.
 
 ## Inventory command
 
