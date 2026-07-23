@@ -743,6 +743,27 @@ for slice_index in (7, 8, 9):
 PY
 ```
 
+Recorded output:
+
+| Slice | Relative RAM update `||RAM-ZF||/||ZF||` | Update relative to ZF error `||RAM-ZF||/||ZF-reference||` | Maximum absolute update | ZF/RAM correlation |
+|---:|---:|---:|---:|---:|
+| 7 | 0.010252 | 0.049308 | 0.043162 | 0.9999101104 |
+| 8 | 0.010964 | 0.048704 | 0.039688 | 0.9999017345 |
+| 9 | 0.012405 | 0.052216 | 0.044495 | 0.9998797646 |
+
+Interpretation: RAM changes the zero-filled magnitude image by only about
+1.0–1.2% of its norm. The update magnitude is only about 4.9–5.2% of the
+existing zero-filled error, and the output remains correlated with zero-filled
+above 0.99987 on every slice. This quantitatively confirms the visual finding
+that RAM is behaving almost like an identity correction around the adjoint
+reconstruction. It is not recovering enough missing-frequency information to
+approach the published fastMRI result.
+
+This does not prove that the checkpoint weights are defective. It proves that
+the combination of the loaded checkpoint, current source-image construction,
+scaling/noise convention, and physics input does not activate the expected MRI
+reconstruction behavior.
+
 The checkpoint remains unvalidated. The RAM paper reports approximately
 31.50 dB PSNR and 0.813 SSIM for its acceleration-8 in-distribution brain MRI
 evaluation, far above this experiment's 22.75 dB and 0.466. These values should
@@ -769,6 +790,23 @@ order:
 5. Only after steps 1–4, run one new three-slice smoke test. A multivolume or
    multicoil experiment remains blocked until that test materially improves
    over zero-filled.
+
+The first part of experiment 5 is a checkpoint-provenance audit. It does not run
+reconstruction and does not need a GPU:
+
+```bash
+cd ~/ram
+git pull --ff-only
+conda activate ~/envs/ram
+
+python scripts/audit_ram_checkpoint.py \
+  --output ~/ram-results/ram-checkpoint-audit.json
+```
+
+This records the checkpoint SHA-256, Hugging Face snapshot revision, file size,
+RAM source hash, Git commit, DeepInverse version/path, tensor count, complex-head
+shapes, and the learned `fact_realign` value. Preserve and return the resulting
+JSON before modifying preprocessing again.
 
 Relevant primary references are the RAM paper, especially Appendix A/B and its
 fastMRI evaluation section, and the official fastMRI transform/mask
