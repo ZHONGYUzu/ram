@@ -687,6 +687,62 @@ readout direction is fully sampled, cropping the readout dimension before
 versus after the linear MRI reconstruction largely commutes. Experiment 4
 therefore rules out crop order as the explanation for the weak RAM gain.
 
+#### Experiment 4 visual inspection
+
+Inspection date: 2026-07-23.
+
+The supplied screenshot showed the slice 8 panel twice and the slice 9 panel
+once. Slice 7 was not present, so this is a partial visual inspection.
+
+Observed:
+
+- The reference images contain sharp cortical folds and clearly delineated
+  tissue boundaries.
+- Both zero-filled and RAM reconstructions are severely degraded by
+  phase-encoding-direction aliasing and broad horizontal banding/ghosting.
+- Fine cortical folds visible in the reference are not recovered by RAM.
+- RAM and zero-filled look almost identical at the displayed scale. RAM does
+  not visibly remove the dominant aliasing or restore meaningful high-frequency
+  anatomy.
+- The zero-filled-reference and RAM-reference absolute-error maps have nearly
+  identical spatial patterns and intensity. Both are dominated by cortical
+  boundaries, the brain perimeter, and repeated background ghosts.
+- No obvious new hallucinated anatomy is visible in RAM, but there is also no
+  visually convincing reconstruction benefit.
+- The slight SSIM decrease could be consistent with a very small local
+  smoothing or contrast change, but the screenshot is insufficient to claim
+  this confidently.
+
+Visual conclusion: the model appears to be making only a very small update to
+the zero-filled reconstruction. This supports the numerical conclusion that the
+current pipeline does not reproduce published RAM behavior. Before changing
+the dataset again, quantify the RAM-to-zero-filled update directly from
+`reconstructions.npz`.
+
+Run this read-only diagnostic on the existing output:
+
+```bash
+python - <<'PY'
+from pathlib import Path
+import numpy as np
+
+path = Path.home() / "ram-results/fastmri-brain-crop320-acc8-smoke-004/reconstructions.npz"
+arrays = np.load(path)
+for slice_index in (7, 8, 9):
+    reference = arrays[f"slice_{slice_index}_reference"].astype(np.float64)
+    zf = arrays[f"slice_{slice_index}_zero_filled"].astype(np.float64)
+    ram = arrays[f"slice_{slice_index}_ram"].astype(np.float64)
+    update = ram - zf
+    print(
+        f"slice={slice_index}",
+        f"relative_update={np.linalg.norm(update) / np.linalg.norm(zf):.8g}",
+        f"relative_update_vs_error={np.linalg.norm(update) / np.linalg.norm(zf-reference):.8g}",
+        f"max_abs_update={np.max(np.abs(update)):.8g}",
+        f"correlation={np.corrcoef(zf.ravel(), ram.ravel())[0,1]:.10f}",
+    )
+PY
+```
+
 The checkpoint remains unvalidated. The RAM paper reports approximately
 31.50 dB PSNR and 0.813 SSIM for its acceleration-8 in-distribution brain MRI
 evaluation, far above this experiment's 22.75 dB and 0.466. These values should
