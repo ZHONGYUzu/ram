@@ -90,7 +90,13 @@ def main() -> None:
     parser.add_argument("--acceleration", type=int, default=8)
     parser.add_argument("--center-fraction", type=float, default=0.04)
     parser.add_argument("--mask-type", choices=("random", "equispaced"), default="random")
-    parser.add_argument("--normalization-scale", type=float, default=5e-3)
+    parser.add_argument(
+        "--crop-before-physics",
+        action=argparse.BooleanOptionalAction,
+        default=True,
+        help="Center-crop the complex reference to the RSS target matrix before MRI (default: true).",
+    )
+    parser.add_argument("--normalization-scale", type=float, default=2e-4)
     parser.add_argument("--noise-sigma", type=float, default=5e-4)
     parser.add_argument(
         "--add-noise",
@@ -153,8 +159,10 @@ def main() -> None:
         parser.error("--normalization-scale must be finite and positive")
     if args.noise_sigma < 0 or not np.isfinite(args.noise_sigma):
         parser.error("--noise-sigma must be finite and non-negative")
-    height, width = source_shape[-2:]
     target_shape = raw_targets.shape[-2:]
+    source_spatial_shape = source_shape[-2:]
+    physics_shape = target_shape if args.crop_before_physics else source_spatial_shape
+    height, width = physics_shape
     rng_device = device.type if device.type == "cuda" else "cpu"
     rng = torch.Generator(device=rng_device).manual_seed(args.seed)
     mask_generator_class = (
@@ -188,10 +196,18 @@ def main() -> None:
         "selected_reference_map": selected_map,
         "reference_map_rss_match_errors": map_match_errors,
         "complex_representation": "two real/imaginary channels",
+        "source_spatial_shape": list(source_spatial_shape),
+        "target_spatial_shape": list(target_shape),
+        "crop_before_physics": args.crop_before_physics,
+        "complex_crop": (
+            f"center crop {source_spatial_shape} to {target_shape} before FFT and masking"
+            if args.crop_before_physics
+            else "none before physics; magnitude outputs cropped for metrics"
+        ),
         "image_shape": [1, 2, height, width],
         "measurement_shape": [1, 2, height, width],
         "fft_convention": "centered orthonormal 2D FFT",
-        "normalization": "fixed full-dataset scale from RAM paper",
+        "normalization": "fixed divisor applied to the complex image before MRI",
         "normalization_scale": args.normalization_scale,
         "noise_sigma": args.noise_sigma,
         "synthetic_noise_added": args.add_noise,
@@ -212,6 +228,8 @@ def main() -> None:
     for position, slice_index in enumerate(args.slices):
         complex_reference = torch.from_numpy(references[position, selected_map]).to(device)
         x_reference = complex_to_channels(complex_reference).unsqueeze(0)
+        if args.crop_before_physics:
+            x_reference = center_crop(x_reference, target_shape)
         x_reference = x_reference / args.normalization_scale
         reference = center_crop(magnitude(x_reference), target_shape)
 

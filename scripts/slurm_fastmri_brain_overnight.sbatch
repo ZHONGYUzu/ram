@@ -8,8 +8,8 @@
 #SBATCH --cpus-per-task=8
 #SBATCH --mem=64G
 #SBATCH --time=12:00:00
-#SBATCH --output=logs/%x_%j.out
-#SBATCH --error=logs/%x_%j.err
+#SBATCH --output=/home/students/studxuzho1/ram/logs/%x_%j.out
+#SBATCH --error=/home/students/studxuzho1/ram/logs/%x_%j.err
 
 set -euo pipefail
 export PYTHONUNBUFFERED=1

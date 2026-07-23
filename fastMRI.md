@@ -1,6 +1,26 @@
 # fastMRI dataset inventory and RAM validation plan
 
-Last inspected on the GPU server: 2026-07-22
+Last updated: 2026-07-23
+
+## Experiment ledger
+
+This file is the canonical human-readable fastMRI/RAM experiment record. Do not
+rely on chat history for experiment state. The machine-readable high-level
+ledger is `fastMRI_experiment_results.csv`; all 25 trial deltas from Slurm job
+41963 are preserved in `fastMRI_sweep_job_41963_deltas.csv`. Per-slice metrics,
+images, environment information, and reconstructed arrays remain in each
+server-side result directory.
+
+| # | Experiment | Dataset | Configurations / slice cases | Physics matrix | Metric matrix | Status | Main result |
+|---:|---|---|---:|---:|---:|---|---|
+| 1 | Knee single-coil acceleration 8 | `knee/data/singlecoil_val/file1000000.h5` | 1 / 3 | `640×368` | `320×320` | Completed | RAM and ZF tied; numerical checks passed; anatomy is out of distribution |
+| 2 | Brain virtual-coil first smoke | Brain AXFLAIR volume below | 1 / 3 | `640×320` | `320×320` | Completed | RAM `+0.045 dB`; preprocessing still mismatched |
+| 3 | Brain parameter sweep | Same brain AXFLAIR volume | 25 / 75 | `640×320` | `320×320` | Completed, job 41963 | Scale dominated; best divisor `0.0002`, RAM `+0.0645 dB` |
+| 4 | Brain complex-crop smoke | Same brain AXFLAIR volume | 1 / 3 | `320×320` | `320×320` | Next | Crop complex image before FFT/measurement; use best scale from experiment 3 |
+
+“Slice cases” counts reconstructed slices, so experiment 3 contains 25
+configurations × 3 slices = 75 slice cases. None of experiments 1–4 is a large
+dataset run.
 
 ## Server location
 
@@ -327,7 +347,7 @@ This is the first test designed to match RAM's MRI training distribution.
 | Field | Recorded value |
 |---|---|
 | Experiment ID | `fastmri-brain-vcc-acc8-smoke-002` |
-| Status | First brain run completed with mismatched preprocessing; paper-matched retry pending |
+| Status | Completed; retained as the first brain preprocessing diagnostic |
 | First-run date | 2026-07-23 |
 | ESPIRiT input | `/mnt/qdata/rawdata/fastMRI/brain/multicoil_val_espirit/file_brain_AXFLAIR_200_6002462.h5` |
 | Matching raw input | `/mnt/qdata/rawdata/fastMRI/brain/multicoil_val/file_brain_AXFLAIR_200_6002462.h5` |
@@ -337,17 +357,13 @@ This is the first test designed to match RAM's MRI training distribution.
 | Measurement representation | `(B, 2, H, W)` real/imaginary channels |
 | Acceleration / center fraction | 8 / 0.04 |
 | First-run mask | Equispaced Cartesian |
-| Retry mask | Random Cartesian fastMRI procedure |
 | First-run normalization | Per-slice p99 of cropped virtual-coil reference magnitude |
-| Retry normalization | Fixed full-dataset scale `0.005`, from RAM paper |
 | First-run noise | Sigma `0.001` for conditioning; no noise added |
-| Retry noise | Gaussian sigma `0.0005`, added through DeepInverse physics |
 | RAM call | Plain `model(y, physics)` |
 | Post-RAM data consistency | None |
 | Metrics | PSNR, NMSE, SSIM for zero-filled and RAM |
 | First-run output | `~/ram-results/fastmri-brain-vcc-acc8-smoke-002/` |
-| Retry output | `~/ram-results/fastmri-brain-vcc-acc8-smoke-002-r1/` |
-| Result | First run: RAM essentially tied with zero-filled; exact paper-matched retry pending |
+| Result | RAM essentially tied with zero-filled; follow-up settings tested in experiment 3 |
 
 Run from an interactive GPU node:
 
@@ -363,6 +379,7 @@ python scripts/validate_fastmri_brain_ram.py \
   --reference-key reference_acl15 \
   --map-index auto \
   --slices 7 8 9 \
+  --no-crop-before-physics \
   --acceleration 8 \
   --center-fraction 0.04 \
   --mask-type random \
@@ -389,17 +406,17 @@ acceleration 8 along the correct phase-encoding axis.
 | RAM minus zero-filled | +0.04503 | -0.000560 | -0.002341 |
 
 This is only a marginal PSNR/NMSE improvement and a small SSIM regression. It
-does not reproduce the published in-distribution RAM result. The run used four
-settings that differ from the paper: per-slice p99 normalization instead of the
-fixed `0.005` dataset rescaling, noise sigma `0.001` instead of `0.0005`, no
-synthetic noise, and an equispaced rather than fastMRI random mask. The `r1`
-retry corrects all four before any conclusion about the pretrained checkpoint.
+does not reproduce the published in-distribution RAM result. The run used
+per-slice p99 normalization, sigma `0.001` without synthetic noise, and an
+equispaced mask. Experiment 3 tested these suspected differences and showed
+that treating `0.005` as a divisor was not supported by the observed data.
 
 ### Experiment 3: overnight brain parameter sweep
 
 Script: `scripts/slurm_fastmri_brain_overnight.sbatch`
 
-Status: planned; not yet submitted.
+Status: completed on 2026-07-23 as Slurm job `41963`, using Git commit
+`b8db0fdb29d2f01accd9b932d8624065ed7a5f7d`.
 
 The sweep runs 25 configurations sequentially in one resumable 12-hour Slurm
 job. This respects the account's one-submitted-job limit and avoids an opaque
@@ -439,6 +456,104 @@ sbatch --export=ALL,BUNDLE=mask scripts/slurm_fastmri_brain_overnight.sbatch
 
 Do not submit these simultaneously under the one-job account limit. The `all`
 bundle is the default and is the recommended overnight command.
+
+#### Experiment 3 completed results
+
+All 25 configurations completed successfully: 25 configurations × 3 central
+slices = 75 reconstructed slice cases. Every case used the two-real-channel
+representation `(B,2,640,320)`, centered orthonormal FFT, official DeepInverse
+`MRI`, plain `model(y, physics)`, and no post-RAM data consistency. The complex
+reference stayed at `640×320` through physics; magnitude images were
+center-cropped to `320×320` only for metrics.
+
+The full server summary is
+`~/ram-results/fastmri-brain-overnight-sweep.csv`. The tracked trial-delta table
+is `fastMRI_sweep_job_41963_deltas.csv`.
+
+| Configuration | ZF PSNR | RAM PSNR | ΔPSNR | ZF NMSE | RAM NMSE | ΔNMSE | ZF SSIM | RAM SSIM | ΔSSIM |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| Best scale: divisor `0.0002`, R8, random, seed 0, σ `0.0005` added | 22.68076 | 22.74524 | +0.06448 | 0.047313 | 0.046614 | -0.000699 | 0.468203 | 0.465472 | -0.002731 |
+| Divisor `0.0005`, otherwise same | 22.68060 | 22.71671 | +0.03611 | 0.047315 | 0.046920 | -0.000395 | 0.467883 | 0.444931 | -0.022952 |
+| Divisor `0.001`, otherwise same | 22.68007 | 22.63933 | -0.04074 | 0.047321 | 0.047771 | +0.000450 | 0.466753 | 0.400666 | -0.066088 |
+| Previous divisor `0.005`, R8 seed 0 | 22.66294 | 20.80290 | -1.86005 | 0.047509 | 0.072958 | +0.025449 | 0.436211 | 0.214890 | -0.221321 |
+
+Interpretation:
+
+- The fixed divisor `0.005` was incorrect for these raw ESPIRiT reference
+  values and severely harmed RAM.
+- The empirically best divisor was `0.0002`, equivalent to multiplying the raw
+  complex reference by 5000.
+- Mask type, seed, center fraction, noise, acceleration, and ACL15/ACL30 did not
+  rescue the `0.005` baseline.
+- Even the best scale gave only a marginal gain. The checkpoint therefore
+  remains unvalidated, and cardiac underperformance cannot yet be attributed
+  to domain shift.
+
+The next isolated mismatch is spatial preprocessing: experiment 3 simulated MRI
+at `640×320`, although its quantitative brain target is `320×320`.
+
+### Experiment 4: crop complex brain reference before physics
+
+Experiment ID: `fastmri-brain-crop320-acc8-smoke-004`
+
+Status: prepared; run next on only slices 7, 8, and 9.
+
+| Field | Recorded value |
+|---|---|
+| ESPIRiT input | `/mnt/qdata/rawdata/fastMRI/brain/multicoil_val_espirit/file_brain_AXFLAIR_200_6002462.h5` |
+| Raw target input | `/mnt/qdata/rawdata/fastMRI/brain/multicoil_val/file_brain_AXFLAIR_200_6002462.h5` |
+| Acquisition / reference | AXFLAIR / `reference_acl15`, map auto-selected |
+| Cases | 3 slices: 7, 8, 9 |
+| Source complex matrix | `640×320` |
+| Complex preprocessing | Center-crop to `320×320` before normalization, FFT, mask generation, and MRI |
+| Physics / measurement matrix | Official DeepInverse `MRI`; `(1,2,320,320)` |
+| Mask | Random Cartesian, acceleration 8, center fraction 0.04, seed 0 |
+| Normalization | Divide complex image by `0.0002` (multiply by 5000) |
+| Noise | Gaussian σ `0.0005`, added through physics |
+| Inference | Plain `model(y, physics)`; no post-RAM data consistency |
+| Outputs | Per-slice panels, metrics JSON/CSV, reconstructions NPZ, environment and command record |
+| Acceptance checks | Shapes, FFT error, adjoint error, operator norm, acceleration, mask orientation, PSNR, NMSE, SSIM, and images |
+| Output path | `~/ram-results/fastmri-brain-crop320-acc8-smoke-004/` |
+
+Run from an interactive GPU node:
+
+```bash
+cd ~/ram
+git pull --ff-only
+conda activate ~/envs/ram
+set -o pipefail
+
+python scripts/validate_fastmri_brain_ram.py \
+  --input-h5 /mnt/qdata/rawdata/fastMRI/brain/multicoil_val_espirit/file_brain_AXFLAIR_200_6002462.h5 \
+  --raw-h5 /mnt/qdata/rawdata/fastMRI/brain/multicoil_val/file_brain_AXFLAIR_200_6002462.h5 \
+  --output-dir ~/ram-results/fastmri-brain-crop320-acc8-smoke-004 \
+  --reference-key reference_acl15 \
+  --map-index auto \
+  --slices 7 8 9 \
+  --crop-before-physics \
+  --acceleration 8 \
+  --center-fraction 0.04 \
+  --mask-type random \
+  --normalization-scale 0.0002 \
+  --noise-sigma 0.0005 \
+  --add-noise \
+  --seed 0 \
+  --device cuda 2>&1 | tee ~/ram-results/fastmri-brain-crop320-acc8-smoke-004-console.log && \
+  mv ~/ram-results/fastmri-brain-crop320-acc8-smoke-004-console.log \
+    ~/ram-results/fastmri-brain-crop320-acc8-smoke-004/run.log
+```
+
+Inspect before any larger run:
+
+```bash
+python -m json.tool \
+  ~/ram-results/fastmri-brain-crop320-acc8-smoke-004/metrics.json
+
+ls -lh ~/ram-results/fastmri-brain-crop320-acc8-smoke-004/*.png
+```
+
+Do not start a complete-volume or multivolume run until experiment 4 metrics and
+images have been reviewed.
 
 ## Inventory command
 
