@@ -35,7 +35,7 @@ experiment_id="fastmri-brain-adapter-deepinv041-r${acceleration}-v1"
 output_dir="$RESULTS_ROOT/$experiment_id"
 
 cd "$REPO_ROOT"
-mkdir -p logs "$RESULTS_ROOT"
+mkdir -p "$RESULTS_ROOT"
 current_branch="$(git branch --show-current)"
 if [[ "$current_branch" != "$EXPECTED_BRANCH" ]]; then
     echo "Expected branch $EXPECTED_BRANCH, found $current_branch" >&2
