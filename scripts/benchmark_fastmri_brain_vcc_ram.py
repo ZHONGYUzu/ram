@@ -19,6 +19,11 @@ import numpy as np
 import torch
 from scipy.optimize import minimize
 
+from ram.adapters.fastmri_brain import (
+    DEFAULT_RAM_CHECKPOINT_SHA256,
+    MINIMUM_DEEPINV_VERSION,
+    load_maintained_ram,
+)
 from validate_fastmri_ram import (
     center_crop,
     complex_to_channels,
@@ -163,6 +168,17 @@ def main() -> None:
     parser.add_argument("--output-dir", type=Path, required=True)
     parser.add_argument("--acceleration", type=int, choices=(4, 8), required=True)
     parser.add_argument("--center-fraction", type=float, required=True)
+    parser.add_argument(
+        "--checkpoint",
+        type=Path,
+        required=True,
+        help="Existing local RAM checkpoint. The adapter never downloads weights.",
+    )
+    parser.add_argument(
+        "--checkpoint-sha256",
+        default=DEFAULT_RAM_CHECKPOINT_SHA256,
+    )
+    parser.add_argument("--minimum-deepinv-version", default=MINIMUM_DEEPINV_VERSION)
     parser.add_argument("--normalization-scale", type=float, default=0.005)
     parser.add_argument("--noise-sigma", type=float, default=5e-4)
     parser.add_argument("--max-volumes", type=int, default=10)
@@ -188,7 +204,13 @@ def main() -> None:
     write_environment(args.output_dir, args)
     device = torch.device(args.device)
     torch.manual_seed(args.seed)
-    model = dinv.models.RAM(device=device, pretrained=True).eval()
+    model, model_provenance = load_maintained_ram(
+        dinv,
+        args.checkpoint,
+        device,
+        expected_sha256=args.checkpoint_sha256,
+        minimum_version=args.minimum_deepinv_version,
+    )
     records: list[dict[str, object]] = []
     volume_diagnostics: list[dict[str, object]] = []
     previews_saved = 0
@@ -287,7 +309,8 @@ def main() -> None:
         "noise_sigma": args.noise_sigma,
         "synthetic_noise_added": True,
         "normalization_scale": args.normalization_scale,
-        "model": "deepinv.models.RAM(pretrained=True)",
+        "model": "deepinv.models.RAM(pretrained=<verified local checkpoint>)",
+        "model_provenance": model_provenance,
         "model_call": "model(y, physics)",
         "post_ram_data_consistency": False,
         "aggregation": {
