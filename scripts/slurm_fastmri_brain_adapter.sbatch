@@ -7,15 +7,16 @@
 #SBATCH --cpus-per-task=8
 #SBATCH --mem=64G
 #SBATCH --time=12:00:00
-#SBATCH --output=/home/students/studxuzho1/ram/logs/%x_%j.out
-#SBATCH --error=/home/students/studxuzho1/ram/logs/%x_%j.err
+#SBATCH --output=/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-001/logs/slurm-%j.out
+#SBATCH --error=/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-001/logs/slurm-%j.err
 
 set -euo pipefail
 export PYTHONUNBUFFERED=1
 export HF_HUB_OFFLINE=1
 export TRANSFORMERS_OFFLINE=1
 
-REPO_ROOT=/home/students/studxuzho1/ram
+SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+REPO_ROOT="$(cd -- "$SCRIPT_DIR/.." && pwd)"
 PYTHON_BIN=/home/students/studxuzho1/envs/ram/bin/python
 DATA_ROOT=/mnt/qdata/rawdata/fastMRI/brain/multicoil_val
 RESULTS_ROOT=/home/students/studxuzho1/ram-results
