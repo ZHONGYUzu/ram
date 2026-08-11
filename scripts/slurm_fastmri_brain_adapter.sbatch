@@ -15,8 +15,7 @@ export PYTHONUNBUFFERED=1
 export HF_HUB_OFFLINE=1
 export TRANSFORMERS_OFFLINE=1
 
-SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
-REPO_ROOT="$(cd -- "$SCRIPT_DIR/.." && pwd)"
+REPO_ROOT=/home/students/studxuzho1/ram-fastmri-brain-adapter
 PYTHON_BIN=/home/students/studxuzho1/envs/ram/bin/python
 DATA_ROOT=/mnt/qdata/rawdata/fastMRI/brain/multicoil_val
 RESULTS_ROOT=/home/students/studxuzho1/ram-results
