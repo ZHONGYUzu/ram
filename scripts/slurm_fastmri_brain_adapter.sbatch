@@ -21,6 +21,7 @@ DATA_ROOT=/mnt/qdata/rawdata/fastMRI/brain/multicoil_val
 RESULTS_ROOT=/home/students/studxuzho1/ram-results
 CHECKPOINT=/mnt/ceph/vol_02_home_students/studxuzho1/.cache/huggingface/hub/models--mterris--ram/blobs/1292571adc3d15f9db5e7f5bd92265599030b6b816637367d0f5992d8dbdef7a
 EXPECTED_BRANCH=feature/fastmri-brain-adapter
+export PYTHONPATH="$REPO_ROOT${PYTHONPATH:+:$PYTHONPATH}"
 
 acceleration="${ACCELERATION:-4}"
 case "$acceleration" in
@@ -63,7 +64,7 @@ echo "Maximum volumes: $max_volumes"
 echo "Offline checkpoint: $CHECKPOINT"
 echo "Started: $(date --iso-8601=seconds)"
 nvidia-smi
-"$PYTHON_BIN" -c 'import torch, deepinv; print("Torch:", torch.__version__); print("DeepInverse:", deepinv.__version__); print("CUDA:", torch.version.cuda)'
+"$PYTHON_BIN" -c 'import torch, deepinv, ram.adapters; print("Torch:", torch.__version__); print("DeepInverse:", deepinv.__version__); print("RAM package:", ram.__file__); print("RAM adapters:", ram.adapters.__file__); print("CUDA:", torch.version.cuda)'
 
 "$PYTHON_BIN" scripts/benchmark_fastmri_brain_vcc_ram.py \
     --data-root "$DATA_ROOT" \
