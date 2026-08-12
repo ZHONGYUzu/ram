@@ -138,6 +138,57 @@ def fastmri_random_mask(
     return mask.astype(np.float32)
 
 
+def exact_random_mask(
+    width: int,
+    acceleration: int,
+    center_fraction: float,
+    seed: int,
+) -> np.ndarray:
+    """Random Cartesian mask with an exact rounded number of sampled columns."""
+    target_columns = int(round(width / acceleration))
+    num_low_frequencies = int(round(width * center_fraction))
+    if not 0 < num_low_frequencies <= target_columns <= width:
+        raise ValueError(
+            f"Invalid exact mask parameters: width={width}, acceleration={acceleration}, "
+            f"center_fraction={center_fraction}"
+        )
+    pad = (width - num_low_frequencies + 1) // 2
+    center = np.arange(pad, pad + num_low_frequencies)
+    candidates = np.setdiff1d(np.arange(width), center, assume_unique=True)
+    rng = np.random.RandomState(seed)
+    high_frequency = rng.choice(
+        candidates,
+        size=target_columns - num_low_frequencies,
+        replace=False,
+    )
+    mask = np.zeros(width, dtype=np.float32)
+    mask[np.concatenate((center, high_frequency))] = 1.0
+    return mask
+
+
+def load_cases(data_root: Path, cases_file: Path | None) -> list[Path]:
+    if cases_file is None:
+        return sorted(data_root.glob("*.h5"))
+    names = [
+        line.strip()
+        for line in cases_file.read_text().splitlines()
+        if line.strip() and not line.lstrip().startswith("#")
+    ]
+    if not names:
+        raise ValueError(f"No cases listed in {cases_file}")
+    if len(names) != len(set(names)):
+        raise ValueError(f"Duplicate cases listed in {cases_file}")
+    files = []
+    for name in names:
+        if Path(name).name != name or not name.endswith(".h5"):
+            raise ValueError(f"cases.txt must contain H5 basenames only, got {name!r}")
+        path = data_root / name
+        if not path.is_file():
+            raise FileNotFoundError(f"Listed fastMRI case not found: {path}")
+        files.append(path)
+    return files
+
+
 def selected_slices(count: int, slices_per_volume: int, edge_fraction: float) -> list[int]:
     edge = int(round(count * edge_fraction))
     first = min(edge, count - 1)
@@ -168,6 +219,12 @@ def main() -> None:
     parser.add_argument("--output-dir", type=Path, required=True)
     parser.add_argument("--acceleration", type=int, choices=(4, 8), required=True)
     parser.add_argument("--center-fraction", type=float, required=True)
+    parser.add_argument("--cases-file", type=Path)
+    parser.add_argument(
+        "--mask-mode",
+        choices=("fastmri-random", "exact-random"),
+        default="fastmri-random",
+    )
     parser.add_argument(
         "--checkpoint",
         type=Path,
@@ -179,7 +236,13 @@ def main() -> None:
         default=DEFAULT_RAM_CHECKPOINT_SHA256,
     )
     parser.add_argument("--minimum-deepinv-version", default=MINIMUM_DEEPINV_VERSION)
+    parser.add_argument(
+        "--normalization-mode",
+        choices=("fixed", "zf-percentile"),
+        default="fixed",
+    )
     parser.add_argument("--normalization-scale", type=float, default=0.005)
+    parser.add_argument("--normalization-percentile", type=float, default=99.5)
     parser.add_argument("--noise-sigma", type=float, default=5e-4)
     parser.add_argument("--max-volumes", type=int, default=10)
     parser.add_argument("--slices-per-volume", type=int, default=3)
@@ -192,9 +255,11 @@ def main() -> None:
 
     if args.output_dir.exists() and any(args.output_dir.iterdir()):
         parser.error(f"Output directory is not empty: {args.output_dir}")
-    if args.normalization_scale <= 0 or args.noise_sigma < 0:
-        parser.error("Normalization scale must be positive and noise sigma non-negative")
-    files = sorted(args.data_root.glob("*.h5"))
+    if args.normalization_mode == "fixed" and args.normalization_scale <= 0:
+        parser.error("Normalization scale must be positive in fixed mode")
+    if not 0 < args.normalization_percentile <= 100 or args.noise_sigma < 0:
+        parser.error("Normalization percentile must be in (0,100] and noise non-negative")
+    files = load_cases(args.data_root, args.cases_file)
     if args.max_volumes > 0:
         files = files[: args.max_volumes]
     if not files:
@@ -229,7 +294,12 @@ def main() -> None:
         indices = selected_slices(
             combined.shape[0], args.slices_per_volume, args.edge_fraction
         )
-        mask_1d = fastmri_random_mask(
+        mask_function = (
+            exact_random_mask
+            if args.mask_mode == "exact-random"
+            else fastmri_random_mask
+        )
+        mask_1d = mask_function(
             crop_shape[-1],
             args.acceleration,
             args.center_fraction,
@@ -252,15 +322,32 @@ def main() -> None:
                 "selected_slices": indices,
                 "mask_sampled_columns": int(mask_1d.sum()),
                 "mask_achieved_acceleration": float(mask_1d.size / mask_1d.sum()),
+                "mask_mode": args.mask_mode,
+                "normalization_scales": [],
                 "esc": esc,
             }
         )
 
         for slice_index in indices:
-            x = complex_to_channels(
+            x_unscaled = complex_to_channels(
                 torch.from_numpy(combined[slice_index]).to(device)
-            ).unsqueeze(0) / args.normalization_scale
+            ).unsqueeze(0)
             with torch.no_grad():
+                if args.normalization_mode == "zf-percentile":
+                    y_unscaled = physics.A(x_unscaled)
+                    zf_unscaled = magnitude(physics.A_adjoint(y_unscaled))
+                    scale = torch.quantile(
+                        zf_unscaled.flatten(), args.normalization_percentile / 100
+                    )
+                    if not torch.isfinite(scale) or scale <= 0:
+                        raise ValueError(
+                            f"Invalid p{args.normalization_percentile:g} scale "
+                            f"for {input_h5.name} slice {slice_index}: {scale.item()}"
+                        )
+                    scale_value = float(scale.item())
+                else:
+                    scale_value = args.normalization_scale
+                x = x_unscaled / scale_value
                 y = physics(x)
                 zero_filled_complex = physics.A_adjoint(y)
                 ram_complex = model(y, physics)
@@ -273,12 +360,16 @@ def main() -> None:
                 "filename": input_h5.name,
                 "acquisition": acquisition,
                 "slice": slice_index,
+                "normalization_scale": scale_value,
                 **values,
                 "delta_psnr": values["ram_psnr"] - values["zf_psnr"],
                 "delta_ssim": values["ram_ssim"] - values["zf_ssim"],
                 "delta_nmse": values["ram_nmse"] - values["zf_nmse"],
             }
             records.append(row)
+            volume_diagnostics[-1]["normalization_scales"].append(
+                {"slice": slice_index, "scale": scale_value}
+            )
             if previews_saved < args.save_previews:
                 preview_values = {"slice": slice_index, **values}
                 save_panel(
@@ -309,9 +400,26 @@ def main() -> None:
         "slices": len(records),
         "acceleration": args.acceleration,
         "center_fraction": args.center_fraction,
+        "mask_mode": args.mask_mode,
         "noise_sigma": args.noise_sigma,
         "synthetic_noise_added": True,
-        "normalization_scale": args.normalization_scale,
+        "normalization_mode": args.normalization_mode,
+        "normalization_percentile": (
+            args.normalization_percentile
+            if args.normalization_mode == "zf-percentile"
+            else None
+        ),
+        "normalization_scale": (
+            args.normalization_scale if args.normalization_mode == "fixed" else None
+        ),
+        "normalization_scales": [
+            {
+                "filename": str(row["filename"]),
+                "slice": int(row["slice"]),
+                "scale": float(row["normalization_scale"]),
+            }
+            for row in records
+        ],
         "model": "deepinv.models.RAM(pretrained=<verified local checkpoint>)",
         "model_provenance": model_provenance,
         "model_call": "model(y, physics)",
