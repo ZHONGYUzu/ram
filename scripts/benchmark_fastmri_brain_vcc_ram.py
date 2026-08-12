@@ -201,6 +201,7 @@ def main() -> None:
         parser.error(f"No H5 files found in {args.data_root}")
 
     args.output_dir.mkdir(parents=True, exist_ok=True)
+    (args.output_dir / "previews").mkdir(exist_ok=True)
     write_environment(args.output_dir, args)
     device = torch.device(args.device)
     torch.manual_seed(args.seed)
@@ -281,7 +282,9 @@ def main() -> None:
             if previews_saved < args.save_previews:
                 preview_values = {"slice": slice_index, **values}
                 save_panel(
-                    args.output_dir / f"preview-{volume_index:03d}-s{slice_index:03d}.png",
+                    args.output_dir
+                    / "previews"
+                    / f"preview-{volume_index:03d}-s{slice_index:03d}.png",
                     reference[0, 0].cpu().numpy(),
                     zero_filled[0, 0].cpu().numpy(),
                     ram[0, 0].cpu().numpy(),

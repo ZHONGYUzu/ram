@@ -18,7 +18,6 @@ export TRANSFORMERS_OFFLINE=1
 REPO_ROOT=/home/students/studxuzho1/ram-fastmri-brain-adapter
 PYTHON_BIN=/home/students/studxuzho1/envs/ram/bin/python
 DATA_ROOT=/mnt/qdata/rawdata/fastMRI/brain/multicoil_val
-RESULTS_ROOT=/home/students/studxuzho1/ram-results
 CHECKPOINT=/mnt/ceph/vol_02_home_students/studxuzho1/.cache/huggingface/hub/models--mterris--ram/blobs/1292571adc3d15f9db5e7f5bd92265599030b6b816637367d0f5992d8dbdef7a
 EXPECTED_BRANCH=feature/fastmri-brain-adapter
 export PYTHONPATH="$REPO_ROOT${PYTHONPATH:+:$PYTHONPATH}"
@@ -31,11 +30,12 @@ case "$acceleration" in
 esac
 
 max_volumes="${MAX_VOLUMES:-10}"
-experiment_id="fastmri-brain-adapter-deepinv041-r${acceleration}-v1"
-output_dir="$RESULTS_ROOT/$experiment_id"
+run_id="${RUN_ID:-debug-r${acceleration}-job${SLURM_JOB_ID}}"
+output_dir="$REPO_ROOT/runs/ram-001/output/$run_id"
+run_log="$REPO_ROOT/runs/ram-001/logs/run-${SLURM_JOB_ID}.log"
 
 cd "$REPO_ROOT"
-mkdir -p "$RESULTS_ROOT"
+mkdir -p "$REPO_ROOT/runs/ram-001/output" "$REPO_ROOT/runs/ram-001/logs"
 current_branch="$(git branch --show-current)"
 if [[ "$current_branch" != "$EXPECTED_BRANCH" ]]; then
     echo "Expected branch $EXPECTED_BRANCH, found $current_branch" >&2
@@ -54,7 +54,6 @@ if [[ -e "$output_dir" ]]; then
     echo "Refusing to overwrite existing output: $output_dir" >&2
     exit 2
 fi
-
 echo "Job ID: ${SLURM_JOB_ID:-manual}"
 echo "Git commit: $(git rev-parse HEAD)"
 echo "Branch: $current_branch"
@@ -80,7 +79,7 @@ nvidia-smi
     --esc-max-iterations 60 \
     --seed 0 \
     --save-previews 6 \
-    --device cuda 2>&1 | tee "$output_dir.run.log"
+    --device cuda 2>&1 | tee "$run_log"
 
-mv "$output_dir.run.log" "$output_dir/run.log"
+cp "$run_log" "$output_dir/run.log"
 echo "Finished: $(date --iso-8601=seconds)"

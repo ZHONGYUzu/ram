@@ -74,10 +74,17 @@ def load_maintained_ram(
             f"expected {expected_sha256}, found {actual_sha256}."
         )
 
-    model = deepinv_module.models.RAM(
-        device=device,
-        pretrained=str(checkpoint),
-    ).eval()
+    # DeepInverse's maintained RAM loader intentionally uses ``strict=False``
+    # for the public checkpoint. Loading a path through its constructor uses
+    # strict=True instead, which rejects legacy PhysicsBlock gain buffers.
+    # Reproduce the maintained pretrained=True behavior explicitly while
+    # retaining an auditable local-only checkpoint path.
+    import torch
+
+    model = deepinv_module.models.RAM(device=device, pretrained=False)
+    state_dict = torch.load(checkpoint, map_location=device, weights_only=True)
+    incompatible = model.load_state_dict(state_dict, strict=False)
+    model = model.eval()
     provenance = {
         "implementation": "deepinv.models.RAM",
         "deepinv_version": installed_version,
@@ -85,6 +92,9 @@ def load_maintained_ram(
         "checkpoint_path": str(checkpoint),
         "checkpoint_sha256": actual_sha256,
         "checkpoint_size_bytes": checkpoint.stat().st_size,
+        "state_dict_strict": False,
+        "missing_keys": list(incompatible.missing_keys),
+        "unexpected_keys": list(incompatible.unexpected_keys),
         "implicit_downloads_allowed": False,
     }
     return model, provenance
