@@ -15,14 +15,26 @@ from pathlib import Path
 
 import deepinv as dinv
 import h5py
+import matplotlib
 import numpy as np
 import torch
 from scipy.optimize import minimize
+
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt
 
 from ram.adapters.fastmri_brain import (
     DEFAULT_RAM_CHECKPOINT_SHA256,
     MINIMUM_DEEPINV_VERSION,
     load_maintained_ram,
+)
+from ram.adapters.cartesian_masks import (
+    center_indices,
+    exact_equispaced_mask,
+    mask_metadata,
+    polynomial_variable_density_mask,
+    target_columns,
+    validate_cartesian_mask,
 )
 from validate_fastmri_ram import (
     center_crop,
@@ -217,14 +229,22 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--data-root", type=Path, required=True)
     parser.add_argument("--output-dir", type=Path, required=True)
-    parser.add_argument("--acceleration", type=int, choices=(4, 8), required=True)
+    parser.add_argument("--acceleration", type=int, choices=(4, 8, 16, 24), required=True)
     parser.add_argument("--center-fraction", type=float, required=True)
+    parser.add_argument("--center-columns", type=int)
     parser.add_argument("--cases-file", type=Path)
     parser.add_argument(
         "--mask-mode",
-        choices=("fastmri-random", "exact-random"),
+        choices=(
+            "fastmri-random",
+            "exact-random",
+            "exact-equispaced",
+            "polynomial-vd-random",
+        ),
         default="fastmri-random",
     )
+    parser.add_argument("--vd-exponent", type=float, default=4.0)
+    parser.add_argument("--vd-floor", type=float, default=1e-6)
     parser.add_argument(
         "--checkpoint",
         type=Path,
@@ -259,6 +279,10 @@ def main() -> None:
         parser.error("Normalization scale must be positive in fixed mode")
     if not 0 < args.normalization_percentile <= 100 or args.noise_sigma < 0:
         parser.error("Normalization percentile must be in (0,100] and noise non-negative")
+    if args.center_columns is not None and args.center_columns <= 0:
+        parser.error("Center columns must be positive")
+    if args.vd_exponent <= 0 or args.vd_floor < 0:
+        parser.error("VD exponent must be positive and VD floor non-negative")
     files = load_cases(args.data_root, args.cases_file)
     if args.max_volumes > 0:
         files = files[: args.max_volumes]
@@ -267,6 +291,7 @@ def main() -> None:
 
     args.output_dir.mkdir(parents=True, exist_ok=True)
     (args.output_dir / "previews").mkdir(exist_ok=True)
+    (args.output_dir / "masks").mkdir(exist_ok=True)
     write_environment(args.output_dir, args)
     device = torch.device(args.device)
     torch.manual_seed(args.seed)
@@ -294,17 +319,71 @@ def main() -> None:
         indices = selected_slices(
             combined.shape[0], args.slices_per_volume, args.edge_fraction
         )
-        mask_function = (
-            exact_random_mask
-            if args.mask_mode == "exact-random"
-            else fastmri_random_mask
+        width = crop_shape[-1]
+        center_columns = (
+            args.center_columns
+            if args.center_columns is not None
+            else int(round(width * args.center_fraction))
         )
-        mask_1d = mask_function(
-            crop_shape[-1],
-            args.acceleration,
-            args.center_fraction,
-            volume_seed(input_h5.name, args.seed),
+        derived_seed = volume_seed(input_h5.name, args.seed)
+        if args.mask_mode == "exact-equispaced":
+            mask_1d = exact_equispaced_mask(width, args.acceleration, center_columns)
+            recorded_seed = None
+        elif args.mask_mode == "polynomial-vd-random":
+            mask_1d = polynomial_variable_density_mask(
+                width,
+                args.acceleration,
+                center_columns,
+                derived_seed,
+                exponent=args.vd_exponent,
+                density_floor=args.vd_floor,
+            )
+            recorded_seed = derived_seed
+        else:
+            mask_function = (
+                exact_random_mask
+                if args.mask_mode == "exact-random"
+                else fastmri_random_mask
+            )
+            mask_1d = mask_function(
+                width,
+                args.acceleration,
+                args.center_fraction,
+                derived_seed,
+            )
+            recorded_seed = derived_seed
+        center = center_indices(width, center_columns)
+        if args.mask_mode != "fastmri-random":
+            validate_cartesian_mask(mask_1d, target_columns(width, args.acceleration), center)
+        metadata = mask_metadata(
+            mask_1d,
+            mode=args.mask_mode,
+            acceleration=args.acceleration,
+            center_columns=center_columns,
+            seed=recorded_seed,
+            exponent=(args.vd_exponent if args.mask_mode == "polynomial-vd-random" else None),
+            density_floor=(args.vd_floor if args.mask_mode == "polynomial-vd-random" else None),
         )
+        mask_stem = f"{volume_index:03d}-{input_h5.stem}"
+        np.savez_compressed(
+            args.output_dir / "masks" / f"{mask_stem}.npz",
+            mask=mask_1d,
+            sampled_indices=np.flatnonzero(mask_1d),
+        )
+        (args.output_dir / "masks" / f"{mask_stem}.json").write_text(
+            json.dumps(metadata, indent=2) + "\n"
+        )
+        plt.figure(figsize=(10, 1.4))
+        plt.imshow(mask_1d[None, :], cmap="gray", aspect="auto", interpolation="nearest")
+        plt.yticks([])
+        plt.xlabel("phase-encoding column")
+        plt.title(
+            f"{args.mask_mode}, nominal R{args.acceleration}, "
+            f"achieved R={metadata['achieved_acceleration']:.3f}"
+        )
+        plt.tight_layout()
+        plt.savefig(args.output_dir / "masks" / f"{mask_stem}.png", dpi=150)
+        plt.close()
         mask = torch.from_numpy(mask_1d).reshape(1, 1, 1, -1).expand(
             1, 2, crop_shape[0], crop_shape[1]
         ).to(device)
@@ -323,6 +402,7 @@ def main() -> None:
                 "mask_sampled_columns": int(mask_1d.sum()),
                 "mask_achieved_acceleration": float(mask_1d.size / mask_1d.sum()),
                 "mask_mode": args.mask_mode,
+                "mask_metadata": metadata,
                 "normalization_scales": [],
                 "esc": esc,
             }
@@ -399,8 +479,16 @@ def main() -> None:
         "volumes": len(files),
         "slices": len(records),
         "acceleration": args.acceleration,
+        "seed": args.seed,
         "center_fraction": args.center_fraction,
         "mask_mode": args.mask_mode,
+        "center_columns": args.center_columns,
+        "vd_exponent": (
+            args.vd_exponent if args.mask_mode == "polynomial-vd-random" else None
+        ),
+        "vd_floor": (
+            args.vd_floor if args.mask_mode == "polynomial-vd-random" else None
+        ),
         "noise_sigma": args.noise_sigma,
         "synthetic_noise_added": True,
         "normalization_mode": args.normalization_mode,
