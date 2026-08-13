@@ -27,7 +27,14 @@ SUMMARY_DIR="$RUN_ROOT/summary/job-${SLURM_JOB_ID}"
 export PYTHONPATH="$REPO_ROOT${PYTHONPATH:+:$PYTHONPATH}"
 
 case "$RUN_ID:$ACCELERATION:$CENTER_FRACTION" in
-    ram-013:4:0.08|ram-014:8:0.04) ;;
+    ram-013:4:0.08|ram-014:8:0.04)
+        PURPOSE="approximate the RAM paper fastMRI MRI training distribution at R${ACCELERATION}"
+        PAPER_RELATION="in-distribution acceleration"
+        ;;
+    ram-015:16:0.02|ram-016:24:0.01)
+        PURPOSE="test high-acceleration generalization beyond the RAM paper training distribution at R${ACCELERATION}"
+        PAPER_RELATION="out-of-distribution acceleration"
+        ;;
     *) echo "Unsupported paper condition: $RUN_ID R$ACCELERATION CF=$CENTER_FRACTION" >&2; exit 2 ;;
 esac
 
@@ -70,8 +77,9 @@ cat > "$RUN_ROOT/config.yaml" <<EOF
 experiment:
   id: $RUN_ID
   parent_run: ram-003
-  purpose: approximate the RAM paper fastMRI MRI training distribution at R${ACCELERATION}
-  deviation_from_paper: zero-filled magnitude p99.5 normalization per slice
+  purpose: $PURPOSE
+  paper_relation: $PAPER_RELATION
+  normalization_note: zero-filled magnitude p99.5 normalization per slice
   slurm_job_id: ${SLURM_JOB_ID}
   git_branch: $(git branch --show-current)
   git_commit: $(git rev-parse HEAD)
