@@ -1,8 +1,8 @@
 #!/bin/bash
 
-# ram-010: one fastMRI brain volume, exact Cartesian R8/R16/R24, ZF p99.5.
+# ram-010: one fastMRI brain volume, fastMRI random Cartesian R8/R16/R24, ZF p99.5.
 
-#SBATCH --job-name=ram010_cart
+#SBATCH --job-name=ram010_rand
 #SBATCH --gres=gpu:1
 #SBATCH --cpus-per-task=8
 #SBATCH --mem=64G
@@ -51,8 +51,9 @@ printf '%s\n' "$CASE" > "$RUN_ROOT/cases.txt"
 cat > "$RUN_ROOT/config.yaml" <<EOF
 experiment:
   id: ram-010
-  parent_runs: [ram-004, ram-006, ram-008]
-  purpose: single-volume exact Cartesian acceleration comparison with ZF p99.5 scaling
+  parent_run: ram-002
+  purpose: single-volume fastMRI random Cartesian acceleration comparison with ZF p99.5 scaling
+  excludes_prior_job: 42509 (wrong exact-equispaced mask)
   slurm_job_id: ${SLURM_JOB_ID}
   git_branch: $(git branch --show-current)
   git_commit: $(git rev-parse HEAD)
@@ -70,13 +71,12 @@ preprocessing:
   normalization: zero-filled magnitude p99.5 per slice
 mask:
   dimensionality: 1D Cartesian
-  mode: exact-equispaced
+  mode: fastmri-random
   nominal_accelerations: [8, 16, 24]
   image_width: 320
-  sampled_columns: [40, 20, 13]
-  center_columns: [13, 6, 3]
   center_fractions: [0.04, 0.02, 0.01]
-  seed: null
+  base_seed: 0
+  per_volume_seed: sha256(filename + base_seed)
 model:
   implementation: deepinv.models.RAM
   minimum_deepinv_version: 0.4.1
@@ -101,20 +101,18 @@ nvidia-smi | tee -a "$RUN_LOG"
 "$PYTHON_BIN" -c 'import torch, deepinv, ram.adapters; print("Torch:", torch.__version__); print("DeepInverse:", deepinv.__version__); print("RAM:", ram.__file__); print("CUDA:", torch.version.cuda)' | tee -a "$RUN_LOG"
 
 ACCELERATIONS=(8 16 24)
-CENTER_COLUMNS=(13 6 3)
 CENTER_FRACTIONS=(0.04 0.02 0.01)
 
 for index in "${!ACCELERATIONS[@]}"; do
     acceleration="${ACCELERATIONS[$index]}"
-    center_columns="${CENTER_COLUMNS[$index]}"
     center_fraction="${CENTER_FRACTIONS[$index]}"
-    output_dir="$RUN_ROOT/output/exact-equispaced-r${acceleration}-job${SLURM_JOB_ID}"
+    output_dir="$RUN_ROOT/output/fastmri-random-r${acceleration}-seed0-job${SLURM_JOB_ID}"
     if [[ -e "$output_dir" ]]; then
         echo "Refusing to overwrite $output_dir" >&2
         exit 2
     fi
 
-    echo "Starting R${acceleration}: center_columns=${center_columns}" | tee -a "$RUN_LOG"
+    echo "Starting R${acceleration}: fastMRI random Cartesian, center_fraction=${center_fraction}, base_seed=0" | tee -a "$RUN_LOG"
     "$PYTHON_BIN" scripts/benchmark_fastmri_brain_vcc_ram.py \
         --data-root "$DATA_ROOT" \
         --cases-file "$RUN_ROOT/cases.txt" \
@@ -123,8 +121,7 @@ for index in "${!ACCELERATIONS[@]}"; do
         --checkpoint-sha256 "$CHECKPOINT_SHA256" \
         --acceleration "$acceleration" \
         --center-fraction "$center_fraction" \
-        --center-columns "$center_columns" \
-        --mask-mode exact-equispaced \
+        --mask-mode fastmri-random \
         --normalization-mode zf-percentile \
         --normalization-percentile 99.5 \
         --noise-sigma 0.0005 \
