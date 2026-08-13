@@ -51,8 +51,11 @@ printf '%s\n' "$CASE" > "$RUN_ROOT/cases.txt"
 cat > "$RUN_ROOT/config.yaml" <<EOF
 experiment:
   id: ram-010
-  parent_run: ram-002
-  purpose: single-volume fastMRI random Cartesian acceleration comparison with ZF p99.5 scaling
+  parent_run: ram-001
+  purpose: ram-001 replication at R8/R16/R24 with ZF p99.5 replacing fixed 0.005 normalization
+  differences_from_parent:
+    accelerations: [8, 16, 24]
+    normalization: zero-filled magnitude p99.5 per slice
   excludes_prior_job: 42509 (wrong exact-equispaced mask)
   slurm_job_id: ${SLURM_JOB_ID}
   git_branch: $(git branch --show-current)
@@ -86,7 +89,7 @@ model:
   post_ram_data_consistency: false
 output:
   root: $RUN_ROOT/output
-  previews_per_acceleration: 3
+  previews_per_acceleration: 6
 logs:
   run: $RUN_LOG
   stdout: $RUN_ROOT/logs/slurm-${SLURM_JOB_ID}.out
@@ -130,7 +133,7 @@ for index in "${!ACCELERATIONS[@]}"; do
         --edge-fraction 0.15 \
         --esc-max-iterations 60 \
         --seed 0 \
-        --save-previews 3 \
+        --save-previews 6 \
         --device cuda 2>&1 | tee -a "$RUN_LOG"
     cp "$RUN_LOG" "$output_dir/run.log"
 done
