@@ -63,6 +63,34 @@ def tensor_sha256(tensor: torch.Tensor) -> str:
     return hashlib.sha256(array.tobytes()).hexdigest()
 
 
+def simulate_birdcage_maps(
+    n_coils: int,
+    img_size: tuple[int, int],
+    device: torch.device,
+    radius: float = 1.5,
+) -> torch.Tensor:
+    """Generate normalized 2D birdcage maps without SigPy at runtime.
+
+    This is the 2D formula used by ``sigpy.mri.birdcage_maps``. Keeping the
+    small deterministic implementation here lets the offline benchmark avoid
+    adding an otherwise unused optional dependency to the server environment.
+    """
+    height, width = img_size
+    coil = np.arange(n_coils, dtype=np.float64)[:, None, None]
+    y, x = np.mgrid[:height, :width]
+    angle = coil * (2.0 * np.pi / n_coils)
+    coil_x = radius * np.cos(angle)
+    coil_y = radius * np.sin(angle)
+    coil_phase = -angle
+    x_relative = (x[None] - width / 2.0) / (width / 2.0) - coil_x
+    y_relative = (y[None] - height / 2.0) / (height / 2.0) - coil_y
+    distance = np.sqrt(x_relative**2 + y_relative**2)
+    phase = np.arctan2(x_relative, -y_relative) + coil_phase
+    maps = (1.0 / distance) * np.exp(1j * phase)
+    maps /= np.sqrt(np.sum(np.abs(maps) ** 2, axis=0, keepdims=True))
+    return torch.from_numpy(maps.astype(np.complex64)).to(device)
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--input-h5", type=Path, required=True)
@@ -138,10 +166,12 @@ def main() -> None:
         .to(device)
     )
 
-    # Passing an integer asks DeepInverse to simulate simple birdcage coil maps.
+    coil_maps_input = simulate_birdcage_maps(
+        args.coils, crop_shape, device=device
+    )
     physics = dinv.physics.MultiCoilMRI(
         mask=mask,
-        coil_maps=args.coils,
+        coil_maps=coil_maps_input,
         img_size=crop_shape,
         noise_model=dinv.physics.GaussianNoise(sigma=args.noise_sigma),
         device=device,
@@ -258,7 +288,10 @@ def main() -> None:
             "dataset_family": "fastMRI brain validation",
         },
         "implementation_assumptions_not_disclosed_by_paper": {
-            "coil_map_generator": "DeepInverse integer coil_maps option (simple birdcage)",
+            "coil_map_generator": (
+                "local deterministic implementation of the 2D "
+                "sigpy.mri.birdcage_maps formula"
+            ),
             "mask": "fastMRI-style random Cartesian R8, center fraction 0.04",
             "normalization": "noiseless multicoil ZF magnitude p99.5 per slice",
             "multicoil_noise_sigma": args.noise_sigma,

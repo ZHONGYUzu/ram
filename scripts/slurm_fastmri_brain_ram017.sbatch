@@ -67,7 +67,7 @@ normalization:
 physics:
   implementation: deepinv.physics.MultiCoilMRI
   simulated_coils: 15
-  coil_map_generator: DeepInverse integer coil_maps option (simple birdcage)
+  coil_map_generator: local deterministic implementation of the 2D sigpy.mri.birdcage_maps formula
   mask: fastMRI-style random Cartesian
   nominal_acceleration: 8
   center_fraction: 0.04
