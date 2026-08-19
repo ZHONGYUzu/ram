@@ -28,12 +28,14 @@ from validate_fastmri_ram import (
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--train-h5", type=Path, required=True)
-    parser.add_argument("--validation-h5", type=Path, required=True)
+    parser.add_argument("--train-h5", type=Path, nargs="+", required=True)
+    parser.add_argument("--validation-h5", type=Path, nargs="+", required=True)
     parser.add_argument("--checkpoint", type=Path, required=True)
     parser.add_argument("--output-dir", type=Path, required=True)
     parser.add_argument("--train-slices", type=int, nargs="+", default=(7, 8, 9))
     parser.add_argument("--validation-slices", type=int, nargs="+", default=(8,))
+    parser.add_argument("--train-mask-seeds", type=int, nargs="+", default=(0,))
+    parser.add_argument("--validation-mask-seeds", type=int, nargs="+", default=(0,))
     parser.add_argument("--reference-key", default="reference_acl15")
     parser.add_argument("--smaps-key", default="smaps_acl15")
     parser.add_argument("--map-index", type=int, default=0)
@@ -52,7 +54,7 @@ def parse_args() -> argparse.Namespace:
 
 
 def validate_args(args: argparse.Namespace, parser_error=ValueError) -> None:
-    for path in (args.train_h5, args.validation_h5, args.checkpoint):
+    for path in (*args.train_h5, *args.validation_h5, args.checkpoint):
         if not path.is_file():
             raise parser_error(f"Required input does not exist: {path}")
     if args.output_dir.exists() and any(args.output_dir.iterdir()):
@@ -258,36 +260,54 @@ def main() -> None:
     trainable_parameters, trainable_names = select_trainable_parameters(model)
     optimizer = torch.optim.AdamW(trainable_parameters, lr=args.learning_rate)
 
-    train_cases = [
-        (
-            args.train_h5.stem,
-            slice_index,
-            *make_case(args, args.train_h5, slice_index, args.seed + index, device),
-        )
-        for index, slice_index in enumerate(args.train_slices)
+    train_specs = [
+        (input_h5, slice_index, mask_seed)
+        for input_h5 in args.train_h5
+        for slice_index in args.train_slices
+        for mask_seed in args.train_mask_seeds
     ]
     validation_cases = [
         (
-            args.validation_h5.stem,
+            input_h5.stem,
             slice_index,
             *make_case(
                 args,
-                args.validation_h5,
+                input_h5,
                 slice_index,
-                args.seed + 1000 + index,
+                args.seed
+                + 1_000_000
+                + volume_index * 10_000
+                + slice_index * 100
+                + mask_seed,
                 device,
             ),
         )
-        for index, slice_index in enumerate(args.validation_slices)
+        for volume_index, input_h5 in enumerate(args.validation_h5)
+        for slice_index in args.validation_slices
+        for mask_seed in args.validation_mask_seeds
     ]
 
     metric_rows = evaluate(model, validation_cases, "pretrained")
-    training_rows: list[dict[str, float | int]] = []
+    training_rows: list[dict[str, float | int | str]] = []
     best_psnr = -math.inf
     best_state: dict[str, torch.Tensor] | None = None
     for epoch in range(1, args.epochs + 1):
         model.train()
-        for step, (_, _, target, y, physics, _) in enumerate(train_cases, start=1):
+        epoch_specs = list(train_specs)
+        np.random.default_rng(args.seed + epoch).shuffle(epoch_specs)
+        for step, (input_h5, slice_index, mask_seed) in enumerate(
+            epoch_specs, start=1
+        ):
+            case_seed = (
+                args.seed
+                + epoch * 1_000_000
+                + args.train_h5.index(input_h5) * 10_000
+                + slice_index * 100
+                + mask_seed
+            )
+            target, y, physics, _ = make_case(
+                args, input_h5, slice_index, case_seed, device
+            )
             optimizer.zero_grad(set_to_none=True)
             prediction = model(y, physics)
             loss, components = supervised_loss(
@@ -304,6 +324,10 @@ def main() -> None:
             row = {
                 "epoch": epoch,
                 "step": step,
+                "volume": input_h5.stem,
+                "slice": slice_index,
+                "mask_seed": mask_seed,
+                "case_seed": case_seed,
                 "loss": float(loss.detach()),
                 "gradient_norm": float(gradient_norm),
                 **components,
@@ -344,10 +368,14 @@ def main() -> None:
         writer.writeheader()
         writer.writerows(metric_rows)
 
-    serializable_args = {
-        key: str(value) if isinstance(value, Path) else value
-        for key, value in vars(args).items()
-    }
+    serializable_args = {}
+    for key, value in vars(args).items():
+        if isinstance(value, Path):
+            serializable_args[key] = str(value)
+        elif isinstance(value, list) and value and isinstance(value[0], Path):
+            serializable_args[key] = [str(item) for item in value]
+        else:
+            serializable_args[key] = value
     summary = {
         "configuration": serializable_args,
         "git_commit": git_output("rev-parse", "HEAD"),
