@@ -21,6 +21,7 @@ ESPIRIT_ROOT=/mnt/qdata/rawdata/fastMRI/brain/multicoil_val_espirit
 CHECKPOINT=/mnt/ceph/vol_02_home_students/studxuzho1/.cache/huggingface/hub/models--mterris--ram/blobs/1292571adc3d15f9db5e7f5bd92265599030b6b816637367d0f5992d8dbdef7a
 RESULTS_ROOT=/home/students/studxuzho1/ram-results
 EXPECTED_BRANCH=feature/fastmri-brain-adapter
+export PYTHONPATH="$REPO_ROOT${PYTHONPATH:+:$PYTHONPATH}"
 
 TRAIN_H5="$ESPIRIT_ROOT/file_brain_AXFLAIR_200_6002471.h5"
 VALIDATION_H5="$ESPIRIT_ROOT/file_brain_AXFLAIR_200_6002462.h5"
@@ -55,6 +56,7 @@ echo "Training input: $TRAIN_H5 slices 7 8 9"
 echo "Validation input: $VALIDATION_H5 slice 8"
 echo "Output: $OUTPUT_DIR"
 nvidia-smi
+"$PYTHON_BIN" -c 'import ram, ram.adapters; print("RAM package:", ram.__file__); print("RAM adapters:", ram.adapters.__file__)'
 
 "$PYTHON_BIN" scripts/finetune_fastmri_brain_smoke.py \
     --train-h5 "$TRAIN_H5" \
