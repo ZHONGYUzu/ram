@@ -60,14 +60,3 @@ ram/demo/
 
 tmp*
 *.egg-info/
-
-# Server synchronization: keep experiment code, exclude bulky artifacts.
-node_modules/
-**/output/
-**/outputs/
-**/checkpoints/
-*.mat
-*.hdf5
-*.npy
-*.npz
-*.safetensors

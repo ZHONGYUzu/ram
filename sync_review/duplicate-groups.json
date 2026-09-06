@@ -1,0 +1,18 @@
+[
+  {
+    "canonical_candidate": "scripts/validate_fastmri_multicoil_ram.py",
+    "distinct_contents": 1,
+    "files": [
+      {
+        "path": "scripts/validate_fastmri_multicoil_ram.py",
+        "sha256": "ee875f4fe20bb2c5b10ff315f9c3d15c4faa9ab1ad3c79197cc8ab9302ca0cfb",
+        "server_path": "/home/students/studxuzho1/ram/scripts/validate_fastmri_multicoil_ram.py"
+      },
+      {
+        "path": "server_archive/ram-local-backups/validate_fastmri_multicoil_ram.py.server-old",
+        "sha256": "ee875f4fe20bb2c5b10ff315f9c3d15c4faa9ab1ad3c79197cc8ab9302ca0cfb",
+        "server_path": "/home/students/studxuzho1/ram-local-backups/validate_fastmri_multicoil_ram.py.server-old"
+      }
+    ]
+  }
+]

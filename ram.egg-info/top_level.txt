@@ -1,0 +1,3 @@
+imgs
+ram
+scripts

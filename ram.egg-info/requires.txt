@@ -1,0 +1,6 @@
+deepinv>=0.3.0
+h5py
+scipy
+torch
+huggingface_hub
+torchvision
