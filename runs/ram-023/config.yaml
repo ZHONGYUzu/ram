@@ -1,0 +1,40 @@
+experiment: ram-023
+purpose: Gaussian-noise stability test paired with ram-022 clean baseline
+baseline: ram-022
+
+input:
+  raw_h5: /mnt/qdata/rawdata/fastMRI/brain/multicoil_val/file_brain_AXFLAIR_200_6002477.h5
+  espirit_h5: /mnt/qdata/rawdata/fastMRI/brain/multicoil_val_espirit/file_brain_AXFLAIR_200_6002477.h5
+  slice_zero_based: 8
+  reference_key: reference_acl15
+  smaps_key: smaps_acl15
+  map_index: 0
+  crop_size: 320
+
+sampling:
+  acceleration: 4
+  center_fraction: 0.08
+  mask_seed: 0
+  measurement_source: measured
+
+normalization:
+  source: ram-022 clean masked zero-filled magnitude p99.5
+  fixed_scale: 0.00015763349074404687
+
+perturbation:
+  type: zero-mean complex Gaussian noise
+  domain: sampled measured k-space before normalization
+  relative_complex_rms: 0.01
+  noise_seed: 23001
+  sampled_lines_only: true
+
+model:
+  checkpoint: /mnt/ceph/vol_02_home_students/studxuzho1/.cache/huggingface/hub/models--mterris--ram/blobs/1292571adc3d15f9db5e7f5bd92265599030b6b816637367d0f5992d8dbdef7a
+  checkpoint_sha256: 1292571adc3d15f9db5e7f5bd92265599030b6b816637367d0f5992d8dbdef7a
+  huggingface_offline: true
+  noise_conditioning_sigma: 0.001
+  post_data_consistency: none
+
+paired_control:
+  fixed_from_ram_022: [data, slice, crop, mask, mask_seed, checkpoint, normalization_scale]
+  only_changed_variable: synthetic input noise

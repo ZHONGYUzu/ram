@@ -1,0 +1,48 @@
+experiment: ram-025
+purpose: formal 30-volume Gaussian-noise stability evaluation on fastMRI brain validation data
+calibration_experiment: ram-024
+
+sampling:
+  paired_raw_espirit_population: 491 volumes
+  calibration_volumes_excluded: 5
+  strata:
+    AXFLAIR: {available: 93, selected: 6}
+    AXT1: {available: 34, selected: 2}
+    AXT1PRE: {available: 77, selected: 5}
+    AXT1POST: {available: 287, selected: 17}
+  volume_selection: deterministic SHA-256 ordering using prefix ram-025-volume
+  slices_per_volume: 3
+  slice_selection: deterministic SHA-256 ordering using prefix ram-025-slice within indices 2 through N-3
+  total_volumes: 30
+  total_cases: 90
+  manifest: manifest.tsv
+
+paired_conditions:
+  clean: no synthetic input noise
+  noisy:
+    type: zero-mean complex Gaussian noise
+    domain: sampled measured k-space before normalization
+    relative_complex_rms: 0.05
+    equivalent_input_snr_db: 26.02
+    sampled_lines_only: true
+  normalization: each noisy case reuses its paired clean masked zero-filled p99.5 scale
+
+fixed_settings:
+  crop_size: 320
+  acceleration: 4
+  center_fraction: 0.08
+  mask_seed: 0
+  measurement_source: measured
+  reference_key: reference_acl15
+  smaps_key: smaps_acl15
+  map_index: 0
+  noise_conditioning_sigma: 0.001
+  post_data_consistency: none
+  checkpoint: /mnt/ceph/vol_02_home_students/studxuzho1/.cache/huggingface/hub/models--mterris--ram/blobs/1292571adc3d15f9db5e7f5bd92265599030b6b816637367d0f5992d8dbdef7a
+  checkpoint_sha256: 1292571adc3d15f9db5e7f5bd92265599030b6b816637367d0f5992d8dbdef7a
+  huggingface_offline: true
+
+execution:
+  slurm_array: 0-29%2
+  one_array_task_per_volume: true
+  dependent_summary: afterok

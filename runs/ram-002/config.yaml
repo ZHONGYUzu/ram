@@ -1,0 +1,41 @@
+experiment:
+  id: ram-002
+  parent_run: ram-001
+  purpose: exact Cartesian R4 and zero-filled p99.5 scaling diagnostic
+  slurm_job_id: 42472
+  git_branch: feature/fastmri-brain-adapter
+  git_commit: d592cc005d0936d951b22b2b1c78c455098e5486
+  downloads_allowed: false
+data:
+  dataset: fastMRI brain multicoil validation
+  data_root: /mnt/qdata/rawdata/fastMRI/brain/multicoil_val
+  cases_file: /home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-002/cases.txt
+  cases: [file_brain_AXFLAIR_200_6002462.h5]
+  selected_slices: [2, 8, 13]
+preprocessing:
+  coil_combination: volume-level ESC/VCC
+  esc_max_iterations: 60
+  normalization: zero-filled magnitude p99.5 per slice
+mask:
+  type: exact-random Cartesian
+  acceleration: 4
+  image_width: 320
+  sampled_columns: 80
+  center_fraction: 0.08
+  low_frequency_columns: 26
+  seed: 0
+model:
+  implementation: deepinv.models.RAM
+  minimum_deepinv_version: 0.4.1
+  checkpoint: /mnt/ceph/vol_02_home_students/studxuzho1/.cache/huggingface/hub/models--mterris--ram/blobs/1292571adc3d15f9db5e7f5bd92265599030b6b816637367d0f5992d8dbdef7a
+  checkpoint_sha256: 1292571adc3d15f9db5e7f5bd92265599030b6b816637367d0f5992d8dbdef7a
+  noise_sigma: 0.0005
+output:
+  directory: /home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-002/output/debug-r4-job42472
+  previews: 3
+  slice_metrics: true
+  summary: true
+logs:
+  run: /home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-002/logs/run-42472.log
+  stdout: /home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-002/logs/slurm-42472.out
+  stderr: /home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-002/logs/slurm-42472.err

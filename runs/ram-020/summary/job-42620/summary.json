@@ -1,0 +1,662 @@
+{
+  "run_id": "ram-020",
+  "condition": "axt1post-simulated-multicoil-r8",
+  "input_directories": 15,
+  "volumes": [
+    "file_brain_AXT1POST_200_6001976.h5",
+    "file_brain_AXT1POST_200_6001979.h5",
+    "file_brain_AXT1POST_200_6001982.h5",
+    "file_brain_AXT1POST_200_6001988.h5",
+    "file_brain_AXT1POST_200_6002016.h5"
+  ],
+  "base_seeds": [
+    0,
+    1,
+    2
+  ],
+  "arms": [
+    "conditioning_only",
+    "noisy"
+  ],
+  "aggregation_by_arm": {
+    "conditioning_only": {
+      "rows": 45,
+      "unique_slice_mask_cases": 45,
+      "zf_psnr": {
+        "mean": 24.85478901333279,
+        "std": 1.9652629838564553,
+        "median": 24.760019302368164
+      },
+      "zf_ssim": {
+        "mean": 0.5575081679556105,
+        "std": 0.03784098140350932,
+        "median": 0.5509052276611328
+      },
+      "zf_nmse": {
+        "mean": 0.08813654093278779,
+        "std": 0.03919257240637335,
+        "median": 0.06684248149394989
+      },
+      "ram_psnr": {
+        "mean": 29.359975560506186,
+        "std": 1.2808591336688147,
+        "median": 29.325164794921875
+      },
+      "ram_ssim": {
+        "mean": 0.584380175669988,
+        "std": 0.0682134938046861,
+        "median": 0.5813835263252258
+      },
+      "ram_nmse": {
+        "mean": 0.02967784698638651,
+        "std": 0.008929588403486115,
+        "median": 0.02655019611120224
+      },
+      "delta_psnr": {
+        "mean": 4.505186547173394,
+        "std": 2.3596637062904127,
+        "median": 4.00648307800293
+      },
+      "delta_ssim": {
+        "mean": 0.02687200771437751,
+        "std": 0.04941847318813553,
+        "median": 0.021381735801696777
+      },
+      "delta_nmse": {
+        "mean": -0.058458693946401276,
+        "std": 0.041549521158574874,
+        "median": -0.0387513879686594
+      },
+      "win_rates": {
+        "psnr": 1.0,
+        "ssim": 0.6666666666666666,
+        "nmse": 1.0,
+        "all_three": 0.6666666666666666
+      }
+    },
+    "noisy": {
+      "rows": 45,
+      "unique_slice_mask_cases": 45,
+      "zf_psnr": {
+        "mean": 24.85479990641276,
+        "std": 1.9652661595431278,
+        "median": 24.76005744934082
+      },
+      "zf_ssim": {
+        "mean": 0.5575156735049354,
+        "std": 0.037840216304383556,
+        "median": 0.5509047508239746
+      },
+      "zf_nmse": {
+        "mean": 0.08813633935319053,
+        "std": 0.03919251070359137,
+        "median": 0.06684233993291855
+      },
+      "ram_psnr": {
+        "mean": 29.35999649895562,
+        "std": 1.2808806091529288,
+        "median": 29.326250076293945
+      },
+      "ram_ssim": {
+        "mean": 0.584422536028756,
+        "std": 0.06819873472836241,
+        "median": 0.581378698348999
+      },
+      "ram_nmse": {
+        "mean": 0.029676882301767668,
+        "std": 0.00892643800585404,
+        "median": 0.026528120040893555
+      },
+      "delta_psnr": {
+        "mean": 4.50519659254286,
+        "std": 2.359428975648287,
+        "median": 4.00633430480957
+      },
+      "delta_ssim": {
+        "mean": 0.026906862523820664,
+        "std": 0.04940006453696562,
+        "median": 0.02137213945388794
+      },
+      "delta_nmse": {
+        "mean": -0.05845945705142286,
+        "std": 0.04154753698634543,
+        "median": -0.03872133977711201
+      },
+      "win_rates": {
+        "psnr": 1.0,
+        "ssim": 0.6666666666666666,
+        "nmse": 1.0,
+        "all_three": 0.6666666666666666
+      }
+    }
+  },
+  "aggregation_by_seed_and_arm": {
+    "seed0:conditioning_only": {
+      "rows": 15,
+      "unique_slice_mask_cases": 15,
+      "zf_psnr": {
+        "mean": 24.774059677124022,
+        "std": 1.9678599815565108,
+        "median": 24.6982479095459
+      },
+      "zf_ssim": {
+        "mean": 0.5505372087160746,
+        "std": 0.031224951381985045,
+        "median": 0.5448041558265686
+      },
+      "zf_nmse": {
+        "mean": 0.08989673703908921,
+        "std": 0.040335039519145945,
+        "median": 0.06691684573888779
+      },
+      "ram_psnr": {
+        "mean": 29.451387278238933,
+        "std": 0.7660913927037751,
+        "median": 29.274763107299805
+      },
+      "ram_ssim": {
+        "mean": 0.570277351140976,
+        "std": 0.057847283990461476,
+        "median": 0.5603235363960266
+      },
+      "ram_nmse": {
+        "mean": 0.028791262954473495,
+        "std": 0.007744220441685772,
+        "median": 0.024961374700069427
+      },
+      "delta_psnr": {
+        "mean": 4.677327601114909,
+        "std": 2.26091843444492,
+        "median": 3.800180435180664
+      },
+      "delta_ssim": {
+        "mean": 0.019740142424901328,
+        "std": 0.04748807112431691,
+        "median": 0.021381735801696777
+      },
+      "delta_nmse": {
+        "mean": -0.06110547408461571,
+        "std": 0.042275390993759765,
+        "median": -0.0387513879686594
+      },
+      "win_rates": {
+        "psnr": 1.0,
+        "ssim": 0.6666666666666666,
+        "nmse": 1.0,
+        "all_three": 0.6666666666666666
+      }
+    },
+    "seed0:noisy": {
+      "rows": 15,
+      "unique_slice_mask_cases": 15,
+      "zf_psnr": {
+        "mean": 24.774072011311848,
+        "std": 1.9678857713034046,
+        "median": 24.6982364654541
+      },
+      "zf_ssim": {
+        "mean": 0.550542950630188,
+        "std": 0.031222545597074196,
+        "median": 0.544787585735321
+      },
+      "zf_nmse": {
+        "mean": 0.08989654804269473,
+        "std": 0.040335043818019854,
+        "median": 0.06691616773605347
+      },
+      "ram_psnr": {
+        "mean": 29.451245498657226,
+        "std": 0.7662423649206324,
+        "median": 29.273229598999023
+      },
+      "ram_ssim": {
+        "mean": 0.5703110257784526,
+        "std": 0.05782459333312935,
+        "median": 0.5603314638137817
+      },
+      "ram_nmse": {
+        "mean": 0.0287905087073644,
+        "std": 0.0077345650602669,
+        "median": 0.02495836839079857
+      },
+      "delta_psnr": {
+        "mean": 4.677173487345377,
+        "std": 2.2605683894523816,
+        "median": 3.802478790283203
+      },
+      "delta_ssim": {
+        "mean": 0.019768075148264567,
+        "std": 0.04745590407855548,
+        "median": 0.02137213945388794
+      },
+      "delta_nmse": {
+        "mean": -0.06110603933533033,
+        "std": 0.042271614912565265,
+        "median": -0.03872133977711201
+      },
+      "win_rates": {
+        "psnr": 1.0,
+        "ssim": 0.6666666666666666,
+        "nmse": 1.0,
+        "all_three": 0.6666666666666666
+      }
+    },
+    "seed1:conditioning_only": {
+      "rows": 15,
+      "unique_slice_mask_cases": 15,
+      "zf_psnr": {
+        "mean": 24.916762415568034,
+        "std": 1.9374697368029652,
+        "median": 24.81696891784668
+      },
+      "zf_ssim": {
+        "mean": 0.5591225902239482,
+        "std": 0.03522939933545593,
+        "median": 0.5529685020446777
+      },
+      "zf_nmse": {
+        "mean": 0.08667349815368652,
+        "std": 0.03804642578202835,
+        "median": 0.06634330004453659
+      },
+      "ram_psnr": {
+        "mean": 29.623340352376303,
+        "std": 0.8670200155055788,
+        "median": 29.454360961914062
+      },
+      "ram_ssim": {
+        "mean": 0.5883647799491882,
+        "std": 0.06242823462726973,
+        "median": 0.5816270112991333
+      },
+      "ram_nmse": {
+        "mean": 0.027357523888349534,
+        "std": 0.005646351091911138,
+        "median": 0.026182871311903
+      },
+      "delta_psnr": {
+        "mean": 4.7065779368082685,
+        "std": 2.2021906464124292,
+        "median": 4.00855827331543
+      },
+      "delta_ssim": {
+        "mean": 0.02924218972524007,
+        "std": 0.04926320022703831,
+        "median": 0.030994415283203125
+      },
+      "delta_nmse": {
+        "mean": -0.05931597426533699,
+        "std": 0.04020264260863095,
+        "median": -0.037971679121255875
+      },
+      "win_rates": {
+        "psnr": 1.0,
+        "ssim": 0.6666666666666666,
+        "nmse": 1.0,
+        "all_three": 0.6666666666666666
+      }
+    },
+    "seed1:noisy": {
+      "rows": 15,
+      "unique_slice_mask_cases": 15,
+      "zf_psnr": {
+        "mean": 24.91676483154297,
+        "std": 1.937452025982102,
+        "median": 24.817066192626953
+      },
+      "zf_ssim": {
+        "mean": 0.5591322680314382,
+        "std": 0.035229307741912616,
+        "median": 0.5529907941818237
+      },
+      "zf_nmse": {
+        "mean": 0.08667340303460756,
+        "std": 0.038046297977056644,
+        "median": 0.06634248048067093
+      },
+      "ram_psnr": {
+        "mean": 29.623327000935873,
+        "std": 0.8669175675596306,
+        "median": 29.452959060668945
+      },
+      "ram_ssim": {
+        "mean": 0.5884303748607635,
+        "std": 0.062424237835092225,
+        "median": 0.5816965103149414
+      },
+      "ram_nmse": {
+        "mean": 0.027356894314289094,
+        "std": 0.005642711619355383,
+        "median": 0.026194531470537186
+      },
+      "delta_psnr": {
+        "mean": 4.706562169392904,
+        "std": 2.202159535273564,
+        "median": 4.01231575012207
+      },
+      "delta_ssim": {
+        "mean": 0.02929810682932536,
+        "std": 0.04926729311184397,
+        "median": 0.03108072280883789
+      },
+      "delta_nmse": {
+        "mean": -0.059316508720318475,
+        "std": 0.04020183846008282,
+        "median": -0.03797456622123718
+      },
+      "win_rates": {
+        "psnr": 1.0,
+        "ssim": 0.6666666666666666,
+        "nmse": 1.0,
+        "all_three": 0.6666666666666666
+      }
+    },
+    "seed2:conditioning_only": {
+      "rows": 15,
+      "unique_slice_mask_cases": 15,
+      "zf_psnr": {
+        "mean": 24.873544947306314,
+        "std": 1.9874114284016915,
+        "median": 24.643489837646484
+      },
+      "zf_ssim": {
+        "mean": 0.5628647049268086,
+        "std": 0.04471932841729932,
+        "median": 0.5698392987251282
+      },
+      "zf_nmse": {
+        "mean": 0.08783938760558764,
+        "std": 0.03909475902319915,
+        "median": 0.06684248149394989
+      },
+      "ram_psnr": {
+        "mean": 29.00519905090332,
+        "std": 1.8383680654713142,
+        "median": 29.263538360595703
+      },
+      "ram_ssim": {
+        "mean": 0.5944983959197998,
+        "std": 0.07999065167501561,
+        "median": 0.6084557175636292
+      },
+      "ram_nmse": {
+        "mean": 0.032884754116336505,
+        "std": 0.01144133875031327,
+        "median": 0.029612166807055473
+      },
+      "delta_psnr": {
+        "mean": 4.131654103597005,
+        "std": 2.555958741708881,
+        "median": 4.00648307800293
+      },
+      "delta_ssim": {
+        "mean": 0.03163369099299113,
+        "std": 0.05064999297240111,
+        "median": 0.0165024995803833
+      },
+      "delta_nmse": {
+        "mean": -0.054954633489251135,
+        "std": 0.041899977980845854,
+        "median": -0.040271712467074394
+      },
+      "win_rates": {
+        "psnr": 1.0,
+        "ssim": 0.6666666666666666,
+        "nmse": 1.0,
+        "all_three": 0.6666666666666666
+      }
+    },
+    "seed2:noisy": {
+      "rows": 15,
+      "unique_slice_mask_cases": 15,
+      "zf_psnr": {
+        "mean": 24.873562876383463,
+        "std": 1.9874128352256606,
+        "median": 24.64345932006836
+      },
+      "zf_ssim": {
+        "mean": 0.56287180185318,
+        "std": 0.044718833608646716,
+        "median": 0.5698494911193848
+      },
+      "zf_nmse": {
+        "mean": 0.08783906698226929,
+        "std": 0.03909469590657355,
+        "median": 0.06684233993291855
+      },
+      "ram_psnr": {
+        "mean": 29.005416997273763,
+        "std": 1.838449351419993,
+        "median": 29.263660430908203
+      },
+      "ram_ssim": {
+        "mean": 0.594526207447052,
+        "std": 0.07997156696250254,
+        "median": 0.608458936214447
+      },
+      "ram_nmse": {
+        "mean": 0.03288324388364951,
+        "std": 0.011442527619441803,
+        "median": 0.029592689126729965
+      },
+      "delta_psnr": {
+        "mean": 4.131854120890299,
+        "std": 2.5556859083566676,
+        "median": 4.00633430480957
+      },
+      "delta_ssim": {
+        "mean": 0.03165440559387207,
+        "std": 0.05062164187937503,
+        "median": 0.016514182090759277
+      },
+      "delta_nmse": {
+        "mean": -0.05495582309861978,
+        "std": 0.041898709524095565,
+        "median": -0.040270717814564705
+      },
+      "win_rates": {
+        "psnr": 1.0,
+        "ssim": 0.6666666666666666,
+        "nmse": 1.0,
+        "all_three": 0.6666666666666666
+      }
+    }
+  },
+  "inputs": [
+    {
+      "input_dir": "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-020/output/seed0/file_brain_AXT1POST_200_6001976-job42620",
+      "volume": "file_brain_AXT1POST_200_6001976.h5",
+      "acquisition": "AXT1POST",
+      "base_seed": 0,
+      "selected_slices": [
+        2,
+        8,
+        13
+      ],
+      "derived_mask_seed": 860500020,
+      "achieved_acceleration": 9.142857551574707
+    },
+    {
+      "input_dir": "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-020/output/seed0/file_brain_AXT1POST_200_6001979-job42620",
+      "volume": "file_brain_AXT1POST_200_6001979.h5",
+      "acquisition": "AXT1POST",
+      "base_seed": 0,
+      "selected_slices": [
+        2,
+        8,
+        13
+      ],
+      "derived_mask_seed": 1062531075,
+      "achieved_acceleration": 7.2727274894714355
+    },
+    {
+      "input_dir": "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-020/output/seed0/file_brain_AXT1POST_200_6001982-job42620",
+      "volume": "file_brain_AXT1POST_200_6001982.h5",
+      "acquisition": "AXT1POST",
+      "base_seed": 0,
+      "selected_slices": [
+        2,
+        8,
+        13
+      ],
+      "derived_mask_seed": 4285145779,
+      "achieved_acceleration": 8.88888931274414
+    },
+    {
+      "input_dir": "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-020/output/seed0/file_brain_AXT1POST_200_6001988-job42620",
+      "volume": "file_brain_AXT1POST_200_6001988.h5",
+      "acquisition": "AXT1POST",
+      "base_seed": 0,
+      "selected_slices": [
+        2,
+        8,
+        13
+      ],
+      "derived_mask_seed": 3886692799,
+      "achieved_acceleration": 11.034482955932617
+    },
+    {
+      "input_dir": "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-020/output/seed0/file_brain_AXT1POST_200_6002016-job42620",
+      "volume": "file_brain_AXT1POST_200_6002016.h5",
+      "acquisition": "AXT1POST",
+      "base_seed": 0,
+      "selected_slices": [
+        2,
+        8,
+        13
+      ],
+      "derived_mask_seed": 3529151650,
+      "achieved_acceleration": 8.648648262023926
+    },
+    {
+      "input_dir": "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-020/output/seed1/file_brain_AXT1POST_200_6001976-job42620",
+      "volume": "file_brain_AXT1POST_200_6001976.h5",
+      "acquisition": "AXT1POST",
+      "base_seed": 1,
+      "selected_slices": [
+        2,
+        8,
+        13
+      ],
+      "derived_mask_seed": 1821509801,
+      "achieved_acceleration": 8.421052932739258
+    },
+    {
+      "input_dir": "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-020/output/seed1/file_brain_AXT1POST_200_6001979-job42620",
+      "volume": "file_brain_AXT1POST_200_6001979.h5",
+      "acquisition": "AXT1POST",
+      "base_seed": 1,
+      "selected_slices": [
+        2,
+        8,
+        13
+      ],
+      "derived_mask_seed": 99668380,
+      "achieved_acceleration": 8.88888931274414
+    },
+    {
+      "input_dir": "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-020/output/seed1/file_brain_AXT1POST_200_6001982-job42620",
+      "volume": "file_brain_AXT1POST_200_6001982.h5",
+      "acquisition": "AXT1POST",
+      "base_seed": 1,
+      "selected_slices": [
+        2,
+        8,
+        13
+      ],
+      "derived_mask_seed": 1346648542,
+      "achieved_acceleration": 8.0
+    },
+    {
+      "input_dir": "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-020/output/seed1/file_brain_AXT1POST_200_6001988-job42620",
+      "volume": "file_brain_AXT1POST_200_6001988.h5",
+      "acquisition": "AXT1POST",
+      "base_seed": 1,
+      "selected_slices": [
+        2,
+        8,
+        13
+      ],
+      "derived_mask_seed": 3803248193,
+      "achieved_acceleration": 7.61904764175415
+    },
+    {
+      "input_dir": "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-020/output/seed1/file_brain_AXT1POST_200_6002016-job42620",
+      "volume": "file_brain_AXT1POST_200_6002016.h5",
+      "acquisition": "AXT1POST",
+      "base_seed": 1,
+      "selected_slices": [
+        2,
+        8,
+        13
+      ],
+      "derived_mask_seed": 4127538173,
+      "achieved_acceleration": 7.61904764175415
+    },
+    {
+      "input_dir": "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-020/output/seed2/file_brain_AXT1POST_200_6001976-job42620",
+      "volume": "file_brain_AXT1POST_200_6001976.h5",
+      "acquisition": "AXT1POST",
+      "base_seed": 2,
+      "selected_slices": [
+        2,
+        8,
+        13
+      ],
+      "derived_mask_seed": 2082769525,
+      "achieved_acceleration": 6.400000095367432
+    },
+    {
+      "input_dir": "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-020/output/seed2/file_brain_AXT1POST_200_6001979-job42620",
+      "volume": "file_brain_AXT1POST_200_6001979.h5",
+      "acquisition": "AXT1POST",
+      "base_seed": 2,
+      "selected_slices": [
+        2,
+        8,
+        13
+      ],
+      "derived_mask_seed": 1415206794,
+      "achieved_acceleration": 10.322580337524414
+    },
+    {
+      "input_dir": "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-020/output/seed2/file_brain_AXT1POST_200_6001982-job42620",
+      "volume": "file_brain_AXT1POST_200_6001982.h5",
+      "acquisition": "AXT1POST",
+      "base_seed": 2,
+      "selected_slices": [
+        2,
+        8,
+        13
+      ],
+      "derived_mask_seed": 2207006346,
+      "achieved_acceleration": 8.0
+    },
+    {
+      "input_dir": "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-020/output/seed2/file_brain_AXT1POST_200_6001988-job42620",
+      "volume": "file_brain_AXT1POST_200_6001988.h5",
+      "acquisition": "AXT1POST",
+      "base_seed": 2,
+      "selected_slices": [
+        2,
+        8,
+        13
+      ],
+      "derived_mask_seed": 2907306267,
+      "achieved_acceleration": 6.153846263885498
+    },
+    {
+      "input_dir": "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-020/output/seed2/file_brain_AXT1POST_200_6002016-job42620",
+      "volume": "file_brain_AXT1POST_200_6002016.h5",
+      "acquisition": "AXT1POST",
+      "base_seed": 2,
+      "selected_slices": [
+        2,
+        8,
+        13
+      ],
+      "derived_mask_seed": 65078406,
+      "achieved_acceleration": 7.111111164093018
+    }
+  ]
+}

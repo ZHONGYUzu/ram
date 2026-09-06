@@ -1,0 +1,54 @@
+--- /home/students/studxuzho1/ram-fastmri-brain-adapter/SERVER_WORKFLOW.md
++++ /Users/zhongyu/Desktop/ram/SERVER_WORKFLOW.md
+@@ -1,22 +1,20 @@
+-# RAM + Slurm 服务器工作流
++# RAM model for fastmri brain dataset on Server Workflow
+ 
+-本文件只适用于 RAM 项目，尤其是 `feature/fastmri-brain-adapter`。
+-NV-Raw2Insights-MRI 使用其自己仓库内的工作流文件，两者的仓库、Python
+-环境、数据、运行脚本和结果目录不得混用。
++This document applies only to the RAM project, especially the
++`feature/fastmri-brain-adapter` branch.
+ 
+-## 当前环境
++## env
+ 
+ ```text
+-SSH 入口:       ssh login
+-计算节点:       slurm_debug（交互检查）或 sbatch（作业）
+-本机仓库:       /Users/zhongyu/Desktop/ram
+-服务器主仓库:   /home/students/studxuzho1/ram
+-服务器 worktree:/home/students/studxuzho1/ram-fastmri-brain-adapter
+-Git 分支:       feature/fastmri-brain-adapter
+-Python:         /home/students/studxuzho1/envs/ram/bin/python
+-fastMRI brain:  /mnt/qdata/rawdata/fastMRI/brain/multicoil_val
+-服务器结果根:   /home/students/studxuzho1/ram-results
+-```
++SSH entry:        ssh login
++Compute node:     slurm_debug (interactive checks) or sbatch (batch jobs)
++Local repository: /Users/zhongyu/Desktop/ram
++Server repository: /home/students/studxuzho1/ram
++Server worktree:  /home/students/studxuzho1/ram-fastmri-brain-adapter
++Git branch:       feature/fastmri-brain-adapter
++Python interpreter: /home/students/studxuzho1/envs/ram/bin/python
++fastMRI brain dataset: /mnt/qdata/rawdata/fastMRI/brain/multicoil_val
++Server results root: /home/students/studxuzho1/ram-results
+ 
+ 当前 RAM checkpoint 已存在于服务器缓存。实验必须使用已有的本地 checkpoint，
+ 并保持 Hugging Face 离线模式；不要下载模型、数据或依赖。
+@@ -171,15 +169,4 @@
+ run.log
+ ```
+ 
+-## 与 NV-Raw2Insights-MRI 隔离
+ 
+-RAM 工作中不要使用以下 NV 项目路径：
+-
+-```text
+-/Users/zhongyu/Documents/NV-Raw2insights-MRI
+-/home/students/studxuzho1/NV-Raw2insights-MRI
+-/home/students/studxuzho1/envs/nv-raw2insights-mri
+-```
+-
+-同样，不要将 RAM 的 fastMRI 数据路径、RAM checkpoint、RAM Slurm 脚本或
+-`ram-results` 写入 NV 项目的配置和工作流文件。

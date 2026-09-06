@@ -1,0 +1,34 @@
+--- /home/students/studxuzho1/ram-fastmri-brain-adapter/scripts/run_cine_experiment.sh
++++ /Users/zhongyu/Desktop/ram/scripts/run_cine_experiment.sh
+@@ -13,6 +13,7 @@
+     [--mask-key KEY] \
+     [--mask-txt PATH] \
+     [--mask-txt-delimiter VALUE] \
++    [--smap-convention CONVENTION] \
+     [--slice-index N] \
+     [--time-index N] \
+     [--normalization MODE] \
+@@ -34,6 +35,7 @@
+ mask_key="mask"
+ mask_txt=""
+ mask_txt_delimiter=","
++smap_convention="conjugated"
+ slice_index=""
+ time_index=""
+ normalization="none"
+@@ -55,6 +57,7 @@
+         --mask-key) mask_key="$2"; shift 2 ;;
+         --mask-txt) mask_txt="$2"; shift 2 ;;
+         --mask-txt-delimiter) mask_txt_delimiter="$2"; shift 2 ;;
++        --smap-convention) smap_convention="$2"; shift 2 ;;
+         --slice-index) slice_index="$2"; shift 2 ;;
+         --time-index) time_index="$2"; shift 2 ;;
+         --normalization) normalization="$2"; shift 2 ;;
+@@ -131,6 +134,7 @@
+     --dc-projection-iter "$dc_projection_iter"
+     --noise-sigma "$noise_sigma"
+     --normalization "$normalization"
++    --smap-convention "$smap_convention"
+     --device "$device"
+ )
+ 

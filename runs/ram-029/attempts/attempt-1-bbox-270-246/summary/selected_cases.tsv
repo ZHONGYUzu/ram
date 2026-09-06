@@ -1,0 +1,4 @@
+selection	volume	slice	case_dir
+best	file_brain_AXT1_202_2020181	3	/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-029/output/file_brain_AXT1_202_2020181/slice-003/text-small
+median	file_brain_AXFLAIR_201_6002974	13	/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-029/output/file_brain_AXFLAIR_201_6002974/slice-013/text-small
+worst	file_brain_AXT1POST_209_6001231	5	/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-029/output/file_brain_AXT1POST_209_6001231/slice-005/text-small

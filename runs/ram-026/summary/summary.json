@@ -1,0 +1,89 @@
+{
+  "experiment": "ram-026",
+  "transform": "physics-consistent left-right mirror flip",
+  "baseline_experiment": "ram-025 clean condition",
+  "cases": 90,
+  "volumes": 30,
+  "case_level": {
+    "delta_ram_psnr": {
+      "mean": 0.047382693820529516,
+      "median": 0.03981781005859375,
+      "min": -0.47386932373046875,
+      "max": 0.6651458740234375
+    },
+    "delta_ram_ssim": {
+      "mean": -0.000544457303153144,
+      "median": -0.00011110305786132812,
+      "min": -0.025335848331451416,
+      "max": 0.013314366340637207
+    },
+    "delta_ram_nmse": {
+      "mean": -0.00011892060283571481,
+      "median": -6.684102118015289e-05,
+      "min": -0.0021584387868642807,
+      "max": 0.0005263471975922585
+    }
+  },
+  "volume_level": {
+    "mean_delta_ram_psnr": {
+      "mean": 0.047382693820529516,
+      "median": 0.04324404398600261,
+      "min": -0.1715265909830729,
+      "max": 0.3593559265136719,
+      "bootstrap_95_ci": [
+        0.006252599292331273,
+        0.08967062950134277
+      ]
+    },
+    "mean_delta_ram_ssim": {
+      "mean": -0.000544457303153144,
+      "median": 0.00033942858378092444,
+      "min": -0.017711997032165527,
+      "max": 0.004169742266337077,
+      "bootstrap_95_ci": [
+        -0.002128687600294749,
+        0.0007015956772698296
+      ]
+    },
+    "mean_delta_ram_nmse": {
+      "mean": -0.00011892060283571481,
+      "median": -6.379249195257822e-05,
+      "min": -0.0011546559010942776,
+      "max": 0.00021970147887865701,
+      "bootstrap_95_ci": [
+        -0.00022466923064914427,
+        -2.9859474873066786e-05
+      ]
+    },
+    "mean_ram_equivariance_psnr": {
+      "mean": 42.96449003057418,
+      "median": 42.86264231246007,
+      "min": 37.15764764539731,
+      "max": 50.388409015976215,
+      "bootstrap_95_ci": [
+        42.053413732979756,
+        43.883003685475856
+      ]
+    },
+    "mean_ram_equivariance_nmse": {
+      "mean": 0.0011605065040883344,
+      "median": 0.0011026384406409564,
+      "min": 0.00042911805734821253,
+      "max": 0.002831263553800298,
+      "bootstrap_95_ci": [
+        0.000998264318078034,
+        0.001350714182895576
+      ]
+    }
+  },
+  "consistency_checks": {
+    "maximum_reference_abs_error_after_unflip": 0.0,
+    "maximum_zero_filled_abs_error_after_unflip": 4.76837158203125e-07,
+    "maximum_mask_abs_error_against_dft_mapping": 0.0
+  },
+  "bootstrap": {
+    "unit": "volume mean",
+    "repetitions": 10000,
+    "seed": 26026
+  }
+}

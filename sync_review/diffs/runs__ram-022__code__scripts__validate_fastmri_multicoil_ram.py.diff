@@ -1,0 +1,41 @@
+--- HEAD/scripts/validate_fastmri_multicoil_ram.py
++++ runs/ram-022/code/scripts/validate_fastmri_multicoil_ram.py
+@@ -13,6 +13,7 @@
+ import numpy as np
+ import torch
+ 
++from ram.adapters.fastmri_brain import load_maintained_ram
+ from validate_fastmri_ram import (
+     channels_to_complex,
+     center_crop,
+@@ -158,6 +159,7 @@
+     parser = argparse.ArgumentParser(description=__doc__)
+     parser.add_argument("--raw-h5", type=Path, required=True)
+     parser.add_argument("--espirit-h5", type=Path, required=True)
++    parser.add_argument("--checkpoint", type=Path, required=True)
+     parser.add_argument("--output-dir", type=Path, required=True)
+     parser.add_argument("--slice", type=int, required=True, dest="slice_index")
+     parser.add_argument("--reference-key", default="reference_acl15")
+@@ -270,7 +272,11 @@
+     with torch.no_grad():
+         y = y_unscaled / scale  # Deliberately condition on sigma without adding noise.
+         zero_filled_complex = physics.A_adjoint(y)
+-        model = dinv.models.RAM(device=device, pretrained=True).eval()
++        model, checkpoint_info = load_maintained_ram(
++            dinv,
++            args.checkpoint,
++            device,
++        )
+         ram_complex = model(y, physics)
+         cg_outputs: list[tuple[float, torch.Tensor, float, float]] = []
+         if args.post_data_consistency == "projection":
+@@ -369,7 +375,8 @@
+         "mask": mask_diagnostics(mask),
+         "normalization": f"p{args.normalization_percentile:g} of unscaled zero-filled magnitude",
+         "normalization_scale": float(scale.item()),
+-        "model": "deepinv.models.RAM(pretrained=True)",
++        "model": "deepinv.models.RAM(pretrained=False) + verified local checkpoint",
++        "checkpoint": checkpoint_info,
+         "noise_conditioning_sigma": args.noise_sigma,
+         "synthetic_noise_added": False,
+         "call": "model(y, physics)",

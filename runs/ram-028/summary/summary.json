@@ -1,0 +1,106 @@
+{
+  "experiment": "ram-028",
+  "transform": "physics-consistent clockwise 90-degree rotation without interpolation",
+  "baseline_experiment": "ram-024 clean condition (reused, not rerun)",
+  "cases": 15,
+  "volumes": 5,
+  "case_level": {
+    "delta_ram_psnr": {
+      "mean": 0.06208928426106771,
+      "median": 0.120697021484375,
+      "min": -0.9562644958496094,
+      "max": 0.661865234375
+    },
+    "delta_ram_ssim": {
+      "mean": 0.00025024016698201496,
+      "median": 0.0007976889610290527,
+      "min": -0.00842893123626709,
+      "max": 0.006785452365875244
+    },
+    "delta_ram_nmse": {
+      "mean": -0.00022075620169440904,
+      "median": -0.00016295956447720528,
+      "min": -0.0009780274704098701,
+      "max": 0.0009370474144816399
+    }
+  },
+  "volume_level": {
+    "mean_delta_ram_psnr": {
+      "mean": 0.06208928426106771,
+      "median": 0.13024520874023438,
+      "min": -0.5231234232584635,
+      "max": 0.3216667175292969,
+      "bootstrap_95_ci": [
+        -0.23136138916015622,
+        0.27102025349934894
+      ]
+    },
+    "mean_delta_ram_ssim": {
+      "mean": 0.00025024016698201485,
+      "median": 0.0007561246554056803,
+      "min": -0.0054847995440165205,
+      "max": 0.004225035508473714,
+      "bootstrap_95_ci": [
+        -0.0027209917704264326,
+        0.0028374711672465003
+      ]
+    },
+    "mean_delta_ram_nmse": {
+      "mean": -0.00022075620169440904,
+      "median": -0.00048509504025181133,
+      "min": -0.0005172509700059891,
+      "max": 0.0005723473926385244,
+      "bootstrap_95_ci": [
+        -0.000501506682485342,
+        0.00020399540662765505
+      ]
+    },
+    "mean_ram_rotation_equivariance_psnr": {
+      "mean": 40.12424575874196,
+      "median": 40.03397057516264,
+      "min": 39.32760409087294,
+      "max": 41.19593041204938,
+      "bootstrap_95_ci": [
+        39.59788497156676,
+        40.72653256391706
+      ]
+    },
+    "mean_ram_rotation_equivariance_nmse": {
+      "mean": 0.0021969733373702963,
+      "median": 0.0020941365321966495,
+      "min": 0.0016817990243905572,
+      "max": 0.0028761388296312225,
+      "bootstrap_95_ci": [
+        0.0018176293798241611,
+        0.00258929667917547
+      ]
+    }
+  },
+  "sampling": {
+    "direction_values": [
+      "height/second-last dimension (horizontal sampled lines)"
+    ],
+    "sampled_fraction_min": 0.25,
+    "sampled_fraction_max": 0.25,
+    "achieved_acceleration_min": 4.0,
+    "achieved_acceleration_max": 4.0
+  },
+  "consistency_checks": {
+    "maximum_normalization_scale_abs_error": 0.0,
+    "maximum_reference_abs_error_after_inverse_rotation": 0.0,
+    "maximum_zero_filled_abs_error_after_inverse_rotation": 5.960464477539062e-07,
+    "maximum_mask_abs_error_against_centered_dft_mapping": 0.0,
+    "thresholds": {
+      "scale": 0.0,
+      "reference": 1e-06,
+      "zero_filled": 1e-05,
+      "mask": 0.0
+    },
+    "all_passed": true
+  },
+  "bootstrap": {
+    "unit": "volume mean",
+    "repetitions": 10000,
+    "seed": 28028
+  }
+}

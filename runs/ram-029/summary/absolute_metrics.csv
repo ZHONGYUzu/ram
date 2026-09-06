@@ -1,0 +1,5 @@
+method,condition,mean_psnr,mean_ssim,mean_nmse,cases
+zero_filled,original,29.2178,0.846164,0.0320587,15
+zero_filled,text,29.1923,0.844947,0.0321528,15
+ram,original,35.1169,0.915528,0.00828182,15
+ram,text,35.0251,0.914024,0.00841574,15

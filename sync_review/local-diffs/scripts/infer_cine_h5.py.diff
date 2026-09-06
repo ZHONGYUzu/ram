@@ -1,0 +1,46 @@
+--- /home/students/studxuzho1/ram-fastmri-brain-adapter/scripts/infer_cine_h5.py
++++ /Users/zhongyu/Desktop/ram/scripts/infer_cine_h5.py
+@@ -5,6 +5,10 @@
+ 
+     kSpace: (slice, coil, time, phase, frequency)
+     dMap:   (slice, coil, 1, phase, frequency)
++
++The CINE ``dMap`` values are conjugated SENSE maps. DeepInverse physics expects
++forward sensitivity maps, so the default ``conjugated`` convention converts
++them with ``conj(dMap)`` before constructing the forward operator.
+ 
+ RAM is a 2D model, so this script reconstructs each slice/time frame as one
+ batch item with two image channels: real and imaginary.
+@@ -235,6 +239,15 @@
+     parser.add_argument("--output-mat", type=Path, required=True)
+     parser.add_argument("--kspace-key", default="kSpace")
+     parser.add_argument("--smap-key", default="dMap")
++    parser.add_argument(
++        "--smap-convention",
++        choices=("conjugated", "forward"),
++        default="conjugated",
++        help=(
++            "Convention stored in --smap-key: 'conjugated' means the H5 contains "
++            "conj(S), as CINE dMap does; 'forward' means it already contains S."
++        ),
++    )
+     parser.add_argument("--mask-mat", type=Path, default=None)
+     parser.add_argument("--mask-key", default="mask")
+     parser.add_argument("--mask-txt", type=Path, default=None)
+@@ -289,6 +302,8 @@
+     dc_cg_iter = args.cg_iter if args.dc_cg_iter is None else args.dc_cg_iter
+ 
+     kspace_np, smap_np = load_cine_h5(args.input_h5, args.kspace_key, args.smap_key)
++    if args.smap_convention == "conjugated":
++        smap_np = np.conj(smap_np).copy()
+     mask_np = load_mask(args, kspace_np)
+ 
+     source_slices, _, source_times, _, _ = kspace_np.shape
+@@ -372,6 +387,7 @@
+             "source_time_indices": selected_time_indices,
+             "normalization_mode": args.normalization,
+             "normalization_scale": np.asarray([scale], dtype=np.float32),
++            "smap_convention": args.smap_convention,
+             "dc_gamma": np.asarray([args.dc_gamma], dtype=np.float32),
+             "dc_cg_iter": np.asarray([dc_cg_iter], dtype=np.int32),
+             "dc_method": args.dc_method,

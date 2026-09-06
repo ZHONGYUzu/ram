@@ -1,0 +1,299 @@
+{
+  "experiment": "ram-027",
+  "status": "complete",
+  "cases": 15,
+  "volumes": 5,
+  "failures": 0,
+  "strict_consistency_checks_passed": true,
+  "crop": "320x320 center crop to 288x288; no resize; no zero-padding",
+  "mask": {
+    "nominal_acceleration": 4,
+    "actual_acceleration": 4.0,
+    "sampled_fraction": 0.25,
+    "sampled_columns": 72,
+    "sampled_column_indices_zero_based": [
+      3,
+      4,
+      9,
+      13,
+      16,
+      28,
+      33,
+      37,
+      44,
+      51,
+      57,
+      58,
+      79,
+      80,
+      83,
+      86,
+      96,
+      101,
+      127,
+      129,
+      133,
+      134,
+      135,
+      136,
+      137,
+      138,
+      139,
+      140,
+      141,
+      142,
+      143,
+      144,
+      145,
+      146,
+      147,
+      148,
+      149,
+      150,
+      151,
+      152,
+      153,
+      154,
+      155,
+      160,
+      165,
+      170,
+      171,
+      177,
+      178,
+      179,
+      183,
+      189,
+      191,
+      192,
+      195,
+      196,
+      200,
+      203,
+      211,
+      218,
+      219,
+      221,
+      225,
+      227,
+      232,
+      243,
+      244,
+      246,
+      264,
+      272,
+      274,
+      280
+    ]
+  },
+  "normalization": "exact paired ram-024 clean masked-ZF p99.5 scale reused per case",
+  "case_level": {
+    "delta_original_full_to_cropped_ram.psnr": {
+      "mean": -2.3834700266520183,
+      "median": -2.2376480102539062,
+      "min": -3.2183914184570312,
+      "max": -1.7586212158203125,
+      "std": 0.47263520700417244
+    },
+    "delta_original_full_to_cropped_ram.ssim": {
+      "mean": -0.027969769636789956,
+      "median": -0.02336519956588745,
+      "min": -0.05712449550628662,
+      "max": -0.010885000228881836,
+      "std": 0.014395342472804096
+    },
+    "delta_original_full_to_cropped_ram.nmse": {
+      "mean": 0.003393001885463794,
+      "median": 0.0035680579021573067,
+      "min": 0.0010229148901998997,
+      "max": 0.005702527239918709,
+      "std": 0.0014495026816863806
+    },
+    "delta_original_same_region_to_cropped_ram.psnr": {
+      "mean": -1.4997694651285807,
+      "median": -1.3417930603027344,
+      "min": -2.331409454345703,
+      "max": -0.8784675598144531,
+      "std": 0.46631528682481277
+    },
+    "delta_original_same_region_to_cropped_ram.ssim": {
+      "mean": -0.01511995792388916,
+      "median": -0.010999321937561035,
+      "min": -0.03448832035064697,
+      "max": -0.003051280975341797,
+      "std": 0.00959109542159143
+    },
+    "delta_original_same_region_to_cropped_ram.nmse": {
+      "mean": 0.0033452216691027084,
+      "median": 0.003611410968005657,
+      "min": 0.001044298755005002,
+      "max": 0.0057546216994524,
+      "std": 0.0013901339072537248
+    },
+    "crop_equivariance_cropped_ram_vs_original_ram_center_crop.psnr": {
+      "mean": 35.268866856892906,
+      "median": 35.249794006347656,
+      "min": 28.926069259643555,
+      "max": 40.21632385253906,
+      "std": 3.3752135624509663
+    },
+    "crop_equivariance_cropped_ram_vs_original_ram_center_crop.nmse": {
+      "mean": 0.005466761183924973,
+      "median": 0.005702067166566849,
+      "min": 0.0018944303737953305,
+      "max": 0.010091324336826801,
+      "std": 0.002277318629250739
+    },
+    "cropped_ram_vs_cropped_reference.psnr": {
+      "mean": 32.7334238688151,
+      "median": 32.60392761230469,
+      "min": 28.171390533447266,
+      "max": 36.34329605102539,
+      "std": 2.4026791398380585
+    },
+    "cropped_ram_vs_cropped_reference.ssim": {
+      "mean": 0.8875580986340841,
+      "median": 0.9019559025764465,
+      "min": 0.8173470497131348,
+      "max": 0.9200905561447144,
+      "std": 0.03367209981714646
+    },
+    "cropped_ram_vs_cropped_reference.nmse": {
+      "mean": 0.011674826219677924,
+      "median": 0.010887541808187962,
+      "min": 0.004827229771763086,
+      "max": 0.021026844158768654,
+      "std": 0.004798347883650184
+    }
+  },
+  "volume_level": {
+    "delta_original_full_to_cropped_ram.psnr": {
+      "mean": -2.3834700266520183,
+      "median": -2.3959325154622397,
+      "min": -2.7013206481933594,
+      "max": -1.9682235717773438,
+      "std": 0.2834684974074045
+    },
+    "delta_original_full_to_cropped_ram.ssim": {
+      "mean": -0.02796976963678996,
+      "median": -0.022051175435384113,
+      "min": -0.045354882876078285,
+      "max": -0.014481067657470703,
+      "std": 0.013154181572230597
+    },
+    "delta_original_full_to_cropped_ram.nmse": {
+      "mean": 0.0033930018854637944,
+      "median": 0.0034112495680650077,
+      "min": 0.0013426624548931916,
+      "max": 0.004975573780635993,
+      "std": 0.001451230548808692
+    },
+    "delta_original_same_region_to_cropped_ram.psnr": {
+      "mean": -1.4997694651285807,
+      "median": -1.5051943461100261,
+      "min": -1.8227335611979167,
+      "max": -1.0833104451497395,
+      "std": 0.27988447073384426
+    },
+    "delta_original_same_region_to_cropped_ram.ssim": {
+      "mean": -0.01511995792388916,
+      "median": -0.011897007624308268,
+      "min": -0.02413421869277954,
+      "max": -0.0060367584228515625,
+      "std": 0.00795387539057275
+    },
+    "delta_original_same_region_to_cropped_ram.nmse": {
+      "mean": 0.003345221669102709,
+      "median": 0.0034658326767385006,
+      "min": 0.0013761916973938544,
+      "max": 0.004589576895038287,
+      "std": 0.0013424189307689482
+    },
+    "crop_equivariance_cropped_ram_vs_original_ram_center_crop.psnr": {
+      "mean": 35.268866856892906,
+      "median": 35.98295211791992,
+      "min": 30.7080504099528,
+      "max": 39.499610900878906,
+      "std": 3.397127693038129
+    },
+    "crop_equivariance_cropped_ram_vs_original_ram_center_crop.nmse": {
+      "mean": 0.005466761183924973,
+      "median": 0.005174768002082904,
+      "min": 0.0024457984060669937,
+      "max": 0.008569257644315561,
+      "std": 0.002231269444476607
+    },
+    "cropped_ram_vs_cropped_reference.psnr": {
+      "mean": 32.73342386881511,
+      "median": 32.74276479085287,
+      "min": 29.528221130371094,
+      "max": 35.68817647298177,
+      "std": 2.341409266454356
+    },
+    "cropped_ram_vs_cropped_reference.ssim": {
+      "mean": 0.887558098634084,
+      "median": 0.9026206334431967,
+      "min": 0.8418218493461609,
+      "max": 0.9186494946479797,
+      "std": 0.03160469311385681
+    },
+    "cropped_ram_vs_cropped_reference.nmse": {
+      "mean": 0.011674826219677924,
+      "median": 0.010158039319018522,
+      "min": 0.006138127918044726,
+      "max": 0.01808973929534356,
+      "std": 0.004700508879078826
+    }
+  },
+  "bootstrap_95_ci": {
+    "delta_original_full_to_cropped_ram.psnr": [
+      -2.5911670684814454,
+      -2.153658294677734
+    ],
+    "delta_original_full_to_cropped_ram.ssim": [
+      -0.0388052741686503,
+      -0.018097782135009764
+    ],
+    "delta_original_full_to_cropped_ram.nmse": [
+      0.002252702197680871,
+      0.004478971163431803
+    ],
+    "delta_original_same_region_to_cropped_ram.psnr": [
+      -1.7002914428710938,
+      -1.2840810139973957
+    ],
+    "delta_original_same_region_to_cropped_ram.ssim": [
+      -0.02118689219156901,
+      -0.009075768788655599
+    ],
+    "delta_original_same_region_to_cropped_ram.nmse": [
+      0.002284616433704893,
+      0.004344085386643807
+    ],
+    "crop_equivariance_cropped_ram_vs_original_ram_center_crop.psnr": [
+      32.719533665974936,
+      37.768961334228514
+    ],
+    "crop_equivariance_cropped_ram_vs_original_ram_center_crop.nmse": [
+      0.003696275417072078,
+      0.007211461787422498
+    ],
+    "cropped_ram_vs_cropped_reference.psnr": [
+      30.85852406819662,
+      34.55449727376302
+    ],
+    "cropped_ram_vs_cropped_reference.ssim": [
+      0.8625246246655781,
+      0.9104600985844928
+    ],
+    "cropped_ram_vs_cropped_reference.nmse": [
+      0.008223618753254414,
+      0.01512603368610144
+    ]
+  },
+  "bootstrap": {
+    "unit": "volume mean",
+    "repetitions": 10000,
+    "seed": 27027
+  }
+}

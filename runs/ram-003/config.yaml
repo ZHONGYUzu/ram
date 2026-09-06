@@ -1,0 +1,44 @@
+experiment:
+  id: ram-003
+  parent_run: ram-002
+  purpose: five-case cross-acquisition generalization check
+  slurm_job_id: 42476
+  git_branch: feature/fastmri-brain-adapter
+  git_commit: fc7785333fcbae6c274d35b9f9e6fd984c93fb58
+  downloads_allowed: false
+data:
+  dataset: fastMRI brain multicoil validation
+  data_root: /mnt/qdata/rawdata/fastMRI/brain/multicoil_val
+  cases_file: /home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-003/cases.txt
+  case_count: 5
+  acquisitions: [AXFLAIR, AXFLAIR, AXT1, AXT1POST, AXT1PRE]
+  slices_per_case: 3
+  slice_selection: equally spaced within the 15%-85% non-edge range
+preprocessing:
+  coil_combination: volume-level ESC/VCC
+  esc_max_iterations: 60
+  normalization: zero-filled magnitude p99.5 per slice
+mask:
+  type: exact-random Cartesian
+  acceleration: 4
+  image_width: 320
+  sampled_columns: 80
+  center_fraction: 0.08
+  low_frequency_columns: 26
+  seed: 0
+  per_case_seed: sha256(filename + seed)
+model:
+  implementation: deepinv.models.RAM
+  minimum_deepinv_version: 0.4.1
+  checkpoint: /mnt/ceph/vol_02_home_students/studxuzho1/.cache/huggingface/hub/models--mterris--ram/blobs/1292571adc3d15f9db5e7f5bd92265599030b6b816637367d0f5992d8dbdef7a
+  checkpoint_sha256: 1292571adc3d15f9db5e7f5bd92265599030b6b816637367d0f5992d8dbdef7a
+  noise_sigma: 0.0005
+output:
+  directory: /home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-003/output/five-cases-r4-job42476
+  previews: 6
+  slice_metrics: true
+  summary: true
+logs:
+  run: /home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-003/logs/run-42476.log
+  stdout: /home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-003/logs/slurm-42476.out
+  stderr: /home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-003/logs/slurm-42476.err

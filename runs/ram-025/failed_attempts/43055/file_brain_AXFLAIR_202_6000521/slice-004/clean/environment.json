@@ -1,0 +1,38 @@
+{
+  "arguments": {
+    "raw_h5": "/mnt/qdata/rawdata/fastMRI/brain/multicoil_val/file_brain_AXFLAIR_202_6000521.h5",
+    "espirit_h5": "/mnt/qdata/rawdata/fastMRI/brain/multicoil_val_espirit/file_brain_AXFLAIR_202_6000521.h5",
+    "checkpoint": "/mnt/ceph/vol_02_home_students/studxuzho1/.cache/huggingface/hub/models--mterris--ram/blobs/1292571adc3d15f9db5e7f5bd92265599030b6b816637367d0f5992d8dbdef7a",
+    "output_dir": "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-025/output/file_brain_AXFLAIR_202_6000521/slice-004/clean",
+    "slice_index": 4,
+    "reference_key": "reference_acl15",
+    "smaps_key": "smaps_acl15",
+    "map_index": 0,
+    "crop_size": 320,
+    "acceleration": 4,
+    "center_fraction": 0.08,
+    "normalization_percentile": 99.5,
+    "normalization_scale": null,
+    "noise_sigma": 0.001,
+    "synthetic_noise_relative_rms": 0.0,
+    "synthetic_noise_seed": 25204,
+    "measurement_source": "measured",
+    "post_data_consistency": "none",
+    "dc_gammas": [
+      0.1,
+      1.0,
+      10.0
+    ],
+    "dc_cg_iterations": 20,
+    "seed": 0,
+    "device": "cuda"
+  },
+  "python": "3.10.20 (main, Jun 11 2026, 15:17:37) [GCC 14.3.0]",
+  "platform": "Linux-5.15.0-186-generic-x86_64-with-glibc2.35",
+  "torch": "2.5.1+cu121",
+  "cuda_runtime": "12.1",
+  "cuda_available": true,
+  "deepinv": "0.4.1",
+  "plain_model_call": "model(y, physics)",
+  "post_ram_data_consistency": false
+}

@@ -1,0 +1,78 @@
+experiment: ram-029
+purpose: RAM stability under one deterministic physically encoded small-text condition
+
+paired_population:
+  source_manifest: /home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-024/manifest.tsv
+  volumes: 5
+  slices_per_volume: 3
+  total_cases: 15
+  original_baseline: reuse ram-024 clean outputs; do not rerun clean
+
+text_condition:
+  content: RAM
+  glyph: built-in deterministic 5x7 bitmap
+  glyph_cell_scale: 2
+  final_pixel_size: {width: 34, height: 14}
+  bounding_box:
+    coordinates: zero-based image rows/columns
+    top_inclusive: 270
+    left_inclusive: 246
+    bottom_exclusive: 284
+    right_exclusive: 280
+  position: fixed lower-right region, fully inside 320x320 FOV
+  amplitude:
+    relative_to: paired clean complex-reference magnitude p99.5
+    fraction: 0.10
+    same_relative_amplitude_all_cases: true
+  complex_phase: pointwise paired clean-reference phase; zero phase where reference is zero
+  physical_encoding:
+    object: complex image-domain text component
+    coil_encoding: original sensitivity maps
+    transform: centered orthonormal FFT
+    sampling: original R4 Cartesian mask
+    measurement: add encoded component only at sampled measured k-space positions
+    transformed_reference: paired clean complex reference plus identical text component
+  png_only_overlay: false
+
+fixed_settings:
+  crop_size: 320
+  acceleration: 4
+  center_fraction: 0.08
+  mask_seed: 0
+  required_actual_acceleration: 4.0
+  measurement_source: measured
+  reference_key: reference_acl15
+  smaps_key: smaps_acl15
+  map_index: 0
+  noise_conditioning_sigma: 0.001
+  additional_gaussian_noise: false
+  post_data_consistency: none
+  normalization: exact paired ram-024 clean masked-ZF p99.5 scale reused for reference/ZF/RAM
+  checkpoint: /mnt/ceph/vol_02_home_students/studxuzho1/.cache/huggingface/hub/models--mterris--ram/blobs/1292571adc3d15f9db5e7f5bd92265599030b6b816637367d0f5992d8dbdef7a
+  checkpoint_sha256: 1292571adc3d15f9db5e7f5bd92265599030b6b816637367d0f5992d8dbdef7a
+  huggingface_offline: true
+
+outputs:
+  case_files:
+    - experiment_setup.json
+    - command.txt
+    - environment.json
+    - metrics.json
+    - metrics.csv
+    - preview.png
+    - reconstructions.npz
+  reconstructions_npz:
+    required_float32_keys: [reference, zero_filled, ram, mask, text_mask, text_component]
+    text_component_layout: [real_imaginary_channel, height, width]
+  preview_display: clean and text images share paired clean-reference p99.5 upper limit
+  summary:
+    metrics: absolute and original-to-text PSNR/SSIM/NMSE; text/non-text error; text recovery
+    bootstrap: 10000 resamples of five volume means, 95% percentile CI, seed 29029
+    figure: summary/summary.png
+
+execution:
+  array: 0-4%2
+  one_array_task_per_volume: true
+  summary_dependency: afterok
+  no_smoke_job: true
+  python_compute_only_under_slurm: true

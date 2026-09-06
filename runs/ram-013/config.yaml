@@ -1,0 +1,55 @@
+experiment:
+  id: ram-013
+  parent_run: ram-003
+  purpose: approximate the RAM paper fastMRI MRI training distribution at R4
+  deviation_from_paper: zero-filled magnitude p99.5 normalization per slice
+  slurm_job_id: 42510
+  git_branch: feature/fastmri-brain-adapter
+  git_commit: b48a5442f083be62b8e37779d0b98a8a37be16a6
+  downloads_allowed: false
+data:
+  dataset: fastMRI brain multicoil validation
+  data_root: /mnt/qdata/rawdata/fastMRI/brain/multicoil_val
+  cases_file: /home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-013/cases.txt
+  case_count: 5
+  acquisitions: [AXFLAIR, AXFLAIR, AXT1, AXT1POST, AXT1PRE]
+  slices_per_case: 3
+  independent_slices: 15
+  slice_selection: equally spaced within the 15%-85% non-edge range
+preprocessing:
+  coil_combination: volume-level ESC/VCC
+  esc_max_iterations: 60
+  image_shape: [320, 320]
+  ram_tensor_shape_per_inference: [1, 2, 320, 320]
+  complex_channels: [real, imaginary]
+  normalization: zero-filled magnitude p99.5 per slice
+mask:
+  dimensionality: 1D Cartesian
+  mode: fastmri-random
+  nominal_acceleration: 4
+  center_fraction: 0.08
+  base_seeds: [0, 1, 2]
+  per_volume_seed: sha256(filename + base_seed)
+model:
+  implementation: deepinv.models.RAM
+  minimum_deepinv_version: 0.4.1
+  checkpoint: /mnt/ceph/vol_02_home_students/studxuzho1/.cache/huggingface/hub/models--mterris--ram/blobs/1292571adc3d15f9db5e7f5bd92265599030b6b816637367d0f5992d8dbdef7a
+  checkpoint_sha256: 1292571adc3d15f9db5e7f5bd92265599030b6b816637367d0f5992d8dbdef7a
+  model_call: model(y, physics)
+  noise_model: Gaussian
+  noise_sigma: 0.0005
+  synthetic_noise_added: true
+  post_ram_data_consistency: false
+evaluation:
+  inference_count: 45
+  formula: 5 cases x 3 slices x 3 mask seeds
+  metrics: [PSNR, SSIM, NMSE]
+  metric_image: magnitude
+output:
+  root: /home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-013/output
+  summary: /home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-013/summary/job-42510
+  previews_per_seed: 3
+logs:
+  run: /home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-013/logs/run-42510.log
+  stdout: /home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-013/logs/slurm-42510.out
+  stderr: /home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-013/logs/slurm-42510.err

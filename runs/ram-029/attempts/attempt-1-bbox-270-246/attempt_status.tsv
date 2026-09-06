@@ -1,0 +1,6 @@
+status	archived_after_quality_review
+reason	bbox [270:284,246:280] outside ESPIRiT sensitivity support in several cases
+array_job_id	43138
+summary_job_id	43139
+completed_cases	15
+slurm_errors	0

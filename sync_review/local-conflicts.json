@@ -1,0 +1,32 @@
+[
+  {
+    "local_path": "/Users/zhongyu/Desktop/ram/SERVER_WORKFLOW.md",
+    "server_path": "/home/students/studxuzho1/ram-fastmri-brain-adapter/SERVER_WORKFLOW.md",
+    "local_preserved": "/Users/zhongyu/Desktop/ram/sync-staging/2026-09-07/local-preserved/SERVER_WORKFLOW.md",
+    "decision": "awaiting-human-review; original local file untouched"
+  },
+  {
+    "local_path": "/Users/zhongyu/Desktop/ram/scripts/infer_cine_h5.py",
+    "server_path": "/home/students/studxuzho1/ram-fastmri-brain-adapter/scripts/infer_cine_h5.py",
+    "local_preserved": "/Users/zhongyu/Desktop/ram/sync-staging/2026-09-07/local-preserved/scripts/infer_cine_h5.py",
+    "decision": "awaiting-human-review; original local file untouched"
+  },
+  {
+    "local_path": "/Users/zhongyu/Desktop/ram/scripts/run_cine_experiment.sh",
+    "server_path": "/home/students/studxuzho1/ram-fastmri-brain-adapter/scripts/run_cine_experiment.sh",
+    "local_preserved": "/Users/zhongyu/Desktop/ram/sync-staging/2026-09-07/local-preserved/scripts/run_cine_experiment.sh",
+    "decision": "awaiting-human-review; original local file untouched"
+  },
+  {
+    "local_path": "/Users/zhongyu/Desktop/ram/scripts/validate_fastmri_multicoil_ram.py",
+    "server_path": "/home/students/studxuzho1/ram-fastmri-brain-adapter/scripts/validate_fastmri_multicoil_ram.py",
+    "local_preserved": "/Users/zhongyu/Desktop/ram/sync-staging/2026-09-07/local-preserved/scripts/validate_fastmri_multicoil_ram.py",
+    "decision": "awaiting-human-review; original local file untouched"
+  },
+  {
+    "local_path": "/Users/zhongyu/Desktop/ram/scripts/validate_fastmri_ram.py",
+    "server_path": "/home/students/studxuzho1/ram-fastmri-brain-adapter/scripts/validate_fastmri_ram.py",
+    "local_preserved": "/Users/zhongyu/Desktop/ram/sync-staging/2026-09-07/local-preserved/scripts/validate_fastmri_ram.py",
+    "decision": "awaiting-human-review; original local file untouched"
+  }
+]

@@ -1,0 +1,36 @@
+experiment:
+  id: ram-017
+  purpose: public-information reconstruction of RAM paper simulated 15-coil R8 test
+  exact_paper_reproduction: false
+  reason_not_exact: paper does not disclose the coil-map generator, multicoil mask details, normalization implementation, or multicoil noise value
+  slurm_job_id: 42607
+  git_branch: feature/fastmri-brain-adapter
+  git_commit: 4e4debe696a67f6bfa6b52ded5e1a3231be70697
+data:
+  source: fastMRI brain multicoil validation
+  input_h5: /mnt/qdata/rawdata/fastMRI/brain/multicoil_val/file_brain_AXFLAIR_200_6002462.h5
+  source_volume: 6002462
+  selected_slices: [2, 8, 13]
+  clean_image_construction: volume-level ESC/VCC, then complex single-coil image
+  crop_shape: [320, 320]
+normalization:
+  mode: noiseless multicoil zero-filled magnitude p99.5 per slice
+physics:
+  implementation: deepinv.physics.MultiCoilMRI
+  simulated_coils: 15
+  coil_map_generator: local deterministic implementation of the 2D sigpy.mri.birdcage_maps formula
+  mask: fastMRI-style random Cartesian
+  nominal_acceleration: 8
+  center_fraction: 0.04
+  seed: 0
+  noise_model: Gaussian
+  noise_sigma: 0.0005
+arms:
+  noisy: actual Gaussian measurement noise added
+  conditioning_only: identical image, mask, and coil maps; sigma supplied to RAM but no noise added
+model:
+  implementation: deepinv.models.RAM
+  checkpoint: /mnt/ceph/vol_02_home_students/studxuzho1/.cache/huggingface/hub/models--mterris--ram/blobs/1292571adc3d15f9db5e7f5bd92265599030b6b816637367d0f5992d8dbdef7a
+  checkpoint_sha256: 1292571adc3d15f9db5e7f5bd92265599030b6b816637367d0f5992d8dbdef7a
+  model_call: model(y, physics)
+  post_ram_data_consistency: false

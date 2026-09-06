@@ -1,0 +1,49 @@
+experiment: ram-028
+purpose: formal physics-consistent clockwise 90-degree small-batch stability and rotation-equivariance evaluation
+baseline_experiment: ram-024 clean condition
+
+sampling:
+  manifest_source: ram-024/manifest.tsv
+  total_volumes: 5
+  slices_per_volume: 3
+  total_cases: 15
+  acquisitions: [AXFLAIR, AXT1, AXT1PRE, AXT1POST]
+
+paired_conditions:
+  original: reuse ram-024 clean outputs without rerunning
+  transformed:
+    type: clockwise 90-degree rotation
+    interpolation: none
+    image_shape: [320, 320]
+    reference: rotated
+    sensitivity_maps: rotated
+    measured_coil_images: rotated before centered FFT
+    rss_reference: rotated
+    cartesian_mask: exact even-grid centered-DFT mapping M_y[a,b] = M_x[-b,a]
+  normalization: every transformed case reuses its exact paired ram-024 clean masked-ZF p99.5 scale; all paired arrays share that scale
+
+fixed_settings:
+  crop_size: 320
+  acceleration: 4
+  center_fraction: 0.08
+  mask_seed: 0
+  measurement_source: measured
+  reference_key: reference_acl15
+  smaps_key: smaps_acl15
+  map_index: 0
+  noise_conditioning_sigma: 0.001
+  synthetic_noise_relative_rms: 0
+  post_data_consistency: none
+  checkpoint: /mnt/ceph/vol_02_home_students/studxuzho1/.cache/huggingface/hub/models--mterris--ram/blobs/1292571adc3d15f9db5e7f5bd92265599030b6b816637367d0f5992d8dbdef7a
+  checkpoint_sha256: 1292571adc3d15f9db5e7f5bd92265599030b6b816637367d0f5992d8dbdef7a
+  huggingface_offline: true
+  reconstruction_npz_dtype: float32
+  preview_display: paired-original-consistent p99.5 (rotation preserves the reference percentile exactly)
+
+execution:
+  workflow: server-only isolated snapshot under runs/ram-028; no git pull, commit, push, or GitHub synchronization
+  smoke_test: none
+  formal_slurm_array: 0-4%2
+  one_array_task_per_volume: true
+  dependent_summary: afterok
+  login_node_compute: forbidden

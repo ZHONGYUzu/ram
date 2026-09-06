@@ -1,0 +1,248 @@
+{
+  "experiment": "ram-029",
+  "status": "complete",
+  "cases": 15,
+  "volumes": 5,
+  "errors": 0,
+  "text_condition": {
+    "content": "RAM",
+    "bitmap": "5x7 glyphs at 2x cell scale",
+    "final_size_pixels": [
+      14,
+      34
+    ],
+    "bbox_top_left_bottom_right_exclusive": [
+      270,
+      246,
+      284,
+      280
+    ],
+    "amplitude_relative_to_clean_reference_p99_5": 0.1,
+    "active_pixels": 216
+  },
+  "validation": {
+    "maximum_absolute_clean_text_scale_difference": 0.0,
+    "actual_acceleration_values": [
+      4.0
+    ],
+    "additional_gaussian_noise": false,
+    "post_data_consistency": false
+  },
+  "case_level": {
+    "delta_zero_filled_psnr": {
+      "mean": -0.04250818888346354,
+      "median": -0.037036895751953125,
+      "min": -0.12553787231445312,
+      "max": -0.017065048217773438
+    },
+    "delta_zero_filled_ssim": {
+      "mean": -0.0050121823946634924,
+      "median": -0.005402684211730957,
+      "min": -0.005746603012084961,
+      "max": -0.002385079860687256
+    },
+    "delta_zero_filled_nmse": {
+      "mean": 0.00025677972783644997,
+      "median": 0.0002826377749443054,
+      "min": 9.800679981708527e-05,
+      "max": 0.00037323683500289917
+    },
+    "delta_ram_psnr": {
+      "mean": -0.1629308064778646,
+      "median": -0.15132522583007812,
+      "min": -0.3469047546386719,
+      "max": -0.05260467529296875
+    },
+    "delta_ram_ssim": {
+      "mean": -0.00493467648824056,
+      "median": -0.00516122579574585,
+      "min": -0.005562126636505127,
+      "max": -0.0035198330879211426
+    },
+    "delta_ram_nmse": {
+      "mean": 0.0002658765763044357,
+      "median": 0.00030156224966049194,
+      "min": 0.00010521151125431061,
+      "max": 0.0003816606476902962
+    },
+    "zero_filled_recovery_contrast_recovery_ratio": {
+      "mean": 0.015174478634762449,
+      "median": 0.0,
+      "min": 0.0,
+      "max": 0.0656168119206798
+    },
+    "ram_recovery_contrast_recovery_ratio": {
+      "mean": 0.038803129835794994,
+      "median": 0.0,
+      "min": 0.0,
+      "max": 0.15156961758436394
+    },
+    "zero_filled_recovery_relative_l2_error": {
+      "mean": 0.9875676949818929,
+      "median": 1.0,
+      "min": 0.9471990466117859,
+      "max": 1.0
+    },
+    "ram_recovery_relative_l2_error": {
+      "mean": 0.9703769008318583,
+      "median": 1.0,
+      "min": 0.8764158487319946,
+      "max": 1.0
+    },
+    "zero_filled_text_region_rmse": {
+      "mean": 0.10465148687362671,
+      "median": 0.10483455657958984,
+      "min": 0.0951438620686531,
+      "max": 0.11276106536388397
+    },
+    "ram_text_region_rmse": {
+      "mean": 0.10377935767173767,
+      "median": 0.10238973796367645,
+      "min": 0.09701573103666306,
+      "max": 0.110404372215271
+    },
+    "zero_filled_non_text_region_rmse": {
+      "mean": 0.053568211694558464,
+      "median": 0.05271406099200249,
+      "min": 0.027104981243610382,
+      "max": 0.0721498355269432
+    },
+    "ram_non_text_region_rmse": {
+      "mean": 0.027424712603290876,
+      "median": 0.02661670744419098,
+      "min": 0.015977684408426285,
+      "max": 0.04297976568341255
+    },
+    "zero_filled_recovery_outside_leakage_rms_relative_to_target": {
+      "mean": 0.001626130740623921,
+      "median": 0.0,
+      "min": 0.0,
+      "max": 0.0060091265477240086
+    },
+    "ram_recovery_outside_leakage_rms_relative_to_target": {
+      "mean": 0.0025154278497211634,
+      "median": 0.0,
+      "min": 0.0,
+      "max": 0.008129090070724487
+    }
+  },
+  "volume_bootstrap_95_ci": {
+    "delta_zero_filled_psnr": {
+      "mean_of_volume_means": -0.04250818888346354,
+      "ci": [
+        -0.05365447998046875,
+        -0.033419164021809895
+      ]
+    },
+    "delta_zero_filled_ssim": {
+      "mean_of_volume_means": -0.005012182394663493,
+      "ci": [
+        -0.005420855681101481,
+        -0.004437235991160075
+      ]
+    },
+    "delta_zero_filled_nmse": {
+      "mean_of_volume_means": 0.0002567797278364499,
+      "ci": [
+        0.000211478341370821,
+        0.0002984051282207171
+      ]
+    },
+    "delta_ram_psnr": {
+      "mean_of_volume_means": -0.16293080647786456,
+      "ci": [
+        -0.22427953084309896,
+        -0.10868911743164063
+      ]
+    },
+    "delta_ram_ssim": {
+      "mean_of_volume_means": -0.00493467648824056,
+      "ci": [
+        -0.005218021074930827,
+        -0.004592708746592204
+      ]
+    },
+    "delta_ram_nmse": {
+      "mean_of_volume_means": 0.0002658765763044357,
+      "ci": [
+        0.0002133193736275037,
+        0.00031360766539971036
+      ]
+    },
+    "zero_filled_recovery_contrast_recovery_ratio": {
+      "mean_of_volume_means": 0.015174478634762449,
+      "ci": [
+        0.004028437209444785,
+        0.02809484856586501
+      ]
+    },
+    "ram_recovery_contrast_recovery_ratio": {
+      "mean_of_volume_means": 0.038803129835794994,
+      "ci": [
+        0.010998854278785868,
+        0.07173025477478505
+      ]
+    },
+    "zero_filled_recovery_relative_l2_error": {
+      "mean_of_volume_means": 0.9875676949818929,
+      "ci": [
+        0.9771145542462667,
+        0.9967245022455852
+      ]
+    },
+    "ram_recovery_relative_l2_error": {
+      "mean_of_volume_means": 0.9703769008318583,
+      "ci": [
+        0.9442126512527464,
+        0.9916915814081828
+      ]
+    },
+    "zero_filled_text_region_rmse": {
+      "mean_of_volume_means": 0.10465148687362671,
+      "ci": [
+        0.10280019988616308,
+        0.10661429514487585
+      ]
+    },
+    "ram_text_region_rmse": {
+      "mean_of_volume_means": 0.10377935767173767,
+      "ci": [
+        0.10221254130204518,
+        0.10546667128801346
+      ]
+    },
+    "zero_filled_non_text_region_rmse": {
+      "mean_of_volume_means": 0.053568211694558464,
+      "ci": [
+        0.04932420651117961,
+        0.05781221687793732
+      ]
+    },
+    "ram_non_text_region_rmse": {
+      "mean_of_volume_means": 0.027424712603290876,
+      "ci": [
+        0.022107554972171782,
+        0.03353356868028641
+      ]
+    },
+    "zero_filled_recovery_outside_leakage_rms_relative_to_target": {
+      "mean_of_volume_means": 0.001626130740623921,
+      "ci": [
+        0.0006747181449706356,
+        0.002778790177156528
+      ]
+    },
+    "ram_recovery_outside_leakage_rms_relative_to_target": {
+      "mean_of_volume_means": 0.0025154278497211634,
+      "ci": [
+        0.0010612719769900044,
+        0.003970627909681449
+      ]
+    }
+  },
+  "bootstrap": {
+    "unit": "volume mean (5 independent volumes)",
+    "repetitions": 10000,
+    "seed": 29029
+  }
+}

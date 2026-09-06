@@ -1,0 +1,45 @@
+experiment:
+  id: ram-007
+  parent_run: ram-003
+  condition: polynomial-vd-random-r16
+  slurm_job_id: 42490
+  git_branch: feature/fastmri-brain-adapter
+  git_commit: e1b1dd988a51745da5fe13c36480121f93da45d8
+  downloads_allowed: false
+data:
+  dataset: fastMRI brain multicoil validation
+  data_root: /mnt/qdata/rawdata/fastMRI/brain/multicoil_val
+  cases_file: /home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-007/cases.txt
+  case_count: 5
+  slices_per_case: 3
+  slice_selection: equally spaced within the 15%-85% non-edge range
+preprocessing:
+  coil_combination: volume-level ESC/VCC
+  esc_max_iterations: 60
+  normalization: zero-filled magnitude p99.5 per slice
+mask:
+  dimensionality: 1D Cartesian
+  mode: polynomial-vd-random
+  nominal_acceleration: 16
+  image_width: 320
+  sampled_columns: 20
+  center_columns: 6
+  center_fraction: 0.02
+  polynomial_exponent: 4.0
+  density_floor: 1.0e-6
+  seeds: [0,1,2]
+  per_case_seed: sha256(filename + seed)
+model:
+  implementation: deepinv.models.RAM
+  minimum_deepinv_version: 0.4.1
+  checkpoint: /mnt/ceph/vol_02_home_students/studxuzho1/.cache/huggingface/hub/models--mterris--ram/blobs/1292571adc3d15f9db5e7f5bd92265599030b6b816637367d0f5992d8dbdef7a
+  checkpoint_sha256: 1292571adc3d15f9db5e7f5bd92265599030b6b816637367d0f5992d8dbdef7a
+  noise_sigma: 0.0005
+output:
+  root: /home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-007/output
+  summary: /home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-007/summary/job-42490
+  previews_per_replicate: 6
+logs:
+  run: /home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-007/logs/run-42490.log
+  stdout: /home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-007/logs/slurm-42490.out
+  stderr: /home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-007/logs/slurm-42490.err

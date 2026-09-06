@@ -1,0 +1,53 @@
+experiment: ram-027
+purpose: RAM center-crop stability and crop equivariance on a small paired batch
+
+sampling:
+  manifest_source: runs/ram-024/manifest.tsv
+  volumes: 5
+  slices_per_volume: 3
+  total_cases: 15
+
+transform:
+  type: fixed_center_crop
+  source_size: [320, 320]
+  output_size: [288, 288]
+  resize: false
+  zero_pad: false
+  applied_identically_to: [reference, sensitivity_maps, measured_image_domain_coil_images, rss]
+  measurement_rebuild: centered_orthonormal_fft_after_cropping_measured_coil_images
+
+sampling_mask:
+  type: Cartesian_vertical_lines
+  generator: deepinv.physics.generator.RandomMaskGenerator
+  nominal_acceleration: 4
+  center_fraction: 0.08
+  seed: 0
+  width: 288
+  required_sampled_columns: 72
+  required_sampled_fraction: 0.25
+  required_actual_acceleration: 4.0
+
+normalization:
+  percentile: 99.5
+  rule: exact paired ram-024 clean masked-ZF normalization_scale per case
+  recompute_from_cropped_data: false
+  shared_by: [reference, zero_filled, ram]
+
+inference:
+  noise_conditioning_sigma: 0.001
+  synthetic_noise: none
+  post_data_consistency: none
+  checkpoint: /mnt/ceph/vol_02_home_students/studxuzho1/.cache/huggingface/hub/models--mterris--ram/blobs/1292571adc3d15f9db5e7f5bd92265599030b6b816637367d0f5992d8dbdef7a
+  checkpoint_sha256: 1292571adc3d15f9db5e7f5bd92265599030b6b816637367d0f5992d8dbdef7a
+  huggingface_offline: true
+
+comparison:
+  original_baseline: paired ram-024 clean RAM reconstruction; never rerun
+  same_region: center 288x288 of paired original RAM reconstruction
+  report: [case_metrics, volume_metrics, original_to_crop_deltas, same_region_deltas, crop_equivariance, bootstrap_95_ci]
+
+execution:
+  slurm_array: 0-4%2
+  one_array_task_per_volume: true
+  aggregation_dependency: afterok
+  smoke_job: false

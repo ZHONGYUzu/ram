@@ -1,0 +1,44 @@
+experiment: ram-024
+purpose: 15-case Gaussian-noise calibration across fastMRI brain validation volumes
+
+sampling:
+  paired_raw_espirit_population: 491 volumes
+  strata:
+    AXFLAIR: {available: 93, selected: 1}
+    AXT1: {available: 34, selected: 1}
+    AXT1PRE: {available: 77, selected: 1}
+    AXT1POST: {available: 287, selected: 2}
+  volume_selection: deterministic SHA-256 ordering using prefix ram-024
+  slices_per_volume: 3
+  slice_selection: deterministic SHA-256 ordering within non-edge indices 2 through 13
+  total_cases: 15
+  manifest: manifest.tsv
+
+paired_conditions:
+  clean: no synthetic input noise
+  noisy:
+    type: zero-mean complex Gaussian noise
+    domain: sampled measured k-space before normalization
+    relative_complex_rms: 0.05
+    equivalent_input_snr_db: 26.02
+    sampled_lines_only: true
+  normalization: each noisy case reuses its paired clean masked zero-filled p99.5 scale
+
+fixed_settings:
+  crop_size: 320
+  acceleration: 4
+  center_fraction: 0.08
+  mask_seed: 0
+  measurement_source: measured
+  reference_key: reference_acl15
+  smaps_key: smaps_acl15
+  map_index: 0
+  noise_conditioning_sigma: 0.001
+  post_data_consistency: none
+  checkpoint: /mnt/ceph/vol_02_home_students/studxuzho1/.cache/huggingface/hub/models--mterris--ram/blobs/1292571adc3d15f9db5e7f5bd92265599030b6b816637367d0f5992d8dbdef7a
+  checkpoint_sha256: 1292571adc3d15f9db5e7f5bd92265599030b6b816637367d0f5992d8dbdef7a
+  huggingface_offline: true
+
+execution:
+  slurm_array: 0-4%2
+  one_array_task_per_volume: true

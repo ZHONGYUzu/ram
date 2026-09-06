@@ -1,0 +1,343 @@
+[
+  {
+    "canonical_candidate": "ram/__init__.py",
+    "distinct_contents": 1,
+    "files": [
+      {
+        "path": "ram/__init__.py",
+        "sha256": "d83ed96185202d99eb3012d0ef6cb3bfa35eb65da48c261dd52c2422cd0bcd4d",
+        "server_path": "/home/students/studxuzho1/ram-fastmri-brain-adapter/ram/__init__.py"
+      },
+      {
+        "path": "runs/ram-022/code/ram/__init__.py",
+        "sha256": "d83ed96185202d99eb3012d0ef6cb3bfa35eb65da48c261dd52c2422cd0bcd4d",
+        "server_path": "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-022/code/ram/__init__.py"
+      },
+      {
+        "path": "runs/ram-023/code/ram/__init__.py",
+        "sha256": "d83ed96185202d99eb3012d0ef6cb3bfa35eb65da48c261dd52c2422cd0bcd4d",
+        "server_path": "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-023/code/ram/__init__.py"
+      },
+      {
+        "path": "runs/ram-024/code/ram/__init__.py",
+        "sha256": "d83ed96185202d99eb3012d0ef6cb3bfa35eb65da48c261dd52c2422cd0bcd4d",
+        "server_path": "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-024/code/ram/__init__.py"
+      },
+      {
+        "path": "runs/ram-025/code/ram/__init__.py",
+        "sha256": "d83ed96185202d99eb3012d0ef6cb3bfa35eb65da48c261dd52c2422cd0bcd4d",
+        "server_path": "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-025/code/ram/__init__.py"
+      },
+      {
+        "path": "runs/ram-026/code/ram/__init__.py",
+        "sha256": "d83ed96185202d99eb3012d0ef6cb3bfa35eb65da48c261dd52c2422cd0bcd4d",
+        "server_path": "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-026/code/ram/__init__.py"
+      },
+      {
+        "path": "runs/ram-027/code/ram/__init__.py",
+        "sha256": "d83ed96185202d99eb3012d0ef6cb3bfa35eb65da48c261dd52c2422cd0bcd4d",
+        "server_path": "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-027/code/ram/__init__.py"
+      },
+      {
+        "path": "runs/ram-029/code/ram/__init__.py",
+        "sha256": "d83ed96185202d99eb3012d0ef6cb3bfa35eb65da48c261dd52c2422cd0bcd4d",
+        "server_path": "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-029/code/ram/__init__.py"
+      },
+      {
+        "path": "runs/ram-028/code/ram/__init__.py",
+        "sha256": "d83ed96185202d99eb3012d0ef6cb3bfa35eb65da48c261dd52c2422cd0bcd4d",
+        "server_path": "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-028/code/ram/__init__.py"
+      }
+    ]
+  },
+  {
+    "canonical_candidate": "ram/adapters/__init__.py",
+    "distinct_contents": 1,
+    "files": [
+      {
+        "path": "ram/adapters/__init__.py",
+        "sha256": "1faea40fc37c64687282aca213b59467adbe59ec18950faab6615a4537c877f7",
+        "server_path": "/home/students/studxuzho1/ram-fastmri-brain-adapter/ram/adapters/__init__.py"
+      },
+      {
+        "path": "runs/ram-022/code/ram/adapters/__init__.py",
+        "sha256": "1faea40fc37c64687282aca213b59467adbe59ec18950faab6615a4537c877f7",
+        "server_path": "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-022/code/ram/adapters/__init__.py"
+      },
+      {
+        "path": "runs/ram-023/code/ram/adapters/__init__.py",
+        "sha256": "1faea40fc37c64687282aca213b59467adbe59ec18950faab6615a4537c877f7",
+        "server_path": "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-023/code/ram/adapters/__init__.py"
+      },
+      {
+        "path": "runs/ram-024/code/ram/adapters/__init__.py",
+        "sha256": "1faea40fc37c64687282aca213b59467adbe59ec18950faab6615a4537c877f7",
+        "server_path": "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-024/code/ram/adapters/__init__.py"
+      },
+      {
+        "path": "runs/ram-025/code/ram/adapters/__init__.py",
+        "sha256": "1faea40fc37c64687282aca213b59467adbe59ec18950faab6615a4537c877f7",
+        "server_path": "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-025/code/ram/adapters/__init__.py"
+      },
+      {
+        "path": "runs/ram-026/code/ram/adapters/__init__.py",
+        "sha256": "1faea40fc37c64687282aca213b59467adbe59ec18950faab6615a4537c877f7",
+        "server_path": "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-026/code/ram/adapters/__init__.py"
+      },
+      {
+        "path": "runs/ram-027/code/ram/adapters/__init__.py",
+        "sha256": "1faea40fc37c64687282aca213b59467adbe59ec18950faab6615a4537c877f7",
+        "server_path": "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-027/code/ram/adapters/__init__.py"
+      },
+      {
+        "path": "runs/ram-029/code/ram/adapters/__init__.py",
+        "sha256": "1faea40fc37c64687282aca213b59467adbe59ec18950faab6615a4537c877f7",
+        "server_path": "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-029/code/ram/adapters/__init__.py"
+      },
+      {
+        "path": "runs/ram-028/code/ram/adapters/__init__.py",
+        "sha256": "1faea40fc37c64687282aca213b59467adbe59ec18950faab6615a4537c877f7",
+        "server_path": "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-028/code/ram/adapters/__init__.py"
+      }
+    ]
+  },
+  {
+    "canonical_candidate": "ram/adapters/fastmri_brain.py",
+    "distinct_contents": 1,
+    "files": [
+      {
+        "path": "ram/adapters/fastmri_brain.py",
+        "sha256": "5ecce04d836248ffc16653fedfcf8fbc8f49b11d88571ca68f30d7d7300c6861",
+        "server_path": "/home/students/studxuzho1/ram-fastmri-brain-adapter/ram/adapters/fastmri_brain.py"
+      },
+      {
+        "path": "runs/ram-022/code/ram/adapters/fastmri_brain.py",
+        "sha256": "5ecce04d836248ffc16653fedfcf8fbc8f49b11d88571ca68f30d7d7300c6861",
+        "server_path": "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-022/code/ram/adapters/fastmri_brain.py"
+      },
+      {
+        "path": "runs/ram-023/code/ram/adapters/fastmri_brain.py",
+        "sha256": "5ecce04d836248ffc16653fedfcf8fbc8f49b11d88571ca68f30d7d7300c6861",
+        "server_path": "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-023/code/ram/adapters/fastmri_brain.py"
+      },
+      {
+        "path": "runs/ram-024/code/ram/adapters/fastmri_brain.py",
+        "sha256": "5ecce04d836248ffc16653fedfcf8fbc8f49b11d88571ca68f30d7d7300c6861",
+        "server_path": "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-024/code/ram/adapters/fastmri_brain.py"
+      },
+      {
+        "path": "runs/ram-025/code/ram/adapters/fastmri_brain.py",
+        "sha256": "5ecce04d836248ffc16653fedfcf8fbc8f49b11d88571ca68f30d7d7300c6861",
+        "server_path": "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-025/code/ram/adapters/fastmri_brain.py"
+      },
+      {
+        "path": "runs/ram-026/code/ram/adapters/fastmri_brain.py",
+        "sha256": "5ecce04d836248ffc16653fedfcf8fbc8f49b11d88571ca68f30d7d7300c6861",
+        "server_path": "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-026/code/ram/adapters/fastmri_brain.py"
+      },
+      {
+        "path": "runs/ram-027/code/ram/adapters/fastmri_brain.py",
+        "sha256": "5ecce04d836248ffc16653fedfcf8fbc8f49b11d88571ca68f30d7d7300c6861",
+        "server_path": "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-027/code/ram/adapters/fastmri_brain.py"
+      },
+      {
+        "path": "runs/ram-029/code/ram/adapters/fastmri_brain.py",
+        "sha256": "5ecce04d836248ffc16653fedfcf8fbc8f49b11d88571ca68f30d7d7300c6861",
+        "server_path": "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-029/code/ram/adapters/fastmri_brain.py"
+      },
+      {
+        "path": "runs/ram-028/code/ram/adapters/fastmri_brain.py",
+        "sha256": "5ecce04d836248ffc16653fedfcf8fbc8f49b11d88571ca68f30d7d7300c6861",
+        "server_path": "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-028/code/ram/adapters/fastmri_brain.py"
+      }
+    ]
+  },
+  {
+    "canonical_candidate": "scripts/validate_fastmri_multicoil_ram.py",
+    "distinct_contents": 6,
+    "files": [
+      {
+        "path": "scripts/validate_fastmri_multicoil_ram.py",
+        "sha256": "ee875f4fe20bb2c5b10ff315f9c3d15c4faa9ab1ad3c79197cc8ab9302ca0cfb",
+        "server_path": "/home/students/studxuzho1/ram-fastmri-brain-adapter/scripts/validate_fastmri_multicoil_ram.py"
+      },
+      {
+        "path": "runs/ram-022/code/scripts/validate_fastmri_multicoil_ram.py",
+        "sha256": "cd1d561049f1d525c32b5c3eee24d4941ec774e2c501b1939b95e193f0e24440",
+        "server_path": "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-022/code/scripts/validate_fastmri_multicoil_ram.py"
+      },
+      {
+        "path": "runs/ram-023/code/scripts/validate_fastmri_multicoil_ram.py",
+        "sha256": "bb8d1e99a1036ed521bf42a75719232a12b5e0eb507a4e552a185972c2cb8fe6",
+        "server_path": "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-023/code/scripts/validate_fastmri_multicoil_ram.py"
+      },
+      {
+        "path": "runs/ram-024/code/scripts/validate_fastmri_multicoil_ram.py",
+        "sha256": "54737001f8a65dcb8cb4b09e15f8a6c1cd25ed17206dd57c52f243e93042b404",
+        "server_path": "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-024/code/scripts/validate_fastmri_multicoil_ram.py"
+      },
+      {
+        "path": "runs/ram-025/code/scripts/validate_fastmri_multicoil_ram.py",
+        "sha256": "54737001f8a65dcb8cb4b09e15f8a6c1cd25ed17206dd57c52f243e93042b404",
+        "server_path": "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-025/code/scripts/validate_fastmri_multicoil_ram.py"
+      },
+      {
+        "path": "runs/ram-026/code/scripts/validate_fastmri_multicoil_ram.py",
+        "sha256": "9ad696b6952aea2cc597e9b3a35a828b2a43ced2e4b2c94c252752a4e88d5c7d",
+        "server_path": "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-026/code/scripts/validate_fastmri_multicoil_ram.py"
+      },
+      {
+        "path": "runs/ram-029/code/scripts/validate_fastmri_multicoil_ram.py",
+        "sha256": "54737001f8a65dcb8cb4b09e15f8a6c1cd25ed17206dd57c52f243e93042b404",
+        "server_path": "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-029/code/scripts/validate_fastmri_multicoil_ram.py"
+      },
+      {
+        "path": "runs/ram-028/code/scripts/validate_fastmri_multicoil_ram.py",
+        "sha256": "286ac1b18b7d50ac9e974ddf26f9547a4f5f13c11aa1dc4b8bfc9e4337147488",
+        "server_path": "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-028/code/scripts/validate_fastmri_multicoil_ram.py"
+      }
+    ]
+  },
+  {
+    "canonical_candidate": "scripts/validate_fastmri_ram.py",
+    "distinct_contents": 2,
+    "files": [
+      {
+        "path": "scripts/validate_fastmri_ram.py",
+        "sha256": "d38dc6bbffb98638c5df8ad1fcdcfb131819a697d0ad70c585b3f11f89bc332a",
+        "server_path": "/home/students/studxuzho1/ram-fastmri-brain-adapter/scripts/validate_fastmri_ram.py"
+      },
+      {
+        "path": "runs/ram-022/code/scripts/validate_fastmri_ram.py",
+        "sha256": "d38dc6bbffb98638c5df8ad1fcdcfb131819a697d0ad70c585b3f11f89bc332a",
+        "server_path": "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-022/code/scripts/validate_fastmri_ram.py"
+      },
+      {
+        "path": "runs/ram-023/code/scripts/validate_fastmri_ram.py",
+        "sha256": "d38dc6bbffb98638c5df8ad1fcdcfb131819a697d0ad70c585b3f11f89bc332a",
+        "server_path": "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-023/code/scripts/validate_fastmri_ram.py"
+      },
+      {
+        "path": "runs/ram-024/code/scripts/validate_fastmri_ram.py",
+        "sha256": "d38dc6bbffb98638c5df8ad1fcdcfb131819a697d0ad70c585b3f11f89bc332a",
+        "server_path": "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-024/code/scripts/validate_fastmri_ram.py"
+      },
+      {
+        "path": "runs/ram-025/code/scripts/validate_fastmri_ram.py",
+        "sha256": "d38dc6bbffb98638c5df8ad1fcdcfb131819a697d0ad70c585b3f11f89bc332a",
+        "server_path": "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-025/code/scripts/validate_fastmri_ram.py"
+      },
+      {
+        "path": "runs/ram-026/code/scripts/validate_fastmri_ram.py",
+        "sha256": "d38dc6bbffb98638c5df8ad1fcdcfb131819a697d0ad70c585b3f11f89bc332a",
+        "server_path": "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-026/code/scripts/validate_fastmri_ram.py"
+      },
+      {
+        "path": "runs/ram-029/code/scripts/validate_fastmri_ram.py",
+        "sha256": "d38dc6bbffb98638c5df8ad1fcdcfb131819a697d0ad70c585b3f11f89bc332a",
+        "server_path": "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-029/code/scripts/validate_fastmri_ram.py"
+      },
+      {
+        "path": "runs/ram-028/code/scripts/validate_fastmri_ram.py",
+        "sha256": "3fc035d5a16947590c0a3b40228d90329ddea588e317b2526c1c7c0cbbf32e9e",
+        "server_path": "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-028/code/scripts/validate_fastmri_ram.py"
+      }
+    ]
+  },
+  {
+    "canonical_candidate": "scripts/aggregate_ram024.py",
+    "distinct_contents": 1,
+    "files": [
+      {
+        "path": "runs/ram-024/code/scripts/aggregate_ram024.py",
+        "sha256": "624533ae9a173a682ee2ee4bfe6a16c462b7ea2c469c667ceef7ca0a640bc7b6",
+        "server_path": "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-024/code/scripts/aggregate_ram024.py"
+      },
+      {
+        "path": "runs/ram-029/code/scripts/aggregate_ram024.py",
+        "sha256": "624533ae9a173a682ee2ee4bfe6a16c462b7ea2c469c667ceef7ca0a640bc7b6",
+        "server_path": "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-029/code/scripts/aggregate_ram024.py"
+      }
+    ]
+  },
+  {
+    "canonical_candidate": "scripts/aggregate_ram025.py",
+    "distinct_contents": 1,
+    "files": [
+      {
+        "path": "runs/ram-025/code/scripts/aggregate_ram025.py",
+        "sha256": "0926496403fe7038cc8ddb02e0d2be59120f0f2be59d9a18e17da40865358211",
+        "server_path": "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-025/code/scripts/aggregate_ram025.py"
+      },
+      {
+        "path": "runs/ram-026/code/scripts/aggregate_ram025.py",
+        "sha256": "0926496403fe7038cc8ddb02e0d2be59120f0f2be59d9a18e17da40865358211",
+        "server_path": "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-026/code/scripts/aggregate_ram025.py"
+      }
+    ]
+  },
+  {
+    "canonical_candidate": "scripts/validate_ram029_text.py",
+    "distinct_contents": 2,
+    "files": [
+      {
+        "path": "runs/ram-029/code/scripts/validate_ram029_text.py",
+        "sha256": "1bfd963d1e4eaf3a39b75c31222b4fb1e8999ef325e444171f5a2987686708fb",
+        "server_path": "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-029/code/scripts/validate_ram029_text.py"
+      },
+      {
+        "path": "runs/ram-029/attempts/attempt-1-bbox-270-246/design_snapshot/validate_ram029_text.py",
+        "sha256": "0d01273bc8f0e464fd19ee8043304749e8a9aa599ec2764ecb8ab137c5997cba",
+        "server_path": "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-029/attempts/attempt-1-bbox-270-246/design_snapshot/validate_ram029_text.py"
+      }
+    ]
+  },
+  {
+    "canonical_candidate": "scripts/aggregate_ram029.py",
+    "distinct_contents": 2,
+    "files": [
+      {
+        "path": "runs/ram-029/code/scripts/aggregate_ram029.py",
+        "sha256": "54fdcf66e36044d9981e9322d6786ad0c24c28edaba35c175414d98c5dfc2291",
+        "server_path": "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-029/code/scripts/aggregate_ram029.py"
+      },
+      {
+        "path": "runs/ram-029/attempts/attempt-1-bbox-270-246/design_snapshot/aggregate_ram029.py",
+        "sha256": "16bb301760bb01416bc0cac44dcd473de2c6f82fbeeac6efc209c3962c9c8d66",
+        "server_path": "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-029/attempts/attempt-1-bbox-270-246/design_snapshot/aggregate_ram029.py"
+      }
+    ]
+  },
+  {
+    "canonical_candidate": "scripts/ram-029-aggregate.sbatch",
+    "distinct_contents": 1,
+    "files": [
+      {
+        "path": "runs/ram-029/ram-029-aggregate.sbatch",
+        "sha256": "a51e871edd2511659e64c77179dae22ecc973a35e1327fff2235baa8b0abd54f",
+        "server_path": "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-029/ram-029-aggregate.sbatch"
+      },
+      {
+        "path": "runs/ram-029/attempts/attempt-1-bbox-270-246/design_snapshot/ram-029-aggregate.sbatch",
+        "sha256": "a51e871edd2511659e64c77179dae22ecc973a35e1327fff2235baa8b0abd54f",
+        "server_path": "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-029/attempts/attempt-1-bbox-270-246/design_snapshot/ram-029-aggregate.sbatch"
+      }
+    ]
+  },
+  {
+    "canonical_candidate": "scripts/ram-029-15cases.sbatch",
+    "distinct_contents": 2,
+    "files": [
+      {
+        "path": "runs/ram-029/attempts/attempt-1-bbox-270-246/design_snapshot/ram-029-15cases.sbatch",
+        "sha256": "34dc553e99bb22bcf20c71a9dfd6f4cb626fe9cd1110612893e052a4761fa364",
+        "server_path": "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-029/attempts/attempt-1-bbox-270-246/design_snapshot/ram-029-15cases.sbatch"
+      },
+      {
+        "path": "runs/ram-029/ram-029-15cases.sbatch",
+        "sha256": "e76fb991827c01b95c91efd2082d1a9e445100ad775028e7fb79acc178f25baa",
+        "server_path": "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-029/ram-029-15cases.sbatch"
+      }
+    ]
+  }
+]

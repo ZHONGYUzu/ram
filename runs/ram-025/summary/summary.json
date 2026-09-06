@@ -1,0 +1,151 @@
+{
+  "experiment": "ram-025",
+  "cases": 90,
+  "volumes": 30,
+  "ram_024_calibration_volumes_excluded": true,
+  "noise_relative_complex_rms_requested": 0.05,
+  "noise_relative_complex_rms_observed_range": [
+    0.04999999329447746,
+    0.05000000819563866
+  ],
+  "maximum_absolute_clean_noisy_scale_difference": 0.0,
+  "case_level": {
+    "delta_ram_psnr": {
+      "mean": -0.18459368811713325,
+      "median": -0.09505558013916016,
+      "min": -0.9890594482421875,
+      "max": 0.10824203491210938
+    },
+    "delta_ram_ssim": {
+      "mean": -0.003033215469784207,
+      "median": -0.0006084740161895752,
+      "min": -0.0351787805557251,
+      "max": 0.0035247802734375
+    },
+    "delta_ram_nmse": {
+      "mean": 0.00031908760882086223,
+      "median": 0.00018655951134860516,
+      "min": -0.0002487320452928543,
+      "max": 0.0019882377237081528
+    }
+  },
+  "volume_level": {
+    "mean_delta_ram_psnr": {
+      "mean": -0.18459368811713325,
+      "median": -0.1327044169108073,
+      "min": -0.969628651936849,
+      "max": 0.03331629435221354,
+      "bootstrap_95_ci": [
+        -0.27332502471076114,
+        -0.10888521300421822
+      ]
+    },
+    "mean_delta_ram_ssim": {
+      "mean": -0.003033215469784207,
+      "median": -0.0004324714342753092,
+      "min": -0.021151761213938396,
+      "max": 0.0026084184646606445,
+      "bootstrap_95_ci": [
+        -0.005425383249918619,
+        -0.0009666347172525196
+      ]
+    },
+    "mean_delta_ram_nmse": {
+      "mean": 0.00031908760882086223,
+      "median": 0.0001963216345757246,
+      "min": -5.378248170018196e-05,
+      "max": 0.0013503213413059711,
+      "bootstrap_95_ci": [
+        0.0001905866904417053,
+        0.0004660813231667918
+      ]
+    }
+  },
+  "acquisition_level": {
+    "AXFLAIR": {
+      "volumes": 6,
+      "cases": 18,
+      "mean_delta_ram_psnr": -0.1034910413953993,
+      "bootstrap_95_ci_delta_ram_psnr": [
+        -0.15847916073269314,
+        -0.04507679409450954
+      ],
+      "mean_delta_ram_ssim": -0.0021205941836039224,
+      "bootstrap_95_ci_delta_ram_ssim": [
+        -0.0035735103819105364,
+        -0.0006109707885318333
+      ],
+      "mean_delta_ram_nmse": 0.00020913109700712893,
+      "bootstrap_95_ci_delta_ram_nmse": [
+        0.0001019226231922706,
+        0.0003238518774095509
+      ]
+    },
+    "AXT1": {
+      "volumes": 2,
+      "cases": 6,
+      "mean_delta_ram_psnr": -0.023607889811197914,
+      "bootstrap_95_ci_delta_ram_psnr": [
+        -0.06756210327148438,
+        0.020346323649088543
+      ],
+      "mean_delta_ram_ssim": -0.0008493860562642415,
+      "bootstrap_95_ci_delta_ram_ssim": [
+        -0.003029028574625651,
+        0.001330256462097168
+      ],
+      "mean_delta_ram_nmse": 5.5636822556455926e-05,
+      "bootstrap_95_ci_delta_ram_nmse": [
+        -3.3198390156030655e-05,
+        0.0001444720352689425
+      ]
+    },
+    "AXT1PRE": {
+      "volumes": 5,
+      "cases": 15,
+      "mean_delta_ram_psnr": -0.5013802846272787,
+      "bootstrap_95_ci_delta_ram_psnr": [
+        -0.7574115753173828,
+        -0.2558789571126302
+      ],
+      "mean_delta_ram_ssim": -0.010956211884816488,
+      "bootstrap_95_ci_delta_ram_ssim": [
+        -0.019662439823150635,
+        -0.0022499839464823405
+      ],
+      "mean_delta_ram_nmse": 0.0008276479939619701,
+      "bootstrap_95_ci_delta_ram_nmse": [
+        0.00038499472041924796,
+        0.0012671832616130512
+      ]
+    },
+    "AXT1POST": {
+      "volumes": 17,
+      "cases": 51,
+      "mean_delta_ram_psnr": -0.13898512896369486,
+      "bootstrap_95_ci_delta_ram_psnr": [
+        -0.22697269308800788,
+        -0.07171815236409507
+      ],
+      "mean_delta_ram_ssim": -0.0012819451444289263,
+      "bootstrap_95_ci_delta_ram_ssim": [
+        -0.0032751290237202366,
+        0.0003385235865910846
+      ],
+      "mean_delta_ram_nmse": 0.0002393134157447254,
+      "bootstrap_95_ci_delta_ram_nmse": [
+        0.00012366324024019288,
+        0.0003833722449866507
+      ]
+    }
+  },
+  "failure_rates": {
+    "ram_psnr_drop_gt_0.5_db": 0.08888888888888889,
+    "ram_psnr_drop_gt_1.0_db": 0
+  },
+  "bootstrap": {
+    "unit": "volume mean",
+    "repetitions": 10000,
+    "seed": 25025
+  }
+}

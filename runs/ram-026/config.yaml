@@ -1,0 +1,43 @@
+experiment: ram-026
+purpose: formal physics-consistent left-right mirror-flip stability and equivariance evaluation
+baseline_experiment: ram-025 clean condition
+
+sampling:
+  manifest_source: ram-025/manifest.tsv
+  total_volumes: 30
+  slices_per_volume: 3
+  total_cases: 90
+  acquisitions: [AXFLAIR, AXT1, AXT1PRE, AXT1POST]
+
+paired_conditions:
+  original: reuse ram-025 clean outputs without rerunning
+  transformed:
+    type: horizontal mirror flip
+    image_axis: last image dimension / left-right
+    reference: flipped
+    sensitivity_maps: flipped
+    measured_coil_images: flipped before centered FFT
+    rss_reference: flipped
+    cartesian_mask: centered-DFT index mapping k_to_minus_k_mod_N
+  normalization: transformed case reuses exact paired original p99.5 scale
+
+fixed_settings:
+  crop_size: 320
+  acceleration: 4
+  center_fraction: 0.08
+  mask_seed: 0
+  measurement_source: measured
+  reference_key: reference_acl15
+  smaps_key: smaps_acl15
+  map_index: 0
+  noise_conditioning_sigma: 0.001
+  synthetic_noise_relative_rms: 0
+  post_data_consistency: none
+  checkpoint_sha256: 1292571adc3d15f9db5e7f5bd92265599030b6b816637367d0f5992d8dbdef7a
+  huggingface_offline: true
+
+execution:
+  workflow: server-only temporary snapshot; no git commit or push
+  smoke_test: first manifest volume, first selected slice
+  formal_slurm_array: 0-29%2
+  dependent_summary: afterok

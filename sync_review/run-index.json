@@ -1,0 +1,860 @@
+{
+  "ram-001": {
+    "code": [],
+    "configs_and_manifests": [
+      "runs/ram-001/config.yaml",
+      "runs/ram-001/cases.txt"
+    ],
+    "launchers": [
+      "scripts/slurm_fastmri_brain_adapter.sbatch",
+      "scripts/slurm_fastmri_brain_adapter_ram002.sbatch",
+      "scripts/slurm_fastmri_brain_ram010.sbatch"
+    ],
+    "server_logs": [
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-001/output/debug-r4-job42471/run.log",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-001/logs/run.log",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-001/logs/slurm-42420.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-001/logs/slurm-42420.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-001/logs/slurm-42421.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-001/logs/slurm-42421.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-001/logs/slurm-42422.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-001/logs/slurm-42422.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-001/logs/slurm-42427.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-001/logs/slurm-42427.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-001/logs/slurm-42439.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-001/logs/slurm-42439.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-001/logs/slurm-42440.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-001/logs/slurm-42440.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-001/logs/failed-42440.run.log",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-001/logs/slurm-42464.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-001/logs/slurm-42464.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-001/logs/slurm-42471.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-001/logs/slurm-42471.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-001/logs/run-42471.log"
+    ]
+  },
+  "ram-002": {
+    "code": [],
+    "configs_and_manifests": [
+      "runs/ram-002/cases.txt",
+      "runs/ram-002/config.yaml"
+    ],
+    "launchers": [
+      "scripts/slurm_fastmri_brain_adapter_ram002.sbatch",
+      "scripts/slurm_fastmri_brain_adapter_ram003.sbatch"
+    ],
+    "server_logs": [
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-002/output/debug-r4-job42472/run.log",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-002/logs/slurm-42472.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-002/logs/slurm-42472.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-002/logs/run-42472.log"
+    ]
+  },
+  "ram-003": {
+    "code": [],
+    "configs_and_manifests": [
+      "runs/ram-003/cases.txt",
+      "runs/ram-003/config.yaml"
+    ],
+    "launchers": [
+      "scripts/slurm_fastmri_brain_adapter_ram003.sbatch",
+      "scripts/run_fastmri_mask_condition.sh",
+      "scripts/run_fastmri_paper_condition.sh"
+    ],
+    "server_logs": [
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-003/output/five-cases-r4-job42476/run.log",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-003/logs/slurm-42476.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-003/logs/slurm-42476.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-003/logs/run-42476.log"
+    ]
+  },
+  "ram-004": {
+    "code": [],
+    "configs_and_manifests": [
+      "runs/ram-004/summary/job-42487/slice_metrics.csv",
+      "runs/ram-004/summary/job-42487/summary.json",
+      "runs/ram-004/cases.txt",
+      "runs/ram-004/config.yaml"
+    ],
+    "launchers": [
+      "scripts/run_fastmri_mask_condition.sh",
+      "scripts/slurm_fastmri_brain_ram004.sbatch"
+    ],
+    "server_logs": [
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-004/logs/slurm-42487.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-004/logs/slurm-42487.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-004/logs/run-42487.log",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-004/output/exact-equispaced-r8-deterministic-job42487/run.log",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-004/summary/job-42487/run.log"
+    ]
+  },
+  "ram-005": {
+    "code": [],
+    "configs_and_manifests": [
+      "runs/ram-005/summary/job-42488/slice_metrics.csv",
+      "runs/ram-005/summary/job-42488/summary.json",
+      "runs/ram-005/cases.txt",
+      "runs/ram-005/config.yaml"
+    ],
+    "launchers": [
+      "scripts/slurm_fastmri_brain_ram005.sbatch"
+    ],
+    "server_logs": [
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-005/logs/slurm-42488.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-005/logs/slurm-42488.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-005/logs/run-42488.log",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-005/output/polynomial-vd-random-r8-seed0-job42488/run.log",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-005/output/polynomial-vd-random-r8-seed1-job42488/run.log",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-005/output/polynomial-vd-random-r8-seed2-job42488/run.log",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-005/summary/job-42488/run.log"
+    ]
+  },
+  "ram-006": {
+    "code": [],
+    "configs_and_manifests": [
+      "runs/ram-006/summary/job-42489/slice_metrics.csv",
+      "runs/ram-006/summary/job-42489/summary.json",
+      "runs/ram-006/cases.txt",
+      "runs/ram-006/config.yaml"
+    ],
+    "launchers": [
+      "scripts/slurm_fastmri_brain_ram006.sbatch"
+    ],
+    "server_logs": [
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-006/logs/slurm-42489.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-006/logs/slurm-42489.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-006/logs/run-42489.log",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-006/output/exact-equispaced-r16-deterministic-job42489/run.log",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-006/summary/job-42489/run.log"
+    ]
+  },
+  "ram-007": {
+    "code": [],
+    "configs_and_manifests": [
+      "runs/ram-007/summary/job-42490/slice_metrics.csv",
+      "runs/ram-007/summary/job-42490/summary.json",
+      "runs/ram-007/cases.txt",
+      "runs/ram-007/config.yaml"
+    ],
+    "launchers": [
+      "scripts/slurm_fastmri_brain_ram007.sbatch"
+    ],
+    "server_logs": [
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-007/logs/slurm-42490.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-007/logs/slurm-42490.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-007/logs/run-42490.log",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-007/output/polynomial-vd-random-r16-seed0-job42490/run.log",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-007/output/polynomial-vd-random-r16-seed1-job42490/run.log",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-007/output/polynomial-vd-random-r16-seed2-job42490/run.log",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-007/summary/job-42490/run.log"
+    ]
+  },
+  "ram-008": {
+    "code": [],
+    "configs_and_manifests": [
+      "runs/ram-008/summary/job-42491/slice_metrics.csv",
+      "runs/ram-008/summary/job-42491/summary.json",
+      "runs/ram-008/cases.txt",
+      "runs/ram-008/config.yaml"
+    ],
+    "launchers": [
+      "scripts/slurm_fastmri_brain_ram008.sbatch"
+    ],
+    "server_logs": [
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-008/logs/slurm-42491.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-008/logs/slurm-42491.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-008/logs/run-42491.log",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-008/output/exact-equispaced-r24-deterministic-job42491/run.log",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-008/summary/job-42491/run.log"
+    ]
+  },
+  "ram-009": {
+    "code": [],
+    "configs_and_manifests": [
+      "runs/ram-009/summary/job-42492/slice_metrics.csv",
+      "runs/ram-009/summary/job-42492/summary.json",
+      "runs/ram-009/cases.txt",
+      "runs/ram-009/config.yaml"
+    ],
+    "launchers": [
+      "scripts/run_fastmri_mask_condition.sh",
+      "scripts/slurm_fastmri_brain_ram009.sbatch"
+    ],
+    "server_logs": [
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-009/logs/slurm-42492.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-009/logs/slurm-42492.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-009/logs/run-42492.log",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-009/output/polynomial-vd-random-r24-seed0-job42492/run.log",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-009/output/polynomial-vd-random-r24-seed1-job42492/run.log",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-009/output/polynomial-vd-random-r24-seed2-job42492/run.log",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-009/summary/job-42492/run.log"
+    ]
+  },
+  "ram-010": {
+    "code": [],
+    "configs_and_manifests": [
+      "runs/ram-010/cases.txt",
+      "runs/ram-010/config.yaml"
+    ],
+    "launchers": [
+      "scripts/slurm_fastmri_brain_ram010.sbatch"
+    ],
+    "server_logs": [
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-010/logs/slurm-42509.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-010/logs/slurm-42509.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-010/logs/run-42509.log",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-010/output/exact-equispaced-r8-job42509/run.log",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-010/output/exact-equispaced-r16-job42509/run.log",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-010/output/exact-equispaced-r24-job42509/run.log"
+    ]
+  },
+  "ram-013": {
+    "code": [],
+    "configs_and_manifests": [
+      "runs/ram-013/summary/job-42510/slice_metrics.csv",
+      "runs/ram-013/summary/job-42510/summary.json",
+      "runs/ram-013/cases.txt",
+      "runs/ram-013/config.yaml"
+    ],
+    "launchers": [
+      "scripts/slurm_fastmri_brain_ram013.sbatch",
+      "scripts/run_fastmri_paper_condition.sh"
+    ],
+    "server_logs": [
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-013/logs/slurm-42510.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-013/logs/slurm-42510.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-013/logs/run-42510.log",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-013/output/fastmri-random-r4-seed0-job42510/run.log",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-013/output/fastmri-random-r4-seed1-job42510/run.log",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-013/output/fastmri-random-r4-seed2-job42510/run.log",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-013/summary/job-42510/run.log"
+    ]
+  },
+  "ram-014": {
+    "code": [],
+    "configs_and_manifests": [
+      "runs/ram-014/summary/job-42511/slice_metrics.csv",
+      "runs/ram-014/summary/job-42511/summary.json",
+      "runs/ram-014/cases.txt",
+      "runs/ram-014/config.yaml"
+    ],
+    "launchers": [
+      "scripts/slurm_fastmri_brain_ram014.sbatch",
+      "scripts/run_fastmri_paper_condition.sh"
+    ],
+    "server_logs": [
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-014/logs/slurm-42511.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-014/logs/slurm-42511.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-014/logs/run-42511.log",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-014/output/fastmri-random-r8-seed0-job42511/run.log",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-014/output/fastmri-random-r8-seed1-job42511/run.log",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-014/output/fastmri-random-r8-seed2-job42511/run.log",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-014/summary/job-42511/run.log"
+    ]
+  },
+  "ram-015": {
+    "code": [],
+    "configs_and_manifests": [
+      "runs/ram-015/summary/job-42515/slice_metrics.csv",
+      "runs/ram-015/summary/job-42515/summary.json",
+      "runs/ram-015/cases.txt",
+      "runs/ram-015/config.yaml"
+    ],
+    "launchers": [
+      "scripts/run_fastmri_paper_condition.sh",
+      "scripts/slurm_fastmri_brain_ram015.sbatch"
+    ],
+    "server_logs": [
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-015/logs/slurm-42515.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-015/logs/slurm-42515.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-015/logs/run-42515.log",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-015/output/fastmri-random-r16-seed0-job42515/run.log",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-015/output/fastmri-random-r16-seed1-job42515/run.log",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-015/output/fastmri-random-r16-seed2-job42515/run.log",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-015/summary/job-42515/run.log"
+    ]
+  },
+  "ram-016": {
+    "code": [],
+    "configs_and_manifests": [
+      "runs/ram-016/summary/job-42516/slice_metrics.csv",
+      "runs/ram-016/summary/job-42516/summary.json",
+      "runs/ram-016/cases.txt",
+      "runs/ram-016/config.yaml"
+    ],
+    "launchers": [
+      "scripts/run_fastmri_paper_condition.sh",
+      "scripts/slurm_fastmri_brain_ram016.sbatch"
+    ],
+    "server_logs": [
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-016/logs/slurm-42516.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-016/logs/slurm-42516.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-016/logs/run-42516.log",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-016/output/fastmri-random-r24-seed0-job42516/run.log",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-016/output/fastmri-random-r24-seed1-job42516/run.log",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-016/output/fastmri-random-r24-seed2-job42516/run.log",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-016/summary/job-42516/run.log"
+    ]
+  },
+  "ram-017": {
+    "code": [],
+    "configs_and_manifests": [
+      "runs/ram-017/config.yaml"
+    ],
+    "launchers": [
+      "scripts/slurm_fastmri_brain_ram017.sbatch",
+      "scripts/slurm_fastmri_brain_ram018.sbatch",
+      "scripts/run_fastmri_brain_formal_multicoil.sh"
+    ],
+    "server_logs": [
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-017/logs/slurm-42606.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-017/logs/slurm-42606.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-017/logs/run-42606.log",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-017/logs/slurm-42607.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-017/logs/slurm-42607.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-017/logs/run-42607.log",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-017/output/job-42607/run.log"
+    ]
+  },
+  "ram-018": {
+    "code": [],
+    "configs_and_manifests": [
+      "runs/ram-018/summary/job-42617/slice_metrics.csv",
+      "runs/ram-018/summary/job-42617/summary.json",
+      "runs/ram-018/cases.txt",
+      "runs/ram-018/config.yaml"
+    ],
+    "launchers": [
+      "scripts/slurm_fastmri_brain_ram018.sbatch"
+    ],
+    "server_logs": [
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-018/logs/slurm-42617.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-018/logs/slurm-42617.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-018/logs/run-42617.log",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-018/output/seed0/file_brain_AXFLAIR_200_6002462-job42617/run.log",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-018/output/seed0/file_brain_AXFLAIR_200_6002471-job42617/run.log",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-018/output/seed0/file_brain_AXFLAIR_200_6002477-job42617/run.log",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-018/output/seed0/file_brain_AXFLAIR_200_6002483-job42617/run.log",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-018/output/seed0/file_brain_AXFLAIR_200_6002499-job42617/run.log",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-018/output/seed1/file_brain_AXFLAIR_200_6002462-job42617/run.log",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-018/output/seed1/file_brain_AXFLAIR_200_6002471-job42617/run.log",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-018/output/seed1/file_brain_AXFLAIR_200_6002477-job42617/run.log",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-018/output/seed1/file_brain_AXFLAIR_200_6002483-job42617/run.log",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-018/output/seed1/file_brain_AXFLAIR_200_6002499-job42617/run.log",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-018/output/seed2/file_brain_AXFLAIR_200_6002462-job42617/run.log",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-018/output/seed2/file_brain_AXFLAIR_200_6002471-job42617/run.log",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-018/output/seed2/file_brain_AXFLAIR_200_6002477-job42617/run.log",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-018/output/seed2/file_brain_AXFLAIR_200_6002483-job42617/run.log",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-018/output/seed2/file_brain_AXFLAIR_200_6002499-job42617/run.log",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-018/summary/job-42617/run.log"
+    ]
+  },
+  "ram-019": {
+    "code": [],
+    "configs_and_manifests": [
+      "runs/ram-019/summary/job-42618/slice_metrics.csv",
+      "runs/ram-019/summary/job-42618/summary.json",
+      "runs/ram-019/cases.txt",
+      "runs/ram-019/config.yaml"
+    ],
+    "launchers": [
+      "scripts/slurm_fastmri_brain_ram019.sbatch"
+    ],
+    "server_logs": [
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-019/logs/slurm-42618.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-019/logs/slurm-42618.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-019/logs/run-42618.log",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-019/output/seed0/file_brain_AXT1_201_6002725-job42618/run.log",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-019/output/seed0/file_brain_AXT1_201_6002736-job42618/run.log",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-019/output/seed0/file_brain_AXT1_201_6002740-job42618/run.log",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-019/output/seed0/file_brain_AXT1_201_6002759-job42618/run.log",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-019/output/seed0/file_brain_AXT1_201_6002786-job42618/run.log",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-019/output/seed1/file_brain_AXT1_201_6002725-job42618/run.log",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-019/output/seed1/file_brain_AXT1_201_6002736-job42618/run.log",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-019/output/seed1/file_brain_AXT1_201_6002740-job42618/run.log",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-019/output/seed1/file_brain_AXT1_201_6002759-job42618/run.log",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-019/output/seed1/file_brain_AXT1_201_6002786-job42618/run.log",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-019/output/seed2/file_brain_AXT1_201_6002725-job42618/run.log",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-019/output/seed2/file_brain_AXT1_201_6002736-job42618/run.log",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-019/output/seed2/file_brain_AXT1_201_6002740-job42618/run.log",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-019/output/seed2/file_brain_AXT1_201_6002759-job42618/run.log",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-019/output/seed2/file_brain_AXT1_201_6002786-job42618/run.log",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-019/summary/job-42618/run.log"
+    ]
+  },
+  "ram-020": {
+    "code": [],
+    "configs_and_manifests": [
+      "runs/ram-020/summary/job-42620/slice_metrics.csv",
+      "runs/ram-020/summary/job-42620/summary.json",
+      "runs/ram-020/cases.txt",
+      "runs/ram-020/config.yaml"
+    ],
+    "launchers": [
+      "scripts/slurm_fastmri_brain_ram020.sbatch"
+    ],
+    "server_logs": [
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-020/logs/slurm-42620.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-020/logs/slurm-42620.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-020/logs/run-42620.log",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-020/output/seed0/file_brain_AXT1POST_200_6001976-job42620/run.log",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-020/output/seed0/file_brain_AXT1POST_200_6001979-job42620/run.log",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-020/output/seed0/file_brain_AXT1POST_200_6001982-job42620/run.log",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-020/output/seed0/file_brain_AXT1POST_200_6001988-job42620/run.log",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-020/output/seed0/file_brain_AXT1POST_200_6002016-job42620/run.log",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-020/output/seed1/file_brain_AXT1POST_200_6001976-job42620/run.log",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-020/output/seed1/file_brain_AXT1POST_200_6001979-job42620/run.log",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-020/output/seed1/file_brain_AXT1POST_200_6001982-job42620/run.log",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-020/output/seed1/file_brain_AXT1POST_200_6001988-job42620/run.log",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-020/output/seed1/file_brain_AXT1POST_200_6002016-job42620/run.log",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-020/output/seed2/file_brain_AXT1POST_200_6001976-job42620/run.log",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-020/output/seed2/file_brain_AXT1POST_200_6001979-job42620/run.log",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-020/output/seed2/file_brain_AXT1POST_200_6001982-job42620/run.log",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-020/output/seed2/file_brain_AXT1POST_200_6001988-job42620/run.log",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-020/output/seed2/file_brain_AXT1POST_200_6002016-job42620/run.log",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-020/summary/job-42620/run.log"
+    ]
+  },
+  "ram-021": {
+    "code": [],
+    "configs_and_manifests": [
+      "runs/ram-021/summary/job-42619/slice_metrics.csv",
+      "runs/ram-021/summary/job-42619/summary.json",
+      "runs/ram-021/cases.txt",
+      "runs/ram-021/config.yaml"
+    ],
+    "launchers": [
+      "scripts/slurm_fastmri_brain_ram021.sbatch"
+    ],
+    "server_logs": [
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-021/logs/slurm-42619.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-021/logs/slurm-42619.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-021/logs/run-42619.log",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-021/output/seed0/file_brain_AXT1PRE_200_6002079-job42619/run.log",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-021/output/seed0/file_brain_AXT1PRE_200_6002087-job42619/run.log",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-021/output/seed0/file_brain_AXT1PRE_200_6002101-job42619/run.log",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-021/output/seed0/file_brain_AXT1PRE_200_6002108-job42619/run.log",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-021/output/seed0/file_brain_AXT1PRE_200_6002120-job42619/run.log",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-021/output/seed1/file_brain_AXT1PRE_200_6002079-job42619/run.log",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-021/output/seed1/file_brain_AXT1PRE_200_6002087-job42619/run.log",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-021/output/seed1/file_brain_AXT1PRE_200_6002101-job42619/run.log",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-021/output/seed1/file_brain_AXT1PRE_200_6002108-job42619/run.log",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-021/output/seed1/file_brain_AXT1PRE_200_6002120-job42619/run.log",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-021/output/seed2/file_brain_AXT1PRE_200_6002079-job42619/run.log",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-021/output/seed2/file_brain_AXT1PRE_200_6002087-job42619/run.log",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-021/output/seed2/file_brain_AXT1PRE_200_6002101-job42619/run.log",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-021/output/seed2/file_brain_AXT1PRE_200_6002108-job42619/run.log",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-021/output/seed2/file_brain_AXT1PRE_200_6002120-job42619/run.log",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-021/summary/job-42619/run.log"
+    ]
+  },
+  "ram-022": {
+    "code": [
+      "runs/ram-022/code/scripts/validate_fastmri_ram.py",
+      "runs/ram-022/code/scripts/validate_fastmri_multicoil_ram.py",
+      "runs/ram-022/code/ram/adapters/__init__.py",
+      "runs/ram-022/code/ram/adapters/fastmri_brain.py",
+      "runs/ram-022/code/ram/__init__.py"
+    ],
+    "configs_and_manifests": [
+      "runs/ram-022/config.yaml"
+    ],
+    "launchers": [
+      "runs/ram-022/ram-022-baseline.sbatch"
+    ],
+    "server_logs": [
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-022/logs/slurm-43041.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-022/logs/slurm-43041.err"
+    ]
+  },
+  "ram-023": {
+    "code": [
+      "runs/ram-023/code/scripts/validate_fastmri_ram.py",
+      "runs/ram-023/code/scripts/validate_fastmri_multicoil_ram.py",
+      "runs/ram-023/code/ram/adapters/__init__.py",
+      "runs/ram-023/code/ram/adapters/fastmri_brain.py",
+      "runs/ram-023/code/ram/__init__.py"
+    ],
+    "configs_and_manifests": [
+      "runs/ram-023/config.yaml"
+    ],
+    "launchers": [
+      "runs/ram-023/ram-023-gaussian-noise.sbatch"
+    ],
+    "server_logs": [
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-023/logs/slurm-43043.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-023/logs/slurm-43043.err"
+    ]
+  },
+  "ram-024": {
+    "code": [
+      "runs/ram-024/code/scripts/validate_fastmri_ram.py",
+      "runs/ram-024/code/scripts/validate_fastmri_multicoil_ram.py",
+      "runs/ram-024/code/scripts/aggregate_ram024.py",
+      "runs/ram-024/code/ram/adapters/__init__.py",
+      "runs/ram-024/code/ram/adapters/fastmri_brain.py",
+      "runs/ram-024/code/ram/__init__.py"
+    ],
+    "configs_and_manifests": [
+      "runs/ram-024/config.yaml",
+      "runs/ram-024/manifest.tsv",
+      "runs/ram-024/summary/case_metrics.csv",
+      "runs/ram-024/summary/volume_metrics.csv",
+      "runs/ram-024/summary/summary.json"
+    ],
+    "launchers": [
+      "runs/ram-024/ram-024-15cases.sbatch",
+      "runs/ram-024/ram-024-aggregate.sbatch"
+    ],
+    "server_logs": [
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-024/logs/slurm-43045_0.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-024/logs/slurm-43045_0.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-024/logs/slurm-43045_1.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-024/logs/slurm-43045_1.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-024/logs/slurm-43045_2.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-024/logs/slurm-43045_2.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-024/logs/slurm-43045_3.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-024/logs/slurm-43045_3.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-024/logs/slurm-43045_4.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-024/logs/slurm-43045_4.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-024/logs/summary-43050.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-024/logs/summary-43050.err"
+    ]
+  },
+  "ram-025": {
+    "code": [
+      "runs/ram-025/code/scripts/validate_fastmri_ram.py",
+      "runs/ram-025/code/scripts/validate_fastmri_multicoil_ram.py",
+      "runs/ram-025/code/scripts/aggregate_ram025.py",
+      "runs/ram-025/code/ram/adapters/__init__.py",
+      "runs/ram-025/code/ram/adapters/fastmri_brain.py",
+      "runs/ram-025/code/ram/__init__.py"
+    ],
+    "configs_and_manifests": [
+      "runs/ram-025/config.yaml",
+      "runs/ram-025/manifest.tsv",
+      "runs/ram-025/manifest.initial.tsv",
+      "runs/ram-025/config.initial.yaml",
+      "runs/ram-025/failed_attempts/43055/file_brain_AXFLAIR_202_6000427/slice-004/clean/command.txt",
+      "runs/ram-025/failed_attempts/43055/file_brain_AXFLAIR_202_6000427/slice-004/clean/git-commit.txt",
+      "runs/ram-025/failed_attempts/43055/file_brain_AXFLAIR_202_6000427/slice-004/clean/git-status.txt",
+      "runs/ram-025/failed_attempts/43055/file_brain_AXFLAIR_202_6000427/slice-004/clean/pip-freeze.txt",
+      "runs/ram-025/failed_attempts/43055/file_brain_AXFLAIR_202_6000427/slice-004/clean/nvidia-smi.txt",
+      "runs/ram-025/failed_attempts/43055/file_brain_AXFLAIR_202_6000427/slice-004/clean/environment.json",
+      "runs/ram-025/failed_attempts/43055/file_brain_AXFLAIR_202_6000521/slice-004/clean/command.txt",
+      "runs/ram-025/failed_attempts/43055/file_brain_AXFLAIR_202_6000521/slice-004/clean/git-commit.txt",
+      "runs/ram-025/failed_attempts/43055/file_brain_AXFLAIR_202_6000521/slice-004/clean/git-status.txt",
+      "runs/ram-025/failed_attempts/43055/file_brain_AXFLAIR_202_6000521/slice-004/clean/pip-freeze.txt",
+      "runs/ram-025/failed_attempts/43055/file_brain_AXFLAIR_202_6000521/slice-004/clean/nvidia-smi.txt",
+      "runs/ram-025/failed_attempts/43055/file_brain_AXFLAIR_202_6000521/slice-004/clean/environment.json",
+      "runs/ram-025/failed_attempts/43055/file_brain_AXFLAIR_202_6000476/slice-006/clean/command.txt",
+      "runs/ram-025/failed_attempts/43055/file_brain_AXFLAIR_202_6000476/slice-006/clean/git-commit.txt",
+      "runs/ram-025/failed_attempts/43055/file_brain_AXFLAIR_202_6000476/slice-006/clean/git-status.txt",
+      "runs/ram-025/failed_attempts/43055/file_brain_AXFLAIR_202_6000476/slice-006/clean/pip-freeze.txt",
+      "runs/ram-025/failed_attempts/43055/file_brain_AXFLAIR_202_6000476/slice-006/clean/nvidia-smi.txt",
+      "runs/ram-025/failed_attempts/43055/file_brain_AXFLAIR_202_6000476/slice-006/clean/environment.json",
+      "runs/ram-025/summary/case_metrics.csv",
+      "runs/ram-025/summary/volume_metrics.csv",
+      "runs/ram-025/summary/acquisition_metrics.csv",
+      "runs/ram-025/summary/summary.json"
+    ],
+    "launchers": [
+      "runs/ram-025/ram-025-90cases.sbatch",
+      "runs/ram-025/ram-025-aggregate.sbatch"
+    ],
+    "server_logs": [
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-025/logs/slurm-43055_0.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-025/logs/slurm-43055_0.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-025/logs/slurm-43055_1.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-025/logs/slurm-43055_1.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-025/logs/slurm-43055_2.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-025/logs/slurm-43055_2.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-025/logs/slurm-43055_3.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-025/logs/slurm-43055_3.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-025/logs/slurm-43055_4.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-025/logs/slurm-43055_4.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-025/logs/slurm-43055_5.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-025/logs/slurm-43055_5.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-025/logs/slurm-43055_6.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-025/logs/slurm-43055_6.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-025/logs/slurm-43055_7.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-025/logs/slurm-43055_7.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-025/logs/slurm-43055_8.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-025/logs/slurm-43055_8.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-025/logs/slurm-43055_9.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-025/logs/slurm-43055_9.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-025/logs/slurm-43055_10.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-025/logs/slurm-43055_10.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-025/logs/slurm-43055_11.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-025/logs/slurm-43055_11.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-025/logs/slurm-43055_12.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-025/logs/slurm-43055_12.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-025/logs/slurm-43055_13.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-025/logs/slurm-43055_13.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-025/logs/slurm-43055_14.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-025/logs/slurm-43055_14.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-025/logs/slurm-43055_15.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-025/logs/slurm-43055_15.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-025/logs/slurm-43055_16.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-025/logs/slurm-43055_16.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-025/logs/slurm-43055_17.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-025/logs/slurm-43055_17.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-025/logs/slurm-43055_18.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-025/logs/slurm-43055_18.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-025/logs/slurm-43055_19.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-025/logs/slurm-43055_19.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-025/logs/slurm-43055_20.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-025/logs/slurm-43055_20.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-025/logs/slurm-43055_21.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-025/logs/slurm-43055_21.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-025/logs/slurm-43055_23.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-025/logs/slurm-43055_23.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-025/logs/slurm-43055_22.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-025/logs/slurm-43055_22.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-025/logs/slurm-43055_24.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-025/logs/slurm-43055_24.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-025/logs/slurm-43055_25.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-025/logs/slurm-43055_25.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-025/logs/slurm-43055_26.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-025/logs/slurm-43055_26.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-025/logs/slurm-43055_27.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-025/logs/slurm-43055_27.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-025/logs/slurm-43055_28.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-025/logs/slurm-43055_28.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-025/logs/slurm-43055_29.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-025/logs/slurm-43055_29.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-025/logs/slurm-43088_2.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-025/logs/slurm-43088_2.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-025/logs/slurm-43088_0.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-025/logs/slurm-43088_0.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-025/logs/slurm-43088_4.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-025/logs/slurm-43088_4.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-025/logs/summary-43091.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-025/logs/summary-43091.err"
+    ]
+  },
+  "ram-026": {
+    "code": [
+      "runs/ram-026/code/scripts/validate_fastmri_ram.py",
+      "runs/ram-026/code/scripts/validate_fastmri_multicoil_ram.py",
+      "runs/ram-026/code/scripts/aggregate_ram025.py",
+      "runs/ram-026/code/scripts/aggregate_ram026.py",
+      "runs/ram-026/code/scripts/check_ram026_case.py",
+      "runs/ram-026/code/ram/__init__.py",
+      "runs/ram-026/code/ram/adapters/__init__.py",
+      "runs/ram-026/code/ram/adapters/fastmri_brain.py"
+    ],
+    "configs_and_manifests": [
+      "runs/ram-026/manifest.tsv",
+      "runs/ram-026/config.yaml",
+      "runs/ram-026/summary/case_metrics.csv",
+      "runs/ram-026/summary/volume_metrics.csv",
+      "runs/ram-026/summary/summary.json"
+    ],
+    "launchers": [
+      "runs/ram-026/ram-026-smoke.sbatch",
+      "runs/ram-026/ram-026-90cases.sbatch",
+      "runs/ram-026/ram-026-aggregate.sbatch"
+    ],
+    "server_logs": [
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-026/logs/smoke-43094.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-026/logs/smoke-43094.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-026/logs/slurm-43095_0.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-026/logs/slurm-43095_0.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-026/logs/slurm-43095_1.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-026/logs/slurm-43095_1.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-026/logs/slurm-43095_2.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-026/logs/slurm-43095_2.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-026/logs/slurm-43095_3.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-026/logs/slurm-43095_3.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-026/logs/slurm-43095_4.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-026/logs/slurm-43095_4.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-026/logs/slurm-43095_5.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-026/logs/slurm-43095_5.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-026/logs/slurm-43095_6.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-026/logs/slurm-43095_6.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-026/logs/slurm-43095_7.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-026/logs/slurm-43095_7.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-026/logs/slurm-43095_8.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-026/logs/slurm-43095_8.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-026/logs/slurm-43095_9.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-026/logs/slurm-43095_9.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-026/logs/slurm-43095_10.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-026/logs/slurm-43095_10.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-026/logs/slurm-43095_11.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-026/logs/slurm-43095_11.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-026/logs/slurm-43095_13.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-026/logs/slurm-43095_13.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-026/logs/slurm-43095_12.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-026/logs/slurm-43095_12.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-026/logs/slurm-43095_15.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-026/logs/slurm-43095_15.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-026/logs/slurm-43095_14.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-026/logs/slurm-43095_14.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-026/logs/slurm-43095_16.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-026/logs/slurm-43095_16.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-026/logs/slurm-43095_17.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-026/logs/slurm-43095_17.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-026/logs/slurm-43095_19.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-026/logs/slurm-43095_19.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-026/logs/slurm-43095_18.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-026/logs/slurm-43095_18.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-026/logs/slurm-43095_20.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-026/logs/slurm-43095_20.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-026/logs/slurm-43095_21.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-026/logs/slurm-43095_21.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-026/logs/slurm-43095_22.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-026/logs/slurm-43095_22.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-026/logs/slurm-43095_23.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-026/logs/slurm-43095_23.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-026/logs/slurm-43095_25.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-026/logs/slurm-43095_25.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-026/logs/slurm-43095_24.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-026/logs/slurm-43095_24.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-026/logs/slurm-43095_26.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-026/logs/slurm-43095_26.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-026/logs/slurm-43095_27.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-026/logs/slurm-43095_27.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-026/logs/slurm-43095_28.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-026/logs/slurm-43095_28.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-026/logs/slurm-43095_29.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-026/logs/slurm-43095_29.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-026/logs/summary-43096.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-026/logs/summary-43096.err"
+    ]
+  },
+  "ram-027": {
+    "code": [
+      "runs/ram-027/code/ram/__init__.py",
+      "runs/ram-027/code/ram/adapters/__init__.py",
+      "runs/ram-027/code/ram/adapters/fastmri_brain.py",
+      "runs/ram-027/code/validate_ram027_crop.py",
+      "runs/ram-027/code/aggregate_ram027.py"
+    ],
+    "configs_and_manifests": [
+      "runs/ram-027/manifest.tsv",
+      "runs/ram-027/config.yaml",
+      "runs/ram-027/summary/case_metrics.csv",
+      "runs/ram-027/summary/volume_metrics.csv",
+      "runs/ram-027/summary/summary.json"
+    ],
+    "launchers": [
+      "runs/ram-027/ram-027-crop288.sbatch",
+      "runs/ram-027/ram-027-aggregate.sbatch"
+    ],
+    "server_logs": [
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-027/logs/slurm-43135_0.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-027/logs/slurm-43135_0.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-027/logs/slurm-43135_1.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-027/logs/slurm-43135_1.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-027/logs/slurm-43135_2.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-027/logs/slurm-43135_2.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-027/logs/slurm-43135_3.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-027/logs/slurm-43135_3.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-027/logs/slurm-43135_4.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-027/logs/slurm-43135_4.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-027/logs/summary-43136.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-027/logs/summary-43136.err"
+    ]
+  },
+  "ram-029": {
+    "code": [
+      "runs/ram-029/code/scripts/validate_fastmri_ram.py",
+      "runs/ram-029/code/scripts/validate_fastmri_multicoil_ram.py",
+      "runs/ram-029/code/scripts/aggregate_ram024.py",
+      "runs/ram-029/code/scripts/validate_ram029_text.py",
+      "runs/ram-029/code/scripts/aggregate_ram029.py",
+      "runs/ram-029/code/ram/__init__.py",
+      "runs/ram-029/code/ram/adapters/__init__.py",
+      "runs/ram-029/code/ram/adapters/fastmri_brain.py",
+      "runs/ram-029/attempts/attempt-1-bbox-270-246/design_snapshot/validate_ram029_text.py",
+      "runs/ram-029/attempts/attempt-1-bbox-270-246/design_snapshot/aggregate_ram029.py"
+    ],
+    "configs_and_manifests": [
+      "runs/ram-029/manifest.tsv",
+      "runs/ram-029/attempts/attempt-1-bbox-270-246/design_snapshot/config.yaml",
+      "runs/ram-029/attempts/attempt-1-bbox-270-246/design_snapshot/manifest.tsv",
+      "runs/ram-029/attempts/attempt-1-bbox-270-246/summary/case_metrics.csv",
+      "runs/ram-029/attempts/attempt-1-bbox-270-246/summary/volume_metrics.csv",
+      "runs/ram-029/attempts/attempt-1-bbox-270-246/summary/summary.json",
+      "runs/ram-029/attempts/attempt-1-bbox-270-246/summary/selected_cases.tsv",
+      "runs/ram-029/attempts/attempt-1-bbox-270-246/submission.tsv",
+      "runs/ram-029/attempts/attempt-1-bbox-270-246/attempt_status.tsv",
+      "runs/ram-029/config.yaml",
+      "runs/ram-029/submission.tsv",
+      "runs/ram-029/summary/case_metrics.csv",
+      "runs/ram-029/summary/volume_metrics.csv",
+      "runs/ram-029/summary/summary.json",
+      "runs/ram-029/summary/selected_cases.tsv",
+      "runs/ram-029/summary/absolute_metrics.csv"
+    ],
+    "launchers": [
+      "runs/ram-029/ram-029-aggregate.sbatch",
+      "runs/ram-029/attempts/attempt-1-bbox-270-246/design_snapshot/ram-029-15cases.sbatch",
+      "runs/ram-029/attempts/attempt-1-bbox-270-246/design_snapshot/ram-029-aggregate.sbatch",
+      "runs/ram-029/ram-029-15cases.sbatch"
+    ],
+    "server_logs": [
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-029/attempts/attempt-1-bbox-270-246/logs/slurm-43138_0.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-029/attempts/attempt-1-bbox-270-246/logs/slurm-43138_0.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-029/attempts/attempt-1-bbox-270-246/logs/slurm-43138_1.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-029/attempts/attempt-1-bbox-270-246/logs/slurm-43138_1.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-029/attempts/attempt-1-bbox-270-246/logs/slurm-43138_2.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-029/attempts/attempt-1-bbox-270-246/logs/slurm-43138_2.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-029/attempts/attempt-1-bbox-270-246/logs/slurm-43138_3.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-029/attempts/attempt-1-bbox-270-246/logs/slurm-43138_3.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-029/attempts/attempt-1-bbox-270-246/logs/slurm-43138_4.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-029/attempts/attempt-1-bbox-270-246/logs/slurm-43138_4.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-029/attempts/attempt-1-bbox-270-246/logs/summary-43139.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-029/attempts/attempt-1-bbox-270-246/logs/summary-43139.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-029/logs/slurm-43164_0.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-029/logs/slurm-43164_0.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-029/logs/slurm-43164_1.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-029/logs/slurm-43164_1.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-029/logs/slurm-43164_2.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-029/logs/slurm-43164_2.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-029/logs/slurm-43164_3.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-029/logs/slurm-43164_3.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-029/logs/slurm-43164_4.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-029/logs/slurm-43164_4.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-029/logs/summary-43165.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-029/logs/summary-43165.err"
+    ]
+  },
+  "ram-028": {
+    "code": [
+      "runs/ram-028/code/ram/adapters/__init__.py",
+      "runs/ram-028/code/ram/adapters/fastmri_brain.py",
+      "runs/ram-028/code/ram/__init__.py",
+      "runs/ram-028/code/scripts/validate_fastmri_multicoil_ram.py",
+      "runs/ram-028/code/scripts/validate_fastmri_ram.py",
+      "runs/ram-028/code/scripts/check_ram028_case.py",
+      "runs/ram-028/code/scripts/aggregate_ram028.py"
+    ],
+    "configs_and_manifests": [
+      "runs/ram-028/config.yaml",
+      "runs/ram-028/manifest.tsv",
+      "runs/ram-028/summary/case_metrics.csv",
+      "runs/ram-028/summary/volume_metrics.csv",
+      "runs/ram-028/summary/summary.json"
+    ],
+    "launchers": [
+      "runs/ram-028/ram-028-15cases.sbatch",
+      "runs/ram-028/ram-028-aggregate.sbatch"
+    ],
+    "server_logs": [
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-028/logs/slurm-43144_0.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-028/logs/slurm-43144_0.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-028/logs/slurm-43144_1.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-028/logs/slurm-43144_1.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-028/logs/slurm-43144_2.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-028/logs/slurm-43144_2.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-028/logs/slurm-43144_3.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-028/logs/slurm-43144_3.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-028/logs/slurm-43144_4.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-028/logs/slurm-43144_4.err",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-028/logs/summary-43145.out",
+      "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-028/logs/summary-43145.err"
+    ]
+  }
+}

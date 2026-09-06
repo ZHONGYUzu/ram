@@ -1,0 +1,32 @@
+experiment: ram-022
+purpose: clean baseline for later RAM stability comparisons
+
+input:
+  raw_h5: /mnt/qdata/rawdata/fastMRI/brain/multicoil_val/file_brain_AXFLAIR_200_6002477.h5
+  espirit_h5: /mnt/qdata/rawdata/fastMRI/brain/multicoil_val_espirit/file_brain_AXFLAIR_200_6002477.h5
+  slice_zero_based: 8
+  reference_key: reference_acl15
+  smaps_key: smaps_acl15
+  map_index: 0
+  crop_size: 320
+
+sampling:
+  acceleration: 4
+  center_fraction: 0.08
+  seed: 0
+  measurement_source: measured
+
+normalization:
+  method: masked zero-filled magnitude percentile
+  percentile: 99.5
+
+model:
+  checkpoint: /mnt/ceph/vol_02_home_students/studxuzho1/.cache/huggingface/hub/models--mterris--ram/blobs/1292571adc3d15f9db5e7f5bd92265599030b6b816637367d0f5992d8dbdef7a
+  checkpoint_sha256: 1292571adc3d15f9db5e7f5bd92265599030b6b816637367d0f5992d8dbdef7a
+  huggingface_offline: true
+  noise_conditioning_sigma: 0.001
+  synthetic_noise_added: false
+  post_data_consistency: none
+
+comparison_rule:
+  note: Later perturbations must reuse this sample, mask seed, checkpoint and the clean baseline normalization scale.
