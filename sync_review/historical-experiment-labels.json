@@ -1,0 +1,118 @@
+[
+  {
+    "experiment_id": "fastmri-brain-measured-r4-6002477-s8-320",
+    "server_directory": "/home/students/studxuzho1/ram-results/fastmri-brain-measured-r4-6002477-s8-320",
+    "original_artifact_status": "result_bearing",
+    "source": "Existing SERVER_EXPERIMENTS.json inventory (collected 2026-08-05); metrics not recomputed.",
+    "label": "历史结果，待有效性复核；未满足整体效果失败判据",
+    "reason": "已有指标相对 ZF 改善；不代表模型、评价方法或科研结论已验证。",
+    "espirit_zf_psnr": 29.71820831298828,
+    "espirit_ram_psnr": 34.36382293701172,
+    "settings": []
+  },
+  {
+    "experiment_id": "fastmri-brain-measured-r4-6002477-s8-320-acl30",
+    "server_directory": "/home/students/studxuzho1/ram-results/fastmri-brain-measured-r4-6002477-s8-320-acl30",
+    "original_artifact_status": "result_bearing",
+    "source": "Existing SERVER_EXPERIMENTS.json inventory (collected 2026-08-05); metrics not recomputed.",
+    "label": "历史结果，待有效性复核；未满足整体效果失败判据",
+    "reason": "已有指标相对 ZF 改善；不代表模型、评价方法或科研结论已验证。",
+    "espirit_zf_psnr": 29.670001983642578,
+    "espirit_ram_psnr": 34.281494140625,
+    "settings": []
+  },
+  {
+    "experiment_id": "fastmri-brain-measured-r4-6002477-s8-320-acl30-cgdc",
+    "server_directory": "/home/students/studxuzho1/ram-results/fastmri-brain-measured-r4-6002477-s8-320-acl30-cgdc",
+    "original_artifact_status": "result_bearing",
+    "source": "Existing SERVER_EXPERIMENTS.json inventory (collected 2026-08-05); metrics not recomputed.",
+    "label": "历史结果，待有效性复核；未满足整体效果失败判据",
+    "reason": "已有指标相对 ZF 改善；不代表模型、评价方法或科研结论已验证。",
+    "espirit_zf_psnr": 29.670001983642578,
+    "espirit_ram_psnr": 34.281494140625,
+    "settings": []
+  },
+  {
+    "experiment_id": "fastmri-brain-measured-r4-6002477-s8-320-cgdc",
+    "server_directory": "/home/students/studxuzho1/ram-results/fastmri-brain-measured-r4-6002477-s8-320-cgdc",
+    "original_artifact_status": "result_bearing",
+    "source": "Existing SERVER_EXPERIMENTS.json inventory (collected 2026-08-05); metrics not recomputed.",
+    "label": "历史结果，待有效性复核；未满足整体效果失败判据",
+    "reason": "已有指标相对 ZF 改善；不代表模型、评价方法或科研结论已验证。",
+    "espirit_zf_psnr": 29.71820831298828,
+    "espirit_ram_psnr": 34.36382293701172,
+    "settings": []
+  },
+  {
+    "experiment_id": "fastmri-brain-measured-r4-6002477-s8-320-cgdc-strong",
+    "server_directory": "/home/students/studxuzho1/ram-results/fastmri-brain-measured-r4-6002477-s8-320-cgdc-strong",
+    "original_artifact_status": "result_bearing",
+    "source": "Existing SERVER_EXPERIMENTS.json inventory (collected 2026-08-05); metrics not recomputed.",
+    "label": "混合结果：按参数设置标记，整组不判失败",
+    "reason": "基础 RAM 优于 ZF；强 CG 的 gamma=100 与 gamma=1000 表现不同。",
+    "espirit_zf_psnr": 29.71820831298828,
+    "espirit_ram_psnr": 34.36382293701172,
+    "settings": [
+      {
+        "gamma": 100.0,
+        "label": "混合表现，待复核",
+        "espirit_psnr": 33.11357498168945,
+        "rss_psnr": 27.694246292114258,
+        "reason": "ESPIRiT 指标相对原始 RAM 退化，但 RSS 指标改善；不能概括为全面失败。"
+      },
+      {
+        "gamma": 1000.0,
+        "label": "实验失败组，仅作为记录（效果退化）",
+        "espirit_psnr": 27.118701934814453,
+        "rss_psnr": 25.6901798248291,
+        "reason": "PSNR、SSIM、NMSE 在 ESPIRiT 和 RSS 两种参考下均劣于 ZF 与原始 RAM。"
+      }
+    ]
+  },
+  {
+    "experiment_id": "fastmri-brain-measured-r4-6002477-s8-320-map1",
+    "server_directory": "/home/students/studxuzho1/ram-results/fastmri-brain-measured-r4-6002477-s8-320-map1",
+    "original_artifact_status": "explicit_failure",
+    "source": "Existing SERVER_EXPERIMENTS.json inventory (collected 2026-08-05); metrics not recomputed.",
+    "label": "实验失败组，仅作为记录",
+    "reason": "运行报错：Invalid normalization scale: 0.0；无可评价重建指标。",
+    "espirit_zf_psnr": null,
+    "espirit_ram_psnr": null,
+    "settings": [],
+    "failure_type": "execution_failure"
+  },
+  {
+    "experiment_id": "fastmri-brain-measured-r4-6002477-s8-320-projection",
+    "server_directory": "/home/students/studxuzho1/ram-results/fastmri-brain-measured-r4-6002477-s8-320-projection",
+    "original_artifact_status": "result_bearing",
+    "source": "Existing SERVER_EXPERIMENTS.json inventory (collected 2026-08-05); metrics not recomputed.",
+    "label": "历史结果，待有效性复核；未满足整体效果失败判据",
+    "reason": "已有指标相对 ZF 改善；不代表模型、评价方法或科研结论已验证。",
+    "espirit_zf_psnr": 29.71820831298828,
+    "espirit_ram_psnr": 34.36382293701172,
+    "settings": []
+  },
+  {
+    "experiment_id": "fastmri-brain-multicoil-r4-6002477-s8-320",
+    "server_directory": "/home/students/studxuzho1/ram-results/fastmri-brain-multicoil-r4-6002477-s8-320",
+    "original_artifact_status": "metadata_only",
+    "source": "Existing SERVER_EXPERIMENTS.json inventory (collected 2026-08-05); metrics not recomputed.",
+    "label": "失败/中断记录，仅作为记录",
+    "reason": "旧索引只有元数据、无结果；服务器 console.log 已发现 traceback。不能判断重建效果。",
+    "espirit_zf_psnr": null,
+    "espirit_ram_psnr": null,
+    "settings": [],
+    "failure_type": "no_evaluable_result"
+  },
+  {
+    "experiment_id": "fastmri-brain-multicoil-r4-6002477-s8-320-r1",
+    "server_directory": "/home/students/studxuzho1/ram-results/fastmri-brain-multicoil-r4-6002477-s8-320-r1",
+    "original_artifact_status": "result_bearing",
+    "source": "Existing SERVER_EXPERIMENTS.json inventory (collected 2026-08-05); metrics not recomputed.",
+    "label": "历史结果，待有效性复核；未满足整体效果失败判据",
+    "reason": "已有指标相对 ZF 改善；不代表模型、评价方法或科研结论已验证。",
+    "espirit_zf_psnr": 29.758146286010742,
+    "espirit_ram_psnr": 34.57260513305664,
+    "settings": []
+  }
+]

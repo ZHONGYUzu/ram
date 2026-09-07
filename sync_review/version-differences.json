@@ -4,63 +4,63 @@
     "server_path": "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-022/code/scripts/validate_fastmri_multicoil_ram.py",
     "archive_path": "runs/ram-022/code/scripts/validate_fastmri_multicoil_ram.py",
     "canonical_path": "scripts/validate_fastmri_multicoil_ram.py",
-    "diff": "sync_review/diffs/runs__ram-022__code__scripts__validate_fastmri_multicoil_ram.py.diff",
-    "decision": "awaiting-human-review; canonical file unchanged"
+    "decision": "Retain runs version; root retirement on hold because 9 historical command records and traceback paths reference root validator. No code deleted.",
+    "diff_status": "Auxiliary experiment diff deleted by user request; regenerate from preserved source files if needed."
   },
   {
     "type": "version-difference",
     "server_path": "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-023/code/scripts/validate_fastmri_multicoil_ram.py",
     "archive_path": "runs/ram-023/code/scripts/validate_fastmri_multicoil_ram.py",
     "canonical_path": "scripts/validate_fastmri_multicoil_ram.py",
-    "diff": "sync_review/diffs/runs__ram-023__code__scripts__validate_fastmri_multicoil_ram.py.diff",
-    "decision": "awaiting-human-review; canonical file unchanged"
+    "decision": "Retain archived experiment snapshot; no repeated individual review or automatic merge; not a functional validation.",
+    "diff_status": "Auxiliary experiment diff deleted by user request; regenerate from preserved source files if needed."
   },
   {
     "type": "version-difference",
     "server_path": "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-024/code/scripts/validate_fastmri_multicoil_ram.py",
     "archive_path": "runs/ram-024/code/scripts/validate_fastmri_multicoil_ram.py",
     "canonical_path": "scripts/validate_fastmri_multicoil_ram.py",
-    "diff": "sync_review/diffs/runs__ram-024__code__scripts__validate_fastmri_multicoil_ram.py.diff",
-    "decision": "awaiting-human-review; canonical file unchanged"
+    "decision": "Retain archived experiment snapshot; no repeated individual review or automatic merge; not a functional validation.",
+    "diff_status": "Auxiliary experiment diff deleted by user request; regenerate from preserved source files if needed."
   },
   {
     "type": "version-difference",
     "server_path": "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-025/code/scripts/validate_fastmri_multicoil_ram.py",
     "archive_path": "runs/ram-025/code/scripts/validate_fastmri_multicoil_ram.py",
     "canonical_path": "scripts/validate_fastmri_multicoil_ram.py",
-    "diff": "sync_review/diffs/runs__ram-025__code__scripts__validate_fastmri_multicoil_ram.py.diff",
-    "decision": "awaiting-human-review; canonical file unchanged"
+    "decision": "Retain archived experiment snapshot; no repeated individual review or automatic merge; not a functional validation.",
+    "diff_status": "Auxiliary experiment diff deleted by user request; regenerate from preserved source files if needed."
   },
   {
     "type": "version-difference",
     "server_path": "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-026/code/scripts/validate_fastmri_multicoil_ram.py",
     "archive_path": "runs/ram-026/code/scripts/validate_fastmri_multicoil_ram.py",
     "canonical_path": "scripts/validate_fastmri_multicoil_ram.py",
-    "diff": "sync_review/diffs/runs__ram-026__code__scripts__validate_fastmri_multicoil_ram.py.diff",
-    "decision": "awaiting-human-review; canonical file unchanged"
+    "decision": "Retain archived experiment snapshot; no repeated individual review or automatic merge; not a functional validation.",
+    "diff_status": "Auxiliary experiment diff deleted by user request; regenerate from preserved source files if needed."
   },
   {
     "type": "version-difference",
     "server_path": "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-029/code/scripts/validate_fastmri_multicoil_ram.py",
     "archive_path": "runs/ram-029/code/scripts/validate_fastmri_multicoil_ram.py",
     "canonical_path": "scripts/validate_fastmri_multicoil_ram.py",
-    "diff": "sync_review/diffs/runs__ram-029__code__scripts__validate_fastmri_multicoil_ram.py.diff",
-    "decision": "awaiting-human-review; canonical file unchanged"
+    "decision": "Retain archived experiment snapshot; no repeated individual review or automatic merge; not a functional validation.",
+    "diff_status": "Auxiliary experiment diff deleted by user request; regenerate from preserved source files if needed."
   },
   {
     "type": "version-difference",
     "server_path": "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-028/code/scripts/validate_fastmri_multicoil_ram.py",
     "archive_path": "runs/ram-028/code/scripts/validate_fastmri_multicoil_ram.py",
     "canonical_path": "scripts/validate_fastmri_multicoil_ram.py",
-    "diff": "sync_review/diffs/runs__ram-028__code__scripts__validate_fastmri_multicoil_ram.py.diff",
-    "decision": "awaiting-human-review; canonical file unchanged"
+    "decision": "Retain archived experiment snapshot; no repeated individual review or automatic merge; not a functional validation.",
+    "diff_status": "Auxiliary experiment diff deleted by user request; regenerate from preserved source files if needed."
   },
   {
     "type": "version-difference",
     "server_path": "/home/students/studxuzho1/ram-fastmri-brain-adapter/runs/ram-028/code/scripts/validate_fastmri_ram.py",
     "archive_path": "runs/ram-028/code/scripts/validate_fastmri_ram.py",
     "canonical_path": "scripts/validate_fastmri_ram.py",
-    "diff": "sync_review/diffs/runs__ram-028__code__scripts__validate_fastmri_ram.py.diff",
-    "decision": "awaiting-human-review; canonical file unchanged"
+    "decision": "Retain archived experiment snapshot; no repeated individual review or automatic merge; not a functional validation.",
+    "diff_status": "Auxiliary experiment diff deleted by user request; regenerate from preserved source files if needed."
   }
 ]
